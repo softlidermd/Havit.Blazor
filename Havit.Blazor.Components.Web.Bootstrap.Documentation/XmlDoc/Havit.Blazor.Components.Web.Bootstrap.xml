@@ -249,6 +249,11 @@
             CSS class to be rendered with the button.
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.ButtonSettings.TextCssClass">
+            <summary>
+            CSS class to be rendered with the button's text.
+            </summary>
+        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.ButtonSettings.Icon">
             <summary>
             Icon to be rendered with the button.
@@ -267,6 +272,13 @@
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.ButtonSettings.Outline">
             <summary>
             <see href="https://getbootstrap.com/docs/5.2/components/buttons/#outline-buttons">Bootstrap outline button style</see>.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.ButtonSettings.Spinner">
+            <summary>
+            Set state of the embedded <see cref="T:Havit.Blazor.Components.Web.Bootstrap.HxSpinner"/>.
+            Leave <c>null</c> if you want automated spinner when any of the <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.OnClick"/> handlers is running.
+            You can set an explicit <c>false</c> constant to disable (override) the spinner automation.
             </summary>
         </member>
         <member name="T:Havit.Blazor.Components.Web.Bootstrap.ButtonSize">
@@ -355,6 +367,11 @@
             <summary>
             Custom CSS class to render with the <c>&lt;button /&gt;</c>.<br />
             When using <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.Tooltip"/> you might want to use <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.TooltipWrapperCssClass"/> instead of <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.CssClass" /> to get the desired result.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.TextCssClass">
+            <summary>
+            Custom CSS class to render with the button's text <c>&lt;span /&gt;</c>.<br />
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.Enabled">
@@ -3124,6 +3141,11 @@
             Settings for the <see cref="T:Havit.Blazor.Components.Web.Bootstrap.HxFormValue"/> and derived components.
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.FormValueSettings.ValueCssClass">
+            <summary>
+            Custom CSS class to render with the value.
+            </summary>
+        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.FormValueSettings.InputSize">
             <summary>
             Input size. Default is <see cref="F:Havit.Blazor.Components.Web.Bootstrap.InputSize.Regular"/>.
@@ -5655,6 +5677,11 @@
             </summary>
             <exception cref="T:System.ArgumentException">Value is <c>Int32.MinValue</c> or <c>Int32.MaxValue</c>.</exception>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxContextMenuGridColumn`1.HeaderCssClass">
+            <summary>
+            Header cell css class.
+            </summary>
+        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxContextMenuGridColumn`1.ItemCssClass">
             <summary>
             Returns item css class (not dependent on data).
@@ -5795,6 +5822,16 @@
         <member name="M:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.InvokeSelectedDataItemsChangedAsync(System.Collections.Generic.HashSet{`0})">
             <summary>
             Triggers the <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.SelectedDataItemsChanged"/> event. Allows interception of the event in derived components.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.RowDoubleClicked">
+            <summary>
+            Event fires when row received double-click.
+            </summary>		
+        </member>
+        <member name="M:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.InvokeRowDoubleClickedAsync(`0)">
+            <summary>
+            Triggers the <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.RowDoubleClicked"/> event. Allows interception of the event in derived components.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.ContentNavigationMode">
