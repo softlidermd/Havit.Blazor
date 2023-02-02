@@ -134,6 +134,8 @@ public class HxAutosuggest<TItem, TValue> : HxInputBase<TValue>, IInputWithSize,
 	/// </summary>
 	[Parameter] public RenderFragment InputGroupEndTemplate { get; set; }
 
+	[Parameter] public EventCallback<TItem> ItemChanged { get; set; }
+
 	private protected override string CoreInputCssClass => "form-control";
 	private protected override string CoreCssClass => "hx-autosuggest position-relative";
 
@@ -148,6 +150,7 @@ public class HxAutosuggest<TItem, TValue> : HxInputBase<TValue>, IInputWithSize,
 
 		builder.AddAttribute(1000, nameof(HxAutosuggestInternal<TItem, TValue>.Value), Value);
 		builder.AddAttribute(1001, nameof(HxAutosuggestInternal<TItem, TValue>.ValueChanged), EventCallback.Factory.Create<TValue>(this, HandleValueChanged));
+		builder.AddAttribute(1001, nameof(HxAutosuggestInternal<TItem, TValue>.ItemChanged), ItemChanged);
 		builder.AddAttribute(1002, nameof(HxAutosuggestInternal<TItem, TValue>.DataProvider), DataProvider);
 		builder.AddAttribute(1003, nameof(HxAutosuggestInternal<TItem, TValue>.ValueSelector), ValueSelector);
 		builder.AddAttribute(1004, nameof(HxAutosuggestInternal<TItem, TValue>.TextSelector), TextSelector);

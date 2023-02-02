@@ -6,6 +6,7 @@ public partial class HxAutosuggestInternal<TItem, TValue> : IAsyncDisposable
 {
 	[Parameter] public TValue Value { get; set; }
 	[Parameter] public EventCallback<TValue> ValueChanged { get; set; }
+	[Parameter] public EventCallback<TItem> ItemChanged { get; set; }
 
 	[Parameter] public AutosuggestDataProviderDelegate<TItem> DataProvider { get; set; }
 
@@ -368,6 +369,7 @@ public partial class HxAutosuggestInternal<TItem, TValue> : IAsyncDisposable
 	private async Task HandleItemSelected(TItem item)
 	{
 		// user selected an item in the "dropdown".
+		await ItemChanged.InvokeAsync(item);
 		await SetValueItemWithEventCallback(item);
 		userInput = TextSelectorEffective(item);
 		userInputModified = false;
