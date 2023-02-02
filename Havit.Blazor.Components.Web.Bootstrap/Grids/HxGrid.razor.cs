@@ -106,6 +106,15 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	protected virtual Task InvokeSelectedDataItemsChangedAsync(HashSet<TItem> selectedDataItems) => SelectedDataItemsChanged.InvokeAsync(selectedDataItems);
 
 	/// <summary>
+	/// Event fires when row received double-click.
+	/// </summary>		
+	[Parameter] public EventCallback<TItem> RowDoubleClicked { get; set; }
+	/// <summary>
+	/// Triggers the <see cref="RowDoubleClicked"/> event. Allows interception of the event in derived components.
+	/// </summary>
+	protected virtual Task InvokeRowDoubleClickedAsync(TItem dataItem) => RowDoubleClicked.InvokeAsync(dataItem);
+
+	/// <summary>
 	/// Strategy how data are displayed in the grid (and loaded to the grid).
 	/// </summary>
 	[Parameter] public GridContentNavigationMode? ContentNavigationMode { get; set; }

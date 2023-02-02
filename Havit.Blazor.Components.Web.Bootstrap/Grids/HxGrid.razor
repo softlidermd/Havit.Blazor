@@ -168,7 +168,9 @@
 													        ItemRowCssClassSelector?.Invoke(item),
 													        ((SelectionEnabled && (item != null) && item.Equals(SelectedDataItem)) ? "table-active" : null))"
 							        @onclick="async () => await HandleSelectOrMultiSelectDataItemClick(item)"
-							        @onclick:stopPropagation>
+							        @onclick:stopPropagation
+									@ondblclick="async () => await InvokeRowDoubleClickedAsync(item)"
+									@ondblclick:stopPropagation>
 
 							        @foreach (IHxGridColumn<TItem> column in columnsToRender)
 							        {
