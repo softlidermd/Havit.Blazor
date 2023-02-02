@@ -220,8 +220,8 @@ public partial class HxMessageBox : ComponentBase
 		}
 		else
 		{
-			// primary button should be always the last one
-			buttons.Sort((b1, b2) => ((b1.IsPrimary ?? false) ? 1 : 0) - ((b2.IsPrimary ?? false) ? 1 : 0));
+			// primary button should be always the first one
+			buttons.Sort((b1, b2) => ((b1.IsPrimary ?? false) ? 0 : 1) - ((b2.IsPrimary ?? false) ? 0 : 1));
 		}
 
 		return buttons;
