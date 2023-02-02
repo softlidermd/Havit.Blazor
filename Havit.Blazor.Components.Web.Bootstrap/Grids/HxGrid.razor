@@ -25,11 +25,11 @@
 @{
 	List<IHxGridColumn<TItem>> columnsToRender = GetColumnsToRender();
 
-	bool shouldRenderLoadingData = totalCount == null;
+	bool shouldRenderLoadingData = false;// totalCount == null;
 	bool shouldRenderLoadingDataWithLoadingTemplate = shouldRenderLoadingData && (LoadingDataTemplate != null);
 	bool shouldRenderLoadingDataWithPlaceholders = shouldRenderLoadingData && !shouldRenderLoadingDataWithLoadingTemplate && (PlaceholdersRowCountEffective > 0);
 
-	bool shouldRenderEmptyData = totalCount == 0;
+	bool shouldRenderEmptyData = false;//totalCount == 0;
 	bool shouldRenderData;
 	bool shouldRenderFooter = (totalCount > 0) || ((totalCount == 0) && this.ShowFooterWhenEmptyDataEffective);
 	var rowHeightValue = ItemRowHeightEffective;
