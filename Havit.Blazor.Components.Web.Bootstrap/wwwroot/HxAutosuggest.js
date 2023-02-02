@@ -24,7 +24,8 @@ export function open(inputElement, hxAutosuggestDotnetObjectReference) {
 	if (!inputElement) {
 		return;
 	}
-    inputElement.setAttribute("data-bs-toggle", "dropdown");
+	inputElement.setAttribute("data-bs-toggle", "dropdown");
+	inputElement.setAttribute("data-bs-display", "static");
     inputElement.hxAutosuggestDotnetObjectReference = hxAutosuggestDotnetObjectReference;
     inputElement.addEventListener('hidden.bs.dropdown', handleDropdownHidden);
 
