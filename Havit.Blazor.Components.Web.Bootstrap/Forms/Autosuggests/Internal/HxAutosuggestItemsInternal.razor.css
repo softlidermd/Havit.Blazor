@@ -6,4 +6,5 @@
     width: 100%;
     overflow: auto;
     max-height: var(--hx-autosuggest-dropdown-menu-height);
+    z-index: 1000;
 }
