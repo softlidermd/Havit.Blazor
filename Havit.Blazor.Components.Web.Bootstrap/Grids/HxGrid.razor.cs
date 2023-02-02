@@ -160,7 +160,7 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	/// Custom CSS class to render with main <c>table</c> element.
 	/// </summary>
 	[Parameter] public string TableCssClass { get; set; }
-	protected string TableCssClassEffective => this.TableCssClass ?? this.GetSettings()?.TableCssClass ?? GetDefaults().TableCssClass;
+	protected string TableCssClassEffective => CssClassHelper.Combine(this.TableCssClass, this.GetSettings()?.TableCssClass, GetDefaults().TableCssClass);
 
 	/// <summary>
 	/// Custom CSS class to render with header <c>tr</c> element.
