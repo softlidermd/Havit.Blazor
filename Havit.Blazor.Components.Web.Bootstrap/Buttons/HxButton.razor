@@ -32,7 +32,7 @@
             }
         }
 
-        @this.Text
+        <span class="@this.TextCssClassEffective">@this.Text</span>
         @ChildContent
 
         @if ((IconPlacementEffective == ButtonIconPlacement.End) && ((this.IconEffective is not null) || this.SpinnerEffective))
