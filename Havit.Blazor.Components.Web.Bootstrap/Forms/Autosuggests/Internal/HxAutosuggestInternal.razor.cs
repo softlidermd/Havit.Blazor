@@ -400,8 +400,18 @@ public partial class HxAutosuggestInternal<TItem, TValue> : IAsyncDisposable
 			blurInProgress = false;
 			if (userInputModified && !isDropdownOpened)
 			{
-				await SetValueItemWithEventCallback(default);
-				userInput = TextSelectorEffective(default);
+				if (typeof(TValue) == typeof(string))
+				{
+					// When TValue is string, support arbitrary values.
+					Value = (TValue)(object)userInput;
+					lastKnownValue = Value;
+					await ValueChanged.InvokeAsync(Value);
+				}
+				else
+				{
+					await SetValueItemWithEventCallback(default);
+					userInput = TextSelectorEffective(default);
+				}
 				userInputModified = false;
 				StateHasChanged();
 			}
