@@ -200,7 +200,7 @@ public partial class HxButton : ComponentBase, ICascadeEnabledComponent
 	/// </summary>
 	[Inject] protected IStringLocalizerFactory StringLocalizerFactory { get; set; }
 
-	protected bool SpinnerEffective => this.Spinner ?? clickInProgress;
+	protected bool SpinnerEffective => this.Spinner ?? this.GetSettings()?.Spinner ?? GetDefaults().Spinner ?? clickInProgress;
 	protected bool DisabledEffective => !CascadeEnabledComponent.EnabledEffective(this)
 		|| (SingleClickProtection && clickInProgress && (OnClick.HasDelegate || OnValidClick.HasDelegate || OnInvalidClick.HasDelegate));
 

@@ -39,4 +39,11 @@ public record ButtonSettings
 	/// <see href="https://getbootstrap.com/docs/5.2/components/buttons/#outline-buttons">Bootstrap outline button style</see>.
 	/// </summary>
 	public bool? Outline { get; set; } = false;
+
+	/// <summary>
+	/// Set state of the embedded <see cref="HxSpinner"/>.
+	/// Leave <c>null</c> if you want automated spinner when any of the <see cref="HxButton.OnClick"/> handlers is running.
+	/// You can set an explicit <c>false</c> constant to disable (override) the spinner automation.
+	/// </summary>
+	public bool? Spinner { get; set; }
 }
