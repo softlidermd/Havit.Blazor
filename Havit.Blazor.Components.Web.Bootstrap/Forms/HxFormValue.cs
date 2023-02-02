@@ -73,6 +73,7 @@ public class HxFormValue : ComponentBase, IFormValueComponent, IFormValueCompone
 	/// Custom CSS class to render with the value.
 	/// </summary>
 	[Parameter] public string ValueCssClass { get; set; }
+	protected string ValueCssClassEffective => this.ValueCssClass ?? this.GetSettings()?.ValueCssClass ?? GetDefaults().ValueCssClass;
 
 	/// <inheritdoc cref="IFormValueComponentWithInputGroups.InputGroupStartText" />
 	[Parameter] public string InputGroupStartText { get; set; }
@@ -108,7 +109,7 @@ public class HxFormValue : ComponentBase, IFormValueComponent, IFormValueCompone
 	public void RenderValue(RenderTreeBuilder builder)
 	{
 		builder.OpenElement(0, "div");
-		builder.AddAttribute(1, "class", CssClassHelper.Combine("form-control", ((IInputWithSize)this).GetInputSizeCssClass(), ValueCssClass));
+		builder.AddAttribute(1, "class", CssClassHelper.Combine("form-control", ((IInputWithSize)this).GetInputSizeCssClass(), ValueCssClassEffective));
 		builder.AddContent(2, Value);
 		builder.AddContent(3, ValueTemplate);
 		if (String.IsNullOrWhiteSpace(Value) && (ValueTemplate == null))
