@@ -2,7 +2,6 @@
 	display: flex;
 	flex-direction: column;
 	flex-shrink: 0;
-	flex-basis: var(--hx-sidebar-width);
 	flex-grow: 1;
 	background-color: var(--hx-sidebar-background-color);
 }
@@ -13,6 +12,10 @@
 }
 
 @media (min-width: 768px) {
+	.hx-sidebar {
+		flex-basis: var(--hx-sidebar-width);
+	}
+
 	.hx-sidebar,
 	.hx-sidebar .nav-menu {
 		max-height: 100vh;
