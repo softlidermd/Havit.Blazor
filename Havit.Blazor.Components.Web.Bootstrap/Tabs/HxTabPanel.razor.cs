@@ -29,7 +29,7 @@ public partial class HxTabPanel : ComponentBase, IAsyncDisposable
 	/// Card settings for the wrapping card.
 	/// Applies only if <see cref="RenderMode"/> is set to <see cref="TabPanelRenderMode.Card"/>.
 	/// </summary>
-	[Parameter] public CardSettings CardSettings { get; set; }
+	[Parameter] public CardSettings CardSettings { get; set; } = new CardSettings { CssClass = "flex-grow-1", BodyCssClass = "d-flex flex-column" };
 
 	/// <summary>
 	/// ID of the active tab (@bindable).
