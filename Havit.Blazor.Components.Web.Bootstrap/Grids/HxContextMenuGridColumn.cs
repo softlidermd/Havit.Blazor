@@ -27,6 +27,11 @@ public class HxContextMenuGridColumn<TItem> : HxGridColumnBase<TItem>
 	private int order = 0;
 
 	/// <summary>
+	/// Header cell css class.
+	/// </summary>
+	[Parameter] public string HeaderCssClass { get; set; } = "hx-grid-context-menu-th";
+
+	/// <summary>
 	/// Returns item css class (not dependent on data).
 	/// </summary>
 	[Parameter] public string ItemCssClass { get; set; }
@@ -48,12 +53,20 @@ public class HxContextMenuGridColumn<TItem> : HxGridColumnBase<TItem>
 	protected override int GetColumnOrder() => order;
 
 	/// <inheritdoc />
-	protected override GridCellTemplate GetHeaderCellTemplate(GridHeaderCellContext context) => GridCellTemplate.Empty;
+	protected override GridCellTemplate GetHeaderCellTemplate(GridHeaderCellContext context)
+	{
+		return GridCellTemplate.Create((builder) => 
+		{
+			builder.OpenComponent(1, typeof(HxContextMenu));
+			builder.AddAttribute(1001, nameof(HxContextMenu.CssClass), "opacity-0");
+			builder.CloseComponent();
+		}, HeaderCssClass);
+	}
 
 	/// <inheritdoc />
 	protected override GridCellTemplate GetItemCellTemplate(TItem item)
 	{
-		string cssClass = CssClassHelper.Combine(ItemCssClass, ItemCssClassSelector?.Invoke(item));
+		string cssClass = CssClassHelper.Combine(ItemCssClass, ItemCssClassSelector?.Invoke(item), "overflow-visible");
 		return GridCellTemplate.Create(ChildContent(item), cssClass);
 	}
 

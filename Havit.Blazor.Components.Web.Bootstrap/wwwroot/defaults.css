@@ -181,3 +181,7 @@ form {
 form > .hx-button {
 	align-self: start;
 }
+
+.hx-grid-context-menu-th {
+	width: 36px;
+}
