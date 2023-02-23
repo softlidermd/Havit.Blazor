@@ -174,9 +174,10 @@
 
 							        @foreach (IHxGridColumn<TItem> column in columnsToRender)
 							        {
-								        // same as below in the else section
+										var dataLabel = (column is HxGridColumn<TItem> gridColumn) ? gridColumn.HeaderText : string.Empty;
+										// same as below in the else section
 								        GridCellTemplate cellTemplate = column.GetItemCellTemplate(item);
-								        <td class="@cellTemplate.CssClass">
+										<td data-label="@dataLabel" class="@cellTemplate.CssClass">
 									        @cellTemplate.Template
 								        </td>
 							        }
