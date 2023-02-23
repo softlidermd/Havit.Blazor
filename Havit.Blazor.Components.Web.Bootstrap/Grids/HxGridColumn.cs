@@ -149,7 +149,7 @@ public class HxGridColumn<TItem> : HxGridColumnBase<TItem>
 	}
 
 	/// <inheritdoc />
-	protected override GridCellTemplate GetItemPlaceholderCellTemplate(GridPlaceholderCellContext context) => GridCellTemplate.Create((PlaceholderTemplate != null) ? PlaceholderTemplate(context) : GetDefaultItemPlaceholder(context));
+	protected override GridCellTemplate GetItemPlaceholderCellTemplate(GridPlaceholderCellContext context) => GridCellTemplate.Create((PlaceholderTemplate != null) ? PlaceholderTemplate(context) : GetDefaultItemPlaceholder(context), "text-start");
 
 	private RenderFragment GetDefaultItemPlaceholder(GridPlaceholderCellContext context)
 	{
