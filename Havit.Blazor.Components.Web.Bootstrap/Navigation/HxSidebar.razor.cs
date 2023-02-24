@@ -78,9 +78,9 @@ public partial class HxSidebar : ComponentBase
 	/// <summary>
 	/// Id of the immediate parent of the contained <see cref="HxSidebarItem"/> components.
 	/// </summary>
-	internal string navId = "hx" + Guid.NewGuid().ToString("N");
+	protected internal string navId = "hx" + Guid.NewGuid().ToString("N");
 
-	private string GetCollapsedCssClass() => Collapsed ? "collapsed" : null;
+	protected string GetCollapsedCssClass() => Collapsed ? "collapsed" : null;
 
 	private async Task HandleCollapseToggleClick()
 	{
@@ -88,7 +88,7 @@ public partial class HxSidebar : ComponentBase
 		await InvokeCollapsedChangedAsync(Collapsed);
 	}
 
-	private string GetResponsiveCssClass(string cssClassPattern)
+	protected string GetResponsiveCssClass(string cssClassPattern)
 	{
 		return this.ResponsiveBreakpoint switch
 		{
