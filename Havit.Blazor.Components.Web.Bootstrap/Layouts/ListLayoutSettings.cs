@@ -11,6 +11,11 @@ public record ListLayoutSettings
 	public string CssClass { get; set; }
 
 	/// <summary>
+	/// Additional CSS classes for the header <c>div</c>.
+	/// </summary>
+	public string HeaderCssClass { get; set; }
+
+	/// <summary>
 	/// Settings for the wrapping <see cref="HxCard"/>.
 	/// </summary>
 	public CardSettings CardSettings { get; set; }

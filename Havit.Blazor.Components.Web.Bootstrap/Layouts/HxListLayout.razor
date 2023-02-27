@@ -4,7 +4,7 @@
 <div class="@CssClassHelper.Combine("hx-list-layout", CssClassEffective)">
 	<HxCard Settings="this.CardSettingsEffective">
 		<BodyTemplate>
-			<div class="hx-list-layout-header hstack gap-2">
+			<div class="@CssClassHelper.Combine("hx-list-layout-header", "hstack", "gap-2", HeaderCssClassEffective)">
 					@if (NamedViewsTemplate != null)
 					{
 						<div class="hx-list-layout-header-dropdown">

@@ -81,6 +81,12 @@ public partial class HxListLayout<TFilterModel>
 	[Parameter] public string CssClass { get; set; }
 	protected string CssClassEffective => CssClass ?? this.GetSettings()?.CssClass ?? this.GetDefaults().CssClass;
 
+	/// <summary>
+	/// Additional CSS classes for the header <c>div</c>.
+	/// </summary>
+	[Parameter] public string HeaderCssClass { get; set; }
+	protected string HeaderCssClassEffective => HeaderCssClass ?? this.GetSettings()?.HeaderCssClass ?? this.GetDefaults().HeaderCssClass;
+
 	[Inject] protected IStringLocalizer<HxListLayout> Localizer { get; set; }
 
 	private ChipItem[] chips;
