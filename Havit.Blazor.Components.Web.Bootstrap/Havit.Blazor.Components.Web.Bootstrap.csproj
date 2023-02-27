@@ -46,7 +46,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="Navigation\HxSidebar.razor.css" CssSpace="hx-sidebar">
+	  <None Update="Navigation\HxSidebar.razor.css" CssScope="hx-sidebar">
 	  </None>
 	</ItemGroup>
 
