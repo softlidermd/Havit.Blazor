@@ -31,7 +31,7 @@
 
                     @InputGroupStartTemplate
 
-                    <input
+                    <input @ref="InputElement"
                         id="@inputId"
                         value="@TextQuery"
                         @oninput="(eventArgs) => HandleTextQueryValueChanged(eventArgs.Value.ToString())"

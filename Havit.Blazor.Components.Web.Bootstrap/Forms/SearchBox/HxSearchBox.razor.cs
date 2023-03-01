@@ -209,6 +209,8 @@ public partial class HxSearchBox<TItem> : IAsyncDisposable
 
 	[Inject] protected IJSRuntime JSRuntime { get; set; }
 
+	internal ElementReference InputElement { get; set; }
+
 	protected bool HasInputGroupsEffective => !String.IsNullOrWhiteSpace(InputGroupStartText) || !String.IsNullOrWhiteSpace(InputGroupEndText) || (InputGroupStartTemplate is not null) || (InputGroupEndTemplate is not null);
 
 	private string dropdownToggleElementId = "hx" + Guid.NewGuid().ToString("N");
@@ -554,6 +556,11 @@ public partial class HxSearchBox<TItem> : IAsyncDisposable
 		}
 
 		return true;
+	}
+
+	public async ValueTask FocusAsync()
+	{
+		await InputElement.FocusAsync();
 	}
 
 	public async ValueTask DisposeAsync()
