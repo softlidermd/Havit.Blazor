@@ -6621,6 +6621,11 @@
             Additional CSS classes for the header <c>div</c>.
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxListLayout`1.ControlsAtBottom">
+            <summary>
+            Render controls (header, commands, filters, etc) at the bottom, instead of top.
+            </summary>
+        </member>
         <member name="T:Havit.Blazor.Components.Web.Bootstrap.ILayoutColumnComponent">
             <summary>
             Interface for column-sized components (e.g. <see cref="T:Havit.Blazor.Components.Web.Bootstrap.HxPlaceholder"/>).
@@ -7079,6 +7084,12 @@
             Header template.
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxModal.CommandsTemplate">
+            <summary>
+            Commands template.
+            If <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxModal.ControlsAtBottom"/> is true, the template is rendered in the footer, otherwise in the header.
+            </summary>
+        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxModal.BodyTemplate">
             <summary>
             Body template.
@@ -7179,6 +7190,11 @@
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxModal.OnShown">
             <summary>
             This event is fired when an modal element has been made visible to the user (will wait for CSS transitions to complete).
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxModal.ControlsAtBottom">
+            <summary>
+            Render controls (title, commands, close button) at the bottom, instead of top.
             </summary>
         </member>
         <member name="M:Havit.Blazor.Components.Web.Bootstrap.HxModal.InvokeOnShownAsync">

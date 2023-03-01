@@ -87,6 +87,11 @@ public partial class HxListLayout<TFilterModel>
 	[Parameter] public string HeaderCssClass { get; set; }
 	protected string HeaderCssClassEffective => HeaderCssClass ?? this.GetSettings()?.HeaderCssClass ?? this.GetDefaults().HeaderCssClass;
 
+	/// <summary>
+	/// Render controls (header, commands, filters, etc) at the bottom, instead of top.
+	/// </summary>
+	[Parameter] public bool ControlsAtBottom { get; set; }
+
 	[Inject] protected IStringLocalizer<HxListLayout> Localizer { get; set; }
 
 	private ChipItem[] chips;

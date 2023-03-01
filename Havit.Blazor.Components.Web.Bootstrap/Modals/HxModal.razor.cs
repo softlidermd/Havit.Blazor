@@ -63,6 +63,12 @@ public partial class HxModal : IAsyncDisposable
 	[Parameter] public RenderFragment HeaderTemplate { get; set; }
 
 	/// <summary>
+	/// Commands template.
+	/// If <see cref="ControlsAtBottom"/> is true, the template is rendered in the footer, otherwise in the header.
+	/// </summary>
+	[Parameter] public RenderFragment CommandsTemplate { get; set; }
+
+	/// <summary>
 	/// Body template.
 	/// </summary>
 	[Parameter] public RenderFragment BodyTemplate { get; set; }
@@ -177,6 +183,11 @@ public partial class HxModal : IAsyncDisposable
 	/// This event is fired when an modal element has been made visible to the user (will wait for CSS transitions to complete).
 	/// </summary>
 	[Parameter] public EventCallback OnShown { get; set; }
+
+	/// <summary>
+	/// Render controls (title, commands, close button) at the bottom, instead of top.
+	/// </summary>
+	[Parameter] public bool ControlsAtBottom { get; set; }
 
 	/// <summary>
 	/// Triggers the <see cref="OnShown"/> event. Allows interception of the event in derived components.

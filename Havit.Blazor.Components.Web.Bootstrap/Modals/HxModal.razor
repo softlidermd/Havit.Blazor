@@ -9,7 +9,7 @@
 
 		<div class="@CssClassHelper.Combine("modal-dialog", GetDialogSizeCssClass(), GetDialogFullscreenCssClass(), GetDialogScrollableCssClass(), GetDialogCenteredCssClass(), this.DialogCssClassEffective)">
 			<div class="@CssClassHelper.Combine("modal-content", this.ContentCssClassEffective)">
-				@if (!String.IsNullOrEmpty(Title) || (HeaderTemplate != null) || ShowCloseButtonEffective)
+				@if (!ControlsAtBottom && (!String.IsNullOrEmpty(Title) || ShowCloseButtonEffective || CommandsTemplate != null) || (HeaderTemplate != null))
 				{
 					<div class="@CssClassHelper.Combine("modal-header", this.HeaderCssClassEffective)">
 						@if (!String.IsNullOrEmpty(Title))
@@ -19,6 +19,10 @@
 						@if (HeaderTemplate != null)
 						{
 							@HeaderTemplate
+						}
+						@if (CommandsTemplate != null && !ControlsAtBottom)
+						{
+							@CommandsTemplate
 						}
 						@if (ShowCloseButtonEffective)
 						{
@@ -39,10 +43,32 @@
 						@BodyTemplate
 					</div>
 				}
-				@if (FooterTemplate != null)
+				@if (ControlsAtBottom && (!String.IsNullOrEmpty(Title) || ShowCloseButtonEffective || CommandsTemplate != null) || (FooterTemplate != null))
 				{
 					<div class="@CssClassHelper.Combine("modal-footer", this.FooterCssClassEffective)">
-						@FooterTemplate
+						@if (!String.IsNullOrEmpty(Title))
+						{
+							<h5 class="modal-title">@Title</h5>
+						}
+						@if (FooterTemplate != null)
+						{
+							@FooterTemplate
+						}
+						@if (CommandsTemplate != null && ControlsAtBottom)
+						{
+							@CommandsTemplate
+						}
+						@if (ShowCloseButtonEffective)
+						{
+							if (CloseButtonIconEffective is null)
+							{
+								<button type="button" class="btn-close text-reset ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+							}
+							else
+							{
+								<div role="button" class="ms-auto" data-bs-dismiss="modal" aria-label="Close"><HxIcon Icon="CloseButtonIconEffective" /></div>
+							}
+						}
 					</div>
 				}
 			</div>
