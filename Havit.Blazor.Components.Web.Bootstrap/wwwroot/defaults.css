@@ -185,3 +185,12 @@ form > .hx-button {
 .hx-grid-context-menu-th {
 	width: 36px;
 }
+
+.hx-messagebox-modal {
+	z-index: 1500;
+}
+
+div.modal-backdrop:nth-of-type(2n) {
+	/* needed for second modal-backdrop, but nth-of-type(2) is not working */
+	--bs-backdrop-zindex: 1499;
+}

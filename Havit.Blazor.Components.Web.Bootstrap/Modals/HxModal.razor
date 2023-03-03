@@ -12,7 +12,7 @@
 				@if (!ControlsAtBottom && (!String.IsNullOrEmpty(Title) || ShowCloseButtonEffective || CommandsTemplate != null) || (HeaderTemplate != null))
 				{
 					<div class="@CssClassHelper.Combine("modal-header", this.HeaderCssClassEffective)">
-						@if (!String.IsNullOrEmpty(Title))
+						@if (!String.IsNullOrEmpty(Title) && !ControlsAtBottom)
 						{
 							<h5 class="modal-title">@Title</h5>
 						}
@@ -24,7 +24,7 @@
 						{
 							@CommandsTemplate
 						}
-						@if (ShowCloseButtonEffective)
+						@if (ShowCloseButtonEffective && !ControlsAtBottom)
 						{
 							if (CloseButtonIconEffective is null)
 							{
@@ -46,7 +46,7 @@
 				@if (ControlsAtBottom && (!String.IsNullOrEmpty(Title) || ShowCloseButtonEffective || CommandsTemplate != null) || (FooterTemplate != null))
 				{
 					<div class="@CssClassHelper.Combine("modal-footer", this.FooterCssClassEffective)">
-						@if (!String.IsNullOrEmpty(Title))
+						@if (!String.IsNullOrEmpty(Title) && ControlsAtBottom)
 						{
 							<h5 class="modal-title">@Title</h5>
 						}
@@ -58,7 +58,7 @@
 						{
 							@CommandsTemplate
 						}
-						@if (ShowCloseButtonEffective)
+						@if (ShowCloseButtonEffective && ControlsAtBottom)
 						{
 							if (CloseButtonIconEffective is null)
 							{
