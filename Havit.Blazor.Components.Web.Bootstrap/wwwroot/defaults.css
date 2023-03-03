@@ -190,7 +190,11 @@ form > .hx-button {
 	z-index: 1500;
 }
 
-div.modal-backdrop:nth-of-type(2n) {
-	/* needed for second modal-backdrop, but nth-of-type(2) is not working */
+.modal-backdrop ~ .modal-backdrop {
+	/* second modal-backdrop, used for message boxes */
 	--bs-backdrop-zindex: 1499;
+}
+
+.modal-header .btn-close {
+	margin-left: 0 !important;
 }
