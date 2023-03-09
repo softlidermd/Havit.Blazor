@@ -123,4 +123,7 @@
   <data name="NoData" xml:space="preserve">
     <value>Нет данных.</value>
   </data>
+  <data name="LoadMoreData" xml:space="preserve">
+    <value>Загрузить еще</value>
+  </data>
 </root>

@@ -123,4 +123,7 @@
   <data name="NoData" xml:space="preserve">
     <value>Lipsă date.</value>
   </data>
+  <data name="LoadMoreData" xml:space="preserve">
+    <value>Încărcați mai departe</value>
+  </data>
 </root>
