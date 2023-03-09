@@ -40,6 +40,10 @@
                     {
                         <h5 class="card-title">@Title</h5>
                     }
+                    @if (CommandsTemplate != null)
+                    {
+                        @CommandsTemplate
+                    }
                     @if (SearchTemplate != null)
                     {
                         @SearchTemplate
@@ -48,14 +52,10 @@
                     {
                         <HxButton Settings="this.FilterOpenButtonSettingsEffective" OnClick="HandleFilterButtonClick" />
                     }
-                    @if (CommandsTemplate != null)
-                    {
-                        @CommandsTemplate
-                    }
                 </div>
                 @if (FilterModel != null)
                 {
-                    <HxChipList Chips="chips" OnChipRemoveClick="HandleChipRemoveClick" />
+                    <HxChipList Chips="chips" OnChipRemoveClick="HandleChipRemoveClick" CssClass="mt-1" />
                 }
                 @if (FilterTemplate != null)
                 {
