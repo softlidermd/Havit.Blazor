@@ -195,6 +195,3 @@ form > .hx-button {
 	--bs-backdrop-zindex: 1499;
 }
 
-.modal-header .btn-close {
-	margin-left: 0 !important;
-}

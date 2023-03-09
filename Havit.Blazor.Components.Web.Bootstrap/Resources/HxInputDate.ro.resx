@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -118,18 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Clear" xml:space="preserve">
-    <value>Очистить</value>
+    <value>Șterge</value>
   </data>
-  <data name="From" xml:space="preserve">
-    <value>С</value>
+  <data name="Today" xml:space="preserve">
+    <value>Astăzi</value>
   </data>
-  <data name="FromParsingErrorMessage" xml:space="preserve">
-    <value>Введите корректную дату "с".</value>
-  </data>
-  <data name="To" xml:space="preserve">
-    <value>По</value>
-  </data>
-  <data name="ToParsingErrorMessage" xml:space="preserve">
-    <value>Введите корректную дату "по".</value>
+  <data name="ParsingErrorMessage" xml:space="preserve">
+    <value>Întroduceți data.</value>
   </data>
 </root>
