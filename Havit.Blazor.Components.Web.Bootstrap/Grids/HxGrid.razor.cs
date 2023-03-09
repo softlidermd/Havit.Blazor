@@ -74,6 +74,11 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	[Parameter] public RenderFragment EmptyDataTemplate { get; set; }
 
 	/// <summary>
+	/// Template to render "load more" button (or other UI element).
+	/// </summary>
+	[Parameter] public RenderFragment<GridLoadMoreTemplateContext> LoadMoreTemplate { get; set; }
+
+	/// <summary>
 	/// Selected data item.
 	/// Intended for data binding.
 	/// </summary>		
@@ -121,7 +126,7 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	protected GridContentNavigationMode ContentNavigationModeEffective => this.ContentNavigationMode ?? this.GetSettings()?.ContentNavigationMode ?? GetDefaults().ContentNavigationMode ?? throw new InvalidOperationException(nameof(ContentNavigationMode) + " default for " + nameof(HxGrid) + " has to be set.");
 
 	/// <summary>
-	/// Page size for <see cref="GridContentNavigationMode.Pagination"/>. Set <c>0</c> to disable paging.
+	/// Page size for <see cref="GridContentNavigationMode.Pagination"/>, <see cref="GridContentNavigationMode.LoadMore"/> and <see cref="GridContentNavigationMode.PaginationAndLoadMore"/>. Set <c>0</c> to disable paging.
 	/// </summary>
 	[Parameter] public int? PageSize { get; set; }
 	protected int PageSizeEffective => this.PageSize ?? this.GetSettings()?.PageSize ?? GetDefaults().PageSize ?? throw new InvalidOperationException(nameof(PageSize) + " default for " + nameof(HxGrid) + " has to be set.");
@@ -138,6 +143,18 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	/// </summary>
 	[Parameter] public PagerSettings PagerSettings { get; set; }
 	protected PagerSettings PagerSettingsEffective => this.PagerSettings ?? this.GetSettings()?.PagerSettings ?? GetDefaults().PagerSettings;
+
+	/// <summary>
+	/// Text of the "Load more" navigation button (<see cref="GridContentNavigationMode.LoadMore"/>).
+	/// (Default is taken from the localization resources.)
+	/// </summary>
+	[Parameter] public string LoadMoreButtonText { get; set; }
+
+	/// <summary>
+	/// Settings for the "Load more" navigation button (<see cref="GridContentNavigationMode.LoadMore"/>).
+	/// </summary>
+	[Parameter] public ButtonSettings LoadMoreButtonSettings { get; set; }
+	protected ButtonSettings LoadMoreButtonSettingsEffective => this.LoadMoreButtonSettings ?? this.GetSettings()?.LoadMoreButtonSettings ?? GetDefaults().LoadMoreButtonSettings ?? throw new InvalidOperationException(nameof(LoadMoreButtonSettings) + " default for " + nameof(HxGrid) + " has to be set.");
 
 	/// <summary>
 	/// Current grid state (page, sorting).
@@ -243,6 +260,18 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	protected bool StripedEffective => this.Striped ?? this.GetSettings()?.Striped ?? GetDefaults().Striped ?? throw new InvalidOperationException(nameof(Striped) + " default for " + nameof(HxGrid) + " has to be set.");
 
 	/// <summary>
+	/// Icon to indicate ascending sort direction in column header.
+	/// </summary>
+	[Parameter] public IconBase SortAscendingIcon { get; set; }
+	protected IconBase SortAscendingIconEffective => this.SortAscendingIcon ?? this.GetSettings()?.SortAscendingIcon ?? GetDefaults().SortAscendingIcon;
+
+	/// <summary>
+	/// Icon to indicate descending sort direction in column header.
+	/// </summary>
+	[Parameter] public IconBase SortDescendingIcon { get; set; }
+	protected IconBase SortDescendingIconEffective => this.SortDescendingIcon ?? this.GetSettings()?.SortDescendingIcon ?? GetDefaults().SortDescendingIcon;
+
+	/// <summary>
 	/// Returns application-wide defaults for the component.
 	/// Enables overriding defaults in descandants (use separate set of defaults).
 	/// </summary>
@@ -265,7 +294,8 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	private bool firstRenderCompleted = false;
 	private GridUserState previousUserState;
 	private int previousPageSizeEffective;
-
+	private int previousLoadMoreAdditionalItemsCount;
+	private bool shouldReloadAllPaginationOrLoadMoreData = false; // it is possible to use previousLoadMoreAdditionalItemsCount (when Nullable<int>) instead of this flag, but we use this for better code understanding
 
 	private Microsoft.AspNetCore.Components.Web.Virtualization.Virtualize<TItem> infiniteScrollVirtualizeComponent;
 
@@ -305,6 +335,7 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 				// We consider it safe because we already have some data.
 				// But for a moment (before data is refreshed (= before OnParametersSetAsync is finished), the component is rendered with a new user state and with old data).
 				previousUserState = CurrentUserState;
+				shouldReloadAllPaginationOrLoadMoreData = true;
 				shouldRefreshData = true;
 			}
 
@@ -337,9 +368,9 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 			}
 		}
 
-		if (firstRender && (ContentNavigationModeEffective == GridContentNavigationMode.Pagination))
+		if (firstRender && ((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore)))
 		{
-			await RefreshPaginationDataCoreAsync();
+			await RefreshPaginationOrLoadMoreDataCoreAsync();
 		}
 
 		// when rendering page with no data, navigate one page back
@@ -349,10 +380,9 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 			int newPageIndex = ((totalCount == null) /* hopefully not even possible */ || (totalCount.Value == 0))
 				? 0
 				: (int)Math.Ceiling((decimal)totalCount.Value / PageSizeEffective) - 1;
-			if (newPageIndex != CurrentUserState.PageIndex)
+			if (await SetCurrentPageIndexWithEventCallback(newPageIndex))
 			{
-				await SetCurrentPageIndexWithEventCallback(newPageIndex);
-				await RefreshPaginationDataCoreAsync();
+				await RefreshPaginationOrLoadMoreDataCoreAsync();
 			}
 		}
 
@@ -444,20 +474,35 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 		currentSorting = newSorting.ToList();
 		previousUserState = CurrentUserState; // suppress another RefreshDataAsync call in OnParametersSetAsync
 		CurrentUserState = CurrentUserState with { Sorting = SerializeToCurrentUserStateSorting(currentSorting) };
+		shouldReloadAllPaginationOrLoadMoreData = true; // When additional items are displayed we need to reload the page and all additional items
 		await InvokeCurrentUserStateChangedAsync(CurrentUserState);
 		return true;
 	}
 
 	private async Task<bool> SetCurrentPageIndexWithEventCallback(int newPageIndex)
 	{
-		if (CurrentUserState.PageIndex != newPageIndex)
+		if ((CurrentUserState.PageIndex != newPageIndex) || (CurrentUserState.LoadMoreAdditionalItemsCount != 0))
 		{
 			previousUserState = CurrentUserState; // suppress another RefreshDataAsync call in OnParametersSetAsync
-			CurrentUserState = CurrentUserState with { PageIndex = newPageIndex };
+			CurrentUserState = CurrentUserState with
+			{
+				PageIndex = newPageIndex,
+				LoadMoreAdditionalItemsCount = 0 // When navigating by Pager in LoadMore mode, navigate directly to the page (do not load additional items).
+			};
+			shouldReloadAllPaginationOrLoadMoreData = true; // When additional items are displayed we need to reload the page and all additional items
 			await InvokeCurrentUserStateChangedAsync(CurrentUserState);
 			return true;
 		}
 		return false;
+	}
+
+	private async Task IncreaseCurrentLoadMoreAdditionalItemsCountWithEventCallback(int additionalItemsCount)
+	{
+		Contract.Requires(additionalItemsCount > 0);
+
+		previousUserState = CurrentUserState; // suppress another RefreshDataAsync call in OnParametersSetAsync
+		CurrentUserState = CurrentUserState with { LoadMoreAdditionalItemsCount = CurrentUserState.LoadMoreAdditionalItemsCount + additionalItemsCount };
+		await InvokeCurrentUserStateChangedAsync(CurrentUserState);
 	}
 
 	private async Task HandleSelectOrMultiSelectDataItemClick(TItem clickedDataItem)
@@ -497,6 +542,11 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 		}
 	}
 
+	private async Task HandleLoadMoreClick()
+	{
+		await LoadMoreAsync();
+	}
+
 	private void HandleColumnAdded(IHxGridColumn<TItem> column)
 	{
 		string columnId = column.GetId();
@@ -533,7 +583,10 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 		switch (ContentNavigationModeEffective)
 		{
 			case GridContentNavigationMode.Pagination:
-				await RefreshPaginationDataCoreAsync();
+			case GridContentNavigationMode.LoadMore:
+			case GridContentNavigationMode.PaginationAndLoadMore:
+				shouldReloadAllPaginationOrLoadMoreData = true;
+				await RefreshPaginationOrLoadMoreDataCoreAsync();
 				break;
 
 			case GridContentNavigationMode.InfiniteScroll:
@@ -548,23 +601,62 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 		}
 	}
 
-	private async ValueTask RefreshPaginationDataCoreAsync()
+	internal async Task LoadMoreAsync()
 	{
-		Contract.Requires(ContentNavigationModeEffective == GridContentNavigationMode.Pagination);
+		Contract.Requires<InvalidOperationException>((ContentNavigationMode == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore), $"{nameof(LoadMoreAsync)} method can be used only with {nameof(ContentNavigationMode)}.{nameof(GridContentNavigationMode.LoadMore)} or {nameof(ContentNavigationMode)}.{nameof(GridContentNavigationMode.PaginationAndLoadMore)}.");
+
+		await IncreaseCurrentLoadMoreAdditionalItemsCountWithEventCallback(PageSizeEffective);
+		await RefreshDataAsync();
+	}
+
+	private async ValueTask RefreshPaginationOrLoadMoreDataCoreAsync()
+	{
+		Contract.Requires((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore));
 
 		paginationRefreshDataCancellationTokenSource?.Cancel();
 		paginationRefreshDataCancellationTokenSource?.Dispose();
 		paginationRefreshDataCancellationTokenSource = new CancellationTokenSource();
 		CancellationToken cancellationToken = paginationRefreshDataCancellationTokenSource.Token;
 
-		int? pageSizeEffective = PageSizeEffective;
-		GridDataProviderRequest<TItem> request = new GridDataProviderRequest<TItem>
+		GridUserState currentUserState = CurrentUserState;
+		int pageSizeEffective = PageSizeEffective;
+
+		// note: PageSize can be null!
+		// loading scenarios:
+		// 1) initial load -> load everything (no paging) or load page 0 (special case of #5)
+		// 2) next page load -> load page X
+		// 3) additional items load -> load Y items
+		// 4) sorting change load -> load page X + additional Y items
+		// 5) state reset (GridUserState changed) -> load page X + additional Y items
+		GridDataProviderRequest<TItem> request;
+		bool loadingAdditionalItemsOnly;
+		if (pageSizeEffective == 0)
 		{
-			StartIndex = (pageSizeEffective ?? 0) * CurrentUserState.PageIndex,
-			Count = pageSizeEffective,
-			Sorting = GridInternalStateSortingItemHelper.ToSortingItems(currentSorting),
-			CancellationToken = cancellationToken
-		};
+			loadingAdditionalItemsOnly = false;
+			request = new GridDataProviderRequest<TItem>
+			{
+				StartIndex = 0,
+				Count = null,
+				Sorting = GridInternalStateSortingItemHelper.ToSortingItems(currentSorting),
+				CancellationToken = cancellationToken
+			};
+		}
+		else
+		{
+			loadingAdditionalItemsOnly = !shouldReloadAllPaginationOrLoadMoreData && (currentUserState.LoadMoreAdditionalItemsCount > 0);
+
+			request = new GridDataProviderRequest<TItem>
+			{
+				StartIndex = loadingAdditionalItemsOnly
+					? (currentUserState.PageIndex * PageSizeEffective) + previousLoadMoreAdditionalItemsCount // loading "a few" load more items
+					: (currentUserState.PageIndex * PageSizeEffective), // loading whole page and additional items (no load more scenario or state reset)
+				Count = loadingAdditionalItemsOnly
+					? currentUserState.LoadMoreAdditionalItemsCount - previousLoadMoreAdditionalItemsCount // loading "a few" load more items
+					: PageSize + currentUserState.LoadMoreAdditionalItemsCount, // loading whole page and additional items (no load more scenario or state reset)
+				Sorting = GridInternalStateSortingItemHelper.ToSortingItems(currentSorting),
+				CancellationToken = cancellationToken
+			};
+		}
 
 		GridDataProviderResult<TItem> result;
 		try
@@ -581,42 +673,51 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 		if (!cancellationToken.IsCancellationRequested)
 		{
 			#region Verify paged data information
-			if ((result.Data != null) && (pageSizeEffective > 0))
+			if (result.Data != null)
 			{
 				int dataCount = result.Data.Count();
 
-				if (dataCount > pageSizeEffective.Value)
+				if ((request.Count != null) && (dataCount > request.Count))
 				{
-					throw new InvalidOperationException($"{nameof(DataProvider)} returned more data items then is the size od the page.");
+					throw new InvalidOperationException($"{nameof(DataProvider)} returned more data items then it was requested.");
 				}
 
-				if (result.TotalCount == null)
+				if ((request.Count != null) && (result.TotalCount == null))
 				{
 					throw new InvalidOperationException($"{nameof(DataProvider)} did not set ${nameof(GridDataProviderResult<TItem>.TotalCount)}.");
 				}
-				else if (dataCount > result.TotalCount.Value)
+
+				if (result.TotalCount != null && (dataCount > result.TotalCount.Value))
 				{
 					throw new InvalidOperationException($"{nameof(DataProvider)} set ${nameof(GridDataProviderResult<TItem>.TotalCount)} property byt the value is smaller than the number of data items.");
 				}
 			}
 			#endregion
 
-			paginationDataItemsToRender = result.Data?.ToList();
-
-			if (!EqualityComparer<TItem>.Default.Equals(SelectedDataItem, default))
+			if (!loadingAdditionalItemsOnly)
 			{
-				if ((paginationDataItemsToRender == null) || !paginationDataItemsToRender.Contains(SelectedDataItem))
+				paginationDataItemsToRender = result.Data?.ToList();
+
+				if (!EqualityComparer<TItem>.Default.Equals(SelectedDataItem, default))
 				{
-					await SetSelectedDataItemWithEventCallback(default);
+					if ((paginationDataItemsToRender == null) || !paginationDataItemsToRender.Contains(SelectedDataItem))
+					{
+						await SetSelectedDataItemWithEventCallback(default);
+					}
+				}
+
+				if (SelectedDataItems?.Count > 0)
+				{
+					HashSet<TItem> selectedDataItems = paginationDataItemsToRender?.Intersect(SelectedDataItems).ToHashSet() ?? new HashSet<TItem>();
+					await SetSelectedDataItemsWithEventCallback(selectedDataItems);
 				}
 			}
-
-			if (SelectedDataItems?.Count > 0)
+			else
 			{
-				HashSet<TItem> selectedDataItems = paginationDataItemsToRender?.Intersect(SelectedDataItems).ToHashSet() ?? new HashSet<TItem>();
-				await SetSelectedDataItemsWithEventCallback(selectedDataItems);
+				paginationDataItemsToRender.AddRange(result.Data?.ToList());
 			}
-
+			previousLoadMoreAdditionalItemsCount = currentUserState.LoadMoreAdditionalItemsCount;
+			shouldReloadAllPaginationOrLoadMoreData = false;
 			// hide InProgress & show data
 			StateHasChanged();
 		}
@@ -642,7 +743,6 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 
 		return new Microsoft.AspNetCore.Components.Web.Virtualization.ItemsProviderResult<TItem>(gridDataProviderResponse.Data, gridDataProviderResponse.TotalCount ?? 0);
 	}
-
 
 	private async Task<GridDataProviderResult<TItem>> InvokeDataProviderInternal(GridDataProviderRequest<TItem> request)
 	{
@@ -681,7 +781,7 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	private async Task HandleMultiSelectUnselectDataItemClicked(TItem selectedDataItem)
 	{
 		Contract.Requires(MultiSelectionEnabled);
-		Contract.Requires(ContentNavigationModeEffective == GridContentNavigationMode.Pagination, "ContentNavigationModeEffective == GridContentNavigationMode.Pagination");
+		Contract.Requires((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore));
 
 		var selectedDataItems = SelectedDataItems?.ToHashSet() ?? new HashSet<TItem>();
 		if (selectedDataItems.Remove(selectedDataItem))
@@ -693,7 +793,7 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	private async Task HandleMultiSelectSelectAllClicked()
 	{
 		Contract.Requires(MultiSelectionEnabled, nameof(MultiSelectionEnabled));
-		Contract.Requires(ContentNavigationModeEffective == GridContentNavigationMode.Pagination, "ContentNavigationModeEffective == GridContentNavigationMode.Pagination");
+		Contract.Requires((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore));
 
 		if (paginationDataItemsToRender is null)
 		{
@@ -708,7 +808,7 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	private async Task HandleMultiSelectSelectNoneClicked()
 	{
 		Contract.Requires(MultiSelectionEnabled);
-		Contract.Requires(ContentNavigationModeEffective == GridContentNavigationMode.Pagination, "ContentNavigationModeEffective == GridContentNavigationMode.Pagination");
+		Contract.Requires((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore));
 
 		await SetSelectedDataItemsWithEventCallback(new HashSet<TItem>());
 	}

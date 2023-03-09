@@ -96,6 +96,12 @@ public partial class HxButton : ComponentBase, ICascadeEnabledComponent
 	protected string CssClassEffective => this.CssClass ?? this.GetSettings()?.CssClass ?? GetDefaults().CssClass;
 
 	/// <summary>
+	/// CSS class to be rendered with the button icon.
+	/// </summary>
+	[Parameter] public string IconCssClass { get; set; }
+	protected string IconCssClassEffective => this.IconCssClass ?? this.GetSettings()?.IconCssClass ?? GetDefaults().IconCssClass;
+	
+	/// <summary>
 	/// Custom CSS class to render with the button's text <c>&lt;span /&gt;</c>.<br />
 	/// </summary>
 	[Parameter] public string TextCssClass { get; set; }

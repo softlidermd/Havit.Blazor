@@ -249,6 +249,11 @@
             CSS class to be rendered with the button.
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.ButtonSettings.IconCssClass">
+            <summary>
+            CSS class to be rendered with the button icon.
+            </summary>
+        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.ButtonSettings.TextCssClass">
             <summary>
             CSS class to be rendered with the button's text.
@@ -367,6 +372,11 @@
             <summary>
             Custom CSS class to render with the <c>&lt;button /&gt;</c>.<br />
             When using <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.Tooltip"/> you might want to use <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.TooltipWrapperCssClass"/> instead of <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.CssClass" /> to get the desired result.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.IconCssClass">
+            <summary>
+            CSS class to be rendered with the button icon.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.TextCssClass">
@@ -959,6 +969,11 @@
         </member>
         <member name="F:Havit.Blazor.Components.Web.Bootstrap.CarouselRide.False">
             <summary>
+            Manual control of the carousel.
+            </summary>
+        </member>
+        <member name="F:Havit.Blazor.Components.Web.Bootstrap.CarouselRide.True">
+            <summary>
             Autoplays the carousel after the user manually cycles the first item.
             </summary>
         </member>
@@ -1385,6 +1400,11 @@
             Additional CSS class(es) for the context menu dropdown menu.
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.ContextMenuSettings.DropdownMenuAlignment">
+            <summary>
+            Alignment for the context menu dropdown menu.
+            </summary>
+        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.ContextMenuSettings.Icon">
             <summary>
             Icon carring the menu (use <see cref="T:Havit.Blazor.Components.Web.Bootstrap.BootstrapIcon" /> or any other <see cref="T:Havit.Blazor.Components.Web.IconBase"/>).<br />
@@ -1449,6 +1469,12 @@
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxContextMenu.IconCssClass">
             <summary>
             Additional CSS class(es) for the context menu icon.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxContextMenu.DropdownMenuAlignment">
+            <summary>
+            Alignment for the context menu dropdown menu.
+            Default is <see cref="F:Havit.Blazor.Components.Web.Bootstrap.DropdownMenuAlignment.End"/>.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxContextMenu.ChildContent">
@@ -3063,6 +3089,18 @@
             Hides the component.
             </summary>
         </member>
+        <member name="M:Havit.Blazor.Components.Web.Bootstrap.Internal.HxTooltipInternalBase.EnableAsync">
+            <summary>
+            Gives the component the ability to be shown.<br />
+            The component is enabled by default (i.e. this method is not necessary to be called if the component has not been disabled).
+            </summary>
+        </member>
+        <member name="M:Havit.Blazor.Components.Web.Bootstrap.Internal.HxTooltipInternalBase.DisableAsync">
+            <summary>
+            Removes the ability for the component to be shown.<br />
+            It will only be able to be shown if it is re-enabled.
+            </summary>
+        </member>
         <member name="M:Havit.Blazor.Components.Web.Bootstrap.Internal.HxTooltipInternalBase.HandleJsShown">
             <summary>
             Receives notification from javascript when content is shown.
@@ -3232,31 +3270,16 @@
             Items to display. 
             </summary>
         </member>
-        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxCheckboxList`2.TextSelector">
-            <summary>
-            <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxCheckboxList`2.TextSelector"/> is obsolete, please use <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxCheckboxList`2.ItemTextSelector"/> instead.
-            </summary>
-        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxCheckboxList`2.ItemTextSelector">
             <summary>
             Selects text to display from item.
             When not set, <c>ToString()</c> is used.
             </summary>
         </member>
-        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxCheckboxList`2.ValueSelector">
-            <summary>
-            <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxCheckboxList`2.ValueSelector"/> is obsolete, please use <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxCheckboxList`2.ItemValueSelector"/> instead.
-            </summary>
-        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxCheckboxList`2.ItemValueSelector">
             <summary>
             Selects value from item.
             Not required when TValue is same as TItem.
-            </summary>
-        </member>
-        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxCheckboxList`2.SortKeySelector">
-            <summary>
-            <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxCheckboxList`2.SortKeySelector"/> is obsolete, please use <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxCheckboxList`2.ItemSortKeySelector"/> instead.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxCheckboxList`2.ItemSortKeySelector">
@@ -3789,12 +3812,6 @@
             Optional icon to display within the input. Use <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxInputDate.Defaults"/> to set the icon for the whole project.
             </summary>
         </member>
-        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxInputDate`1.ShowCalendarButtons">
-            <summary>
-            Indicates whether the <i>Clear</i> and <i>OK</i> buttons in calendar should be visible.<br/>
-            Default is <c>true</c> (configurable in <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxInputDate.Defaults"/>).
-            </summary>
-        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxInputDate`1.ShowClearButton">
             <summary>
             Indicates whether the <i>Clear</i> button in dropdown calendar should be visible.<br/>
@@ -3921,12 +3938,6 @@
             <summary>
             Gets or sets the error message used when displaying an a &quot;to&quot; parsing error.
             Used with <c>String.Format(...)</c>, <c>{0}</c> is replaced by Label property, <c>{1}</c> name of bounded property.
-            </summary>
-        </member>
-        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxInputDateRange.ShowCalendarButtons">
-            <summary>
-            Indicates whether the <i>Clear</i> and <i>OK</i> buttons in calendar should be visible.<br/>
-            Default is <c>true</c> (configurable in <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxInputDate.Defaults"/>).
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxInputDateRange.ShowClearButton">
@@ -4355,6 +4366,17 @@
             Input-group at the end of the input.
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxMultiSelect`2.InputText">
+            <summary>
+            Text to display in the input (default is a list of selected values).
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxMultiSelect`2.InputTextSelector">
+            <summary>
+            Function to build the text to be displayed in the input from selected items (default is a list of selected values).
+            </summary>
+            <remarks>Currently does not affect the chip being generated. Override <c>RenderChipValue()</c> method to influence the chip.</remarks>
+        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxMultiSelect`2.InputGroupEndTemplate">
             <summary>
             Input-group at the end of the input.
@@ -4399,11 +4421,6 @@
             Not required when <c>TValue</c> is same as <c>TItem</c>.
             </summary>
         </member>
-        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonList`2.ValueSelector">
-            <summary>
-            <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonList`2.ValueSelector"/> is obsolete, please use <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonList`2.ItemValueSelector"/> instead.
-            </summary>
-        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonList`2.Data">
             <summary>
             Items to display. 
@@ -4413,11 +4430,6 @@
             <summary>
             Selects text to display from item. Also used for chip text.
             When not set <c>ToString()</c> is used.
-            </summary>
-        </member>
-        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonList`2.TextSelector">
-            <summary>
-            <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonList`2.TextSelector"/> is obsolete, please use <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonList`2.ItemTextSelector"/> instead.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonList`2.ItemTemplate">
@@ -4430,11 +4442,6 @@
             <summary>
             Selects value to sort items. Uses <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonList`2.ItemTextSelector"/> property when not set.
             When complex sorting required, sort data manually and don't let sort them by this component. Alternatively create a custom comparable property.
-            </summary>
-        </member>
-        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonList`2.SortKeySelector">
-            <summary>
-            <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonList`2.SortKeySelector"/> is obsolete, please use <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonList`2.ItemSortKeySelector"/> instead.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonList`2.ItemCssClass">
@@ -4492,11 +4499,6 @@
             Base property for direct setup or to be re-published as <c>[Parameter] public</c>.
             </summary>
         </member>
-        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonListBase`2.ValueSelectorImpl">
-            <summary>
-            <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonListBase`2.ValueSelectorImpl"/> is obsolete, please use <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonListBase`2.ItemValueSelectorImpl"/> instead.
-            </summary>
-        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonListBase`2.DataImpl">
             <summary>
             Items to display. 
@@ -4510,11 +4512,6 @@
             Base property for direct setup or to be re-published as <c>[Parameter] public</c>.
             </summary>
         </member>
-        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonListBase`2.TextSelectorImpl">
-            <summary>
-            <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonListBase`2.TextSelectorImpl"/> is obsolete, please use <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonListBase`2.ItemTextSelectorImpl"/> instead.
-            </summary>
-        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonListBase`2.ItemTemplateImpl">
             <summary>
             Gets html to display from item.
@@ -4526,11 +4523,6 @@
             Selects value to sort items. Uses <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonListBase`2.ItemTextSelectorImpl"/> property when not set.
             When complex sorting required, sort data manually and don't let sort them by this component. Alternatively create a custom comparable property.
             Base property for direct setup or to be re-published as <c>[Parameter] public</c>.
-            </summary>
-        </member>
-        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonListBase`2.SortKeySelectorImpl">
-            <summary>
-            <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonListBase`2.SortKeySelectorImpl"/> is obsolete, please use <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonListBase`2.ItemSortKeySelectorImpl"/> instead.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxRadioButtonListBase`2.ItemCssClassImpl">
@@ -4867,11 +4859,6 @@
             Input size.
             </summary>
         </member>
-        <member name="P:Havit.Blazor.Components.Web.Bootstrap.InputDateRangeSettings.ShowCalendarButtons">
-            <summary>
-            Indicates whether the <i>Clear</i> and <i>OK</i> buttons in calendar should be visible.<br/>
-            </summary>
-        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.InputDateRangeSettings.ShowClearButton">
             <summary>
             Indicates whether the <i>Clear</i> button in dropdown calendar should be visible.<br/>
@@ -4915,11 +4902,6 @@
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.InputDateSettings.CalendarIcon">
             <summary>
             Optional icon to display within the input.
-            </summary>
-        </member>
-        <member name="P:Havit.Blazor.Components.Web.Bootstrap.InputDateSettings.ShowCalendarButtons">
-            <summary>
-            Indicates whether the <i>Clear</i> and <i>OK</i> buttons in calendar should be visible.<br/>
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.InputDateSettings.ShowClearButton">
@@ -5422,6 +5404,19 @@
             Use pager.
             </summary>
         </member>
+        <member name="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.LoadMore">
+            <summary>
+            Use "Load more" button.
+            </summary>
+        </member>
+        <member name="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.PaginationAndLoadMore">
+            <summary>
+            Use pager and "Load more" button.
+            </summary>
+            <remarks>
+            Value used as this is a flagged enum (but it is not).
+            </remarks>
+        </member>
         <member name="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.InfiniteScroll">
             <summary>
             Use infinite scroll (virtualized).
@@ -5513,6 +5508,21 @@
             Indicates whether the sorting should be performed in the reverse direction.	
             </summary>
         </member>
+        <member name="T:Havit.Blazor.Components.Web.Bootstrap.GridLoadMoreTemplateContext">
+            <summary>
+            Context for "load more" template of <see cref="T:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1"/>.
+            </summary>
+        </member>
+        <member name="M:Havit.Blazor.Components.Web.Bootstrap.GridLoadMoreTemplateContext.LoadMoreAsync">
+            <summary>
+            Instructs the grid to load next page.
+            </summary>
+        </member>
+        <member name="M:Havit.Blazor.Components.Web.Bootstrap.GridLoadMoreTemplateContext.#ctor(System.Func{System.Threading.Tasks.Task})">
+            <remark>
+            Not used HxGrid because we have HxGrid&lt;TItem&gt; which leads to GridLoadMoreTemplateContext&lt;TItem&gt;.
+            </remark>
+        </member>
         <member name="T:Havit.Blazor.Components.Web.Bootstrap.GridPlaceholderCellContext">
             <summary>
             Placeholder cell context.
@@ -5521,7 +5531,7 @@
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.GridPlaceholderCellContext.Index">
             <summary>
             Index of the row.		
-            It reflects current page index when <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.Pagination" /> mode is used
+            It reflects current page index when <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.Pagination" />, <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.LoadMore" /> or <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.PaginationAndLoadMore" /> mode is used
             (ie. when the page size is 10, then on the third page indexes are 20-29).
             </summary>
         </member>
@@ -5537,12 +5547,12 @@
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.GridSettings.SortAscendingIcon">
             <summary>
-            Icon to display ascending sort direction.
+            Icon to indicate ascending sort direction in column header.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.GridSettings.SortDescendingIcon">
             <summary>
-            Icon to display descending sort direction.
+            Icon to indicate descending sort direction in column header.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.GridSettings.ItemRowHeight">
@@ -5561,7 +5571,7 @@
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.GridSettings.PageSize">
             <summary>
-            Page size for <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.Pagination"/>. Set <c>0</c> to disable paging.
+            Page size for <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.Pagination"/>, <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.LoadMore"/> and <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.PaginationAndLoadMore" />. Set <c>0</c> to disable paging.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.GridSettings.PlaceholdersRowCount">
@@ -5620,6 +5630,11 @@
             Pager settings.
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.GridSettings.LoadMoreButtonSettings">
+            <summary>
+            Settings for the "Load more" navigation button (<see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.LoadMore"/> or <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.PaginationAndLoadMore"/>).
+            </summary>
+        </member>
         <member name="T:Havit.Blazor.Components.Web.Bootstrap.GridUserState">
             <summary>
             User state of the <see cref="T:Havit.Blazor.Components.Web.Bootstrap.HxGrid"/>.
@@ -5627,7 +5642,16 @@
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.GridUserState.PageIndex">
             <summary>
-            Current page index.
+            Current page index for <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.Pagination"/>.
+            Starting page index for <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.LoadMore"/> and <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.PaginationAndLoadMore"/>.
+            </summary>
+            <remarks>
+            This number is not the current page index in pager when <see cref="P:Havit.Blazor.Components.Web.Bootstrap.GridUserState.LoadMoreAdditionalItemsCount"/> is not zero.
+            </remarks>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.GridUserState.LoadMoreAdditionalItemsCount">
+            <summary>
+            Count of additional items to load for <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.LoadMore"/> or <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.PaginationAndLoadMore"/>.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.GridUserState.Sorting">
@@ -5790,6 +5814,11 @@
             Template to render when there is empty Data (but not <c>null</c>).
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.LoadMoreTemplate">
+            <summary>
+            Template to render "load more" button (or other UI element).
+            </summary>
+        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.SelectedDataItem">
             <summary>
             Selected data item.
@@ -5841,7 +5870,7 @@
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.PageSize">
             <summary>
-            Page size for <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.Pagination"/>. Set <c>0</c> to disable paging.
+            Page size for <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.Pagination"/>, <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.LoadMore"/> and <see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.PaginationAndLoadMore"/>. Set <c>0</c> to disable paging.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.ShowFooterWhenEmptyData">
@@ -5853,6 +5882,17 @@
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.PagerSettings">
             <summary>
             Pager settings.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.LoadMoreButtonText">
+            <summary>
+            Text of the "Load more" navigation button (<see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.LoadMore"/>).
+            (Default is taken from the localization resources.)
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.LoadMoreButtonSettings">
+            <summary>
+            Settings for the "Load more" navigation button (<see cref="F:Havit.Blazor.Components.Web.Bootstrap.GridContentNavigationMode.LoadMore"/>).
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.CurrentUserState">
@@ -5946,6 +5986,16 @@
             <summary>
             Adds zebra-striping to any table row within the <c>&lt;tbody&gt;</c> (alternating rows).<br />
             Default is <c>false</c>.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.SortAscendingIcon">
+            <summary>
+            Icon to indicate ascending sort direction in column header.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.SortDescendingIcon">
+            <summary>
+            Icon to indicate descending sort direction in column header.
             </summary>
         </member>
         <member name="M:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.GetDefaults">
