@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Havit.Blazor.Components.Web.Bootstrap\Havit.Blazor.Components.Web.Bootstrap.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Components\SlSidebar.razor.css" CssScope="hx-sidebar" />
+  </ItemGroup>
+
+</Project>

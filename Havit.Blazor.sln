@@ -61,6 +61,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorRTLAppTest", "BlazorR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Havit.Blazor.Grpc.Core.Tests", "Havit.Blazor.Grpc.Core.Tests\Havit.Blazor.Grpc.Core.Tests.csproj", "{E64B4752-B697-4B5A-91F0-8A8581B1ABE5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Havit.Blazor.SoftLider", "Havit.Blazor.SoftLider\Havit.Blazor.SoftLider.csproj", "{4EAF7B80-B642-41C4-9BB0-102CFF5C2BBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +149,10 @@ Global
 		{E64B4752-B697-4B5A-91F0-8A8581B1ABE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E64B4752-B697-4B5A-91F0-8A8581B1ABE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E64B4752-B697-4B5A-91F0-8A8581B1ABE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EAF7B80-B642-41C4-9BB0-102CFF5C2BBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EAF7B80-B642-41C4-9BB0-102CFF5C2BBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EAF7B80-B642-41C4-9BB0-102CFF5C2BBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EAF7B80-B642-41C4-9BB0-102CFF5C2BBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
