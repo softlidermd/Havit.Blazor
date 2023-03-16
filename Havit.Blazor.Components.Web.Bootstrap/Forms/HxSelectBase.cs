@@ -228,7 +228,7 @@ public abstract class HxSelectBase<TValue, TItem> : HxInputBaseWithInputGroups<T
 
 			if ((Value != null) && (selectedItemIndex == -1))
 			{
-				throw new InvalidOperationException($"Data does not contain item for current value '{Value}'.");
+				//throw new InvalidOperationException($"Data does not contain item for current value '{Value}'.");
 			}
 		}
 		else
