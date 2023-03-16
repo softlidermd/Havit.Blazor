@@ -9,7 +9,7 @@ public class UISettings
     public static IServiceCollection Initialize(IServiceCollection services)
     {
         services.AddHxServices();
-        services.AddHxMessenger();
+        services.AddHxMessenger(forceAsSingleton: true);
         services.AddHxMessageBoxHost();
         SetDefaults();
         return services;

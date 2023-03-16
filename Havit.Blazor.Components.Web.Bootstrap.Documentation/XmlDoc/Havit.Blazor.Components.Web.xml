@@ -801,7 +801,7 @@
             Extension methods for installation of HxMessenger support.
             </summary>
         </member>
-        <member name="M:Havit.Blazor.Components.Web.MessengerServiceCollectionExtensions.AddHxMessenger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Havit.Blazor.Components.Web.MessengerServiceCollectionExtensions.AddHxMessenger(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Boolean)">
             <summary>
             Adds <see cref="T:Havit.Blazor.Components.Web.IHxMessengerService"/> support to be able to add messages to HxMessenger.
             </summary>
