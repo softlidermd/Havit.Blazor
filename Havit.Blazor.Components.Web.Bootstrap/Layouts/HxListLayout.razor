@@ -10,7 +10,7 @@
             }
 
             <div class="@CssClassHelper.Combine("card-body", "flex-grow-0")" style="@($"border-{ (ControlsAtBottom ? "top" : "bottom") }: 1px solid var(--bs-border-color);")">
-                <div class="@CssClassHelper.Combine("hx-list-layout-header", "hstack", "gap-2", HeaderCssClassEffective)">
+                <div class="@CssClassHelper.Combine("hx-list-layout-header", "hstack", "gap-1 gap-sm-2", HeaderCssClassEffective)">
                     @if (NamedViewsTemplate != null)
                     {
                         <div class="hx-list-layout-header-dropdown">
