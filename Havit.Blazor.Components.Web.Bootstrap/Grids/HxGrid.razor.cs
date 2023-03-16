@@ -62,6 +62,10 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	/// </summary>
 	[Parameter] public RenderFragment<TItem> ContextMenu { get; set; }
 
+	[Parameter] public bool? RenderLoadingData { get; set; }
+
+	protected bool RenderLoadingDataEffective => this.RenderLoadingData ?? this.GetSettings()?.RenderLoadingData ?? GetDefaults().RenderLoadingData ?? throw new InvalidOperationException(nameof(RenderLoadingData) + " default for " + nameof(HxGrid) + " has to be set.");
+
 	/// <summary>
 	/// Template to render when "first" data are loading.
 	/// This template is not used when loading data for sorting or paging operations.

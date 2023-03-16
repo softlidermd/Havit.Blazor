@@ -160,14 +160,14 @@ public class HxGridColumn<TItem> : HxGridColumnBase<TItem>
 			builder.AddAttribute(102, nameof(HxPlaceholderContainer.ChildContent), (RenderFragment)((RenderTreeBuilder builder2) =>
 			{
 				builder2.OpenComponent<HxPlaceholder>(200);
-				builder2.AddAttribute(201, nameof(HxPlaceholder.Columns), placeholderColumns[context.Index % placeholderColumns.Length]);
+				builder2.AddAttribute(201, nameof(HxPlaceholder.Columns), DefaultPlaceholderColumns[context.Index % DefaultPlaceholderColumns.Length]);
 				builder2.CloseComponent(); // HxPlaceholder
 			}));
 
 			builder.CloseComponent(); // HxPlaceholderContainer
 		};
 	}
-	private readonly string[] placeholderColumns = new[] { "6", "9", "4", "10", "5", "2", "7" };
+	public static string[] DefaultPlaceholderColumns { get; } = new[] { "6", "9", "4", "10", "5", "2", "7" };
 
 	/// <inheritdoc />
 	protected override GridCellTemplate GetFooterCellTemplate(GridFooterCellContext context) => GridCellTemplate.Create(RenderFragmentBuilder.CreateFrom(FooterText, FooterTemplate?.Invoke(context)), FooterCssClass);

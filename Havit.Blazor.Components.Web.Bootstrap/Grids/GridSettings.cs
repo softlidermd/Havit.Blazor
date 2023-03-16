@@ -99,4 +99,6 @@ public record GridSettings
 	/// Settings for the "Load more" navigation button (<see cref="GridContentNavigationMode.LoadMore"/> or <see cref="GridContentNavigationMode.PaginationAndLoadMore"/>).
 	/// </summary>
 	public ButtonSettings LoadMoreButtonSettings { get; set; }
+
+	public bool? RenderLoadingData { get; set; }
 }

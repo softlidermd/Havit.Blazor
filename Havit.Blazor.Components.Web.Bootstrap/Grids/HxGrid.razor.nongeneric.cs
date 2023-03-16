@@ -31,7 +31,8 @@ public sealed class HxGrid
 			LoadMoreButtonSettings = new ButtonSettings()
 			{
 				Color = ThemeColor.Secondary
-			}
+			},
+			RenderLoadingData = true,
 		};
 	}
 }
