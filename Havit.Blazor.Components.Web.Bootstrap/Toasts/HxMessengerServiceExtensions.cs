@@ -92,7 +92,7 @@ public static class HxMessengerServiceExtensions
 				builder.CloseElement();
 			}
 
-			builder.AddMarkupContent(10, text);
+			builder.AddMarkupContent(10, text.Replace("\n", "<br />"));
 		};
 	}
 }
