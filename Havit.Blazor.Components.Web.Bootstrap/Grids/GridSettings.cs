@@ -101,4 +101,6 @@ public record GridSettings
 	public ButtonSettings LoadMoreButtonSettings { get; set; }
 
 	public bool? RenderLoadingData { get; set; }
+
+	public bool? RenderHeader { get; set; }
 }

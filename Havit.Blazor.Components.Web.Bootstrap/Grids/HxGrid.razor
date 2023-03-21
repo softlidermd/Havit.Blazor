@@ -24,7 +24,7 @@
 
 @{
 	List<IHxGridColumn<TItem>> columnsToRender = GetColumnsToRender();
-
+	
 	bool shouldRenderLoadingData = RenderLoadingDataEffective && totalCount == null;
 	bool shouldRenderLoadingDataWithLoadingTemplate = shouldRenderLoadingData && (LoadingDataTemplate != null);
 	bool shouldRenderLoadingDataWithPlaceholders = shouldRenderLoadingData && !shouldRenderLoadingDataWithLoadingTemplate && (PlaceholdersRowCountEffective > 0);
@@ -62,41 +62,44 @@
 
 		<div class="@CssClassHelper.Combine(ResponsiveEffective ? "table-responsive" : null, TableContainerCssClassEffective)">
 			<table class="@GetTableElementCssClass(totalCount > 0)">
-				<thead>
-					<tr class="@HeaderRowCssClassEffective">
-						@{
-							GridHeaderCellContext gridHeaderCellContext = CreateGridHeaderCellContext();
-						}
+				@if (RenderHeaderEffective)
+				{
+					<thead>
+						<tr class="@HeaderRowCssClassEffective">
+							@{
+								GridHeaderCellContext gridHeaderCellContext = CreateGridHeaderCellContext();
+							}
 
-						@foreach (IHxGridColumn<TItem> column in columnsToRender)
-						{
-							var columnSorting = column.GetSorting();
-							bool isCurrentSorting = currentSorting?.FirstOrDefault()?.Column == column;
-							var headerCellTemplate = column.GetHeaderCellTemplate(gridHeaderCellContext);
-							bool isSortingActive = (totalCount > 0) && columnSorting.Any();
+							@foreach (IHxGridColumn<TItem> column in columnsToRender)
+							{
+								var columnSorting = column.GetSorting();
+								bool isCurrentSorting = currentSorting?.FirstOrDefault()?.Column == column;
+								var headerCellTemplate = column.GetHeaderCellTemplate(gridHeaderCellContext);
+								bool isSortingActive = (totalCount > 0) && columnSorting.Any();
 
-							<th role="@(isSortingActive ? "button" : null)"
-								class="@CssClassHelper.Combine(headerCellTemplate.CssClass, isSortingActive ? (isCurrentSorting ? "hx-grid-sorted" : "hx-grid-sortable") : null)"
-								@onclick="@(isSortingActive ? async () => await HandleSortingClick(column) : null)"
-								@onclick:stopPropagation="isSortingActive">
-								<div class="hx-grid-header-cell-container">
-									<div class="hx-grid-header-cell-template">@headerCellTemplate.Template</div>
-									@if (isSortingActive)
-									{
-										if (GetSortIconDisplayDirection(isCurrentSorting, currentSorting, columnSorting) == Collections.SortDirection.Ascending)
+								<th role="@(isSortingActive ? "button" : null)"
+									class="@CssClassHelper.Combine(headerCellTemplate.CssClass, isSortingActive ? (isCurrentSorting ? "hx-grid-sorted" : "hx-grid-sortable") : null)"
+									@onclick="@(isSortingActive ? async () => await HandleSortingClick(column) : null)"
+									@onclick:stopPropagation="isSortingActive">
+									<div class="hx-grid-header-cell-container">
+										<div class="hx-grid-header-cell-template">@headerCellTemplate.Template</div>
+										@if (isSortingActive)
 										{
-											<HxIcon CssClass="hx-grid-sort-icon" Icon="@this.SortAscendingIconEffective" />
+											if (GetSortIconDisplayDirection(isCurrentSorting, currentSorting, columnSorting) == Collections.SortDirection.Ascending)
+											{
+												<HxIcon CssClass="hx-grid-sort-icon" Icon="@this.SortAscendingIconEffective" />
+											}
+											else
+											{
+												<HxIcon CssClass="hx-grid-sort-icon" Icon="@this.SortDescendingIconEffective" />
+											}
 										}
-										else
-										{
-											<HxIcon CssClass="hx-grid-sort-icon" Icon="@this.SortDescendingIconEffective" />
-										}
-									}
-								</div>
-							</th>
-						}
-					</tr>
+									</div>
+								</th>
+							}
+						</tr>
 				</thead>
+				}
 				<tbody>
 					@if (shouldRenderLoadingData)
 					{

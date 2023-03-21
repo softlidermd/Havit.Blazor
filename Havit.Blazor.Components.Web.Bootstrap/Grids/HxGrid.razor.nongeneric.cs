@@ -33,6 +33,7 @@ public sealed class HxGrid
 				Color = ThemeColor.Secondary
 			},
 			RenderLoadingData = true,
+			RenderHeader = true,
 		};
 	}
 }
