@@ -55,11 +55,9 @@ public class HxContextMenuGridColumn<TItem> : HxGridColumnBase<TItem>
 	/// <inheritdoc />
 	protected override GridCellTemplate GetHeaderCellTemplate(GridHeaderCellContext context)
 	{
-		return GridCellTemplate.Create((builder) => 
+		return GridCellTemplate.Create((builder) =>
 		{
-			builder.OpenComponent(1, typeof(HxContextMenu));
-			builder.AddAttribute(1001, nameof(HxContextMenu.CssClass), "opacity-0");
-			builder.CloseComponent();
+
 		}, HeaderCssClass);
 	}
 
