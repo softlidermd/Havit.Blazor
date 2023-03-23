@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Havit.Blazor.Components.Web.Bootstrap\Havit.Blazor.Components.Web.Bootstrap.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Components\SlSidebar.razor.css" CssScope="hx-sidebar" />
-  </ItemGroup>
-
 </Project>
