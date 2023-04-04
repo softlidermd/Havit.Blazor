@@ -29,7 +29,7 @@
 	bool shouldRenderLoadingDataWithLoadingTemplate = shouldRenderLoadingData && (LoadingDataTemplate != null);
 	bool shouldRenderLoadingDataWithPlaceholders = shouldRenderLoadingData && !shouldRenderLoadingDataWithLoadingTemplate && (PlaceholdersRowCountEffective > 0);
 
-	bool shouldRenderEmptyData = false;//totalCount == 0;
+	bool shouldRenderEmptyData = totalCount == 0 && EmptyDataTemplate != null;
 	bool shouldRenderData;
 	bool shouldRenderFooter = (totalCount > 0) || ((totalCount == 0) && this.ShowFooterWhenEmptyDataEffective);
 	var rowHeightValue = ItemRowHeightEffective;
