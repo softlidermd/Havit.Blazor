@@ -86,6 +86,7 @@ public partial class HxBadge
 		{
 			BadgeType.Regular => null,
 			BadgeType.RoundedPill => "rounded-pill",
+			BadgeType.RoundedCircle => "rounded-circle",
 			_ => throw new InvalidOperationException($"Unknown {nameof(BadgeType)} value: {TypeEffective}.")
 		};
 	}
