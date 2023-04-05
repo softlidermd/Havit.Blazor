@@ -9,14 +9,18 @@
                 <CascadingValue Value="@this">
                     @HeaderTemplate
                 </CascadingValue>
-                <HxButton
-                    CssClass="@CssClassHelper.Combine("hx-sidebar-navbar-toggler ms-auto", GetResponsiveCssClass("d-??-none"))"
-                    data-bs-toggle="collapse"
-                    data-bs-target="@($"#{NavContentElementId}")"
-                    aria-controls="@NavContentElementId"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                    Icon="BootstrapIcon.List" />
+                <HxButton CssClass="@CssClassHelper.Combine("hx-sidebar-navbar-toggler ms-auto position-relative", GetResponsiveCssClass("d-??-none"))"
+                          data-bs-toggle="collapse"
+                          data-bs-target="@($"#{NavContentElementId}")"
+                          aria-controls="@NavContentElementId"
+                          aria-expanded="false"
+                          aria-label="Toggle navigation"
+                      Icon="BootstrapIcon.List">
+                    @if (ShowNotificationsDot)
+                    {
+                        <span class="hx-sidebar-notifications-dot bg-danger" />
+                    }
+                </HxButton>
             </div>
         }
 

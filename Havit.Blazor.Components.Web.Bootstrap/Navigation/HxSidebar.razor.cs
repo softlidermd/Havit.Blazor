@@ -73,6 +73,11 @@ public partial class HxSidebar : ComponentBase
 	/// </summary>
 	[Parameter] public SidebarResponsiveBreakpoint ResponsiveBreakpoint { get; set; } = SidebarResponsiveBreakpoint.Medium;
 
+	/// <summary>
+	/// Displays notifications dot.
+	/// </summary>
+	[Parameter] public bool ShowNotificationsDot { get; set; } = false;
+
 	protected internal string NavContentElementId => Id + "-nav-content";
 
 	/// <summary>
