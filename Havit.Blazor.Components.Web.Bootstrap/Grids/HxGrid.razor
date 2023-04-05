@@ -271,7 +271,7 @@
 		{
 			if ((((CurrentUserState.PageIndex + 1) * PageSizeEffective) + CurrentUserState.LoadMoreAdditionalItemsCount) < totalCount.Value)
 			{
-				<div class="hx-grid-load-more-container">
+				<div class="hx-grid-load-more-container d-flex justify-content-center">
 					@if (LoadMoreTemplate != null)
 					{
 						var loadMoreContext = GridLoadMoreTemplateContext.CreateFor(this);
