@@ -12,7 +12,7 @@
          CssClass="hx-messagebox-modal"
          @attributes="this.AdditionalAttributes">
     <BodyTemplate>
-        @Text
+        @((MarkupString)Text)
         @BodyTemplate
     </BodyTemplate>
     <FooterTemplate>
