@@ -23,7 +23,7 @@
                                     disabled="@(!EnabledEffective)"
                                     @attributes="this.AdditionalAttributes" />
 
-                <HxDropdownContent CssClass="hx-input-date-range-dropdown-menu">
+                <HxDropdownMenu CssClass="hx-input-date-range-dropdown-menu">
                     @if (EnabledEffective)
                     {
                         <div class="hx-input-date-range-calendar">
@@ -43,7 +43,7 @@
                             }
                         </div>
                     }
-                </HxDropdownContent>
+                </HxDropdownMenu>
             </HxDropdown>
 
             <HxDropdown AutoClose="DropdownAutoClose.Outside">
@@ -61,7 +61,7 @@
                                     disabled="@(!EnabledEffective)"
                                     @attributes="this.AdditionalAttributes" />
 
-                <HxDropdownContent CssClass="hx-input-date-range-dropdown-menu">
+                <HxDropdownMenu CssClass="hx-input-date-range-dropdown-menu">
                     @if (EnabledEffective)
                     {
                         <div class="hx-input-date-range-calendar">
@@ -81,7 +81,7 @@
                             }
                         </div>
                     }
-                </HxDropdownContent>
+                </HxDropdownMenu>
             </HxDropdown>
         </div>
 
