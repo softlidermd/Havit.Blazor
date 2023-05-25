@@ -216,6 +216,7 @@ public partial class HxModal : IAsyncDisposable
 	private ElementReference modalElement;
 	private IJSObjectReference jsModule;
 	private bool disposed;
+	private string id = "hx" + Guid.NewGuid().ToString("N");
 
 	public HxModal()
 	{
@@ -271,6 +272,7 @@ public partial class HxModal : IAsyncDisposable
 	[JSInvokable("HxModal_HandleModalShown")]
 	public async Task HandleModalShown()
 	{
+		await JSRuntime.InvokeVoidAsync("eval", $"document.querySelector('#{id}').focus();");
 		await InvokeOnShownAsync();
 	}
 

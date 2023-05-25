@@ -3,6 +3,7 @@
 @if (opened)
 {
 	<div @ref="modalElement"
+		id="@id"
 		class="@CssClassHelper.Combine("hx-modal modal fade", this.CssClassEffective)"
 		tabindex="-1"
 		data-bs-backdrop="@GetBackdropSetupValue(BackdropEffective)">
