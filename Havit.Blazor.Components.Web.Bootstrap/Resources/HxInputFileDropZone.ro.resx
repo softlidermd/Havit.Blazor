@@ -124,7 +124,7 @@
     <value>Glisați fișierul aici, sau faceți click pentru a-l selecta.</value>
   </data>
   <data name="NoFilesMultiple" xml:space="preserve">
-    <value>Glisați fișiereșe aici, sau faceți click pentru a le selecta.</value>
+    <value>Glisați fișierele aici, sau faceți click pentru a le selecta.</value>
   </data>
   <data name="MultipleFilesSelected" xml:space="preserve">
     <value>{0} fișiere alese: {1}</value>
