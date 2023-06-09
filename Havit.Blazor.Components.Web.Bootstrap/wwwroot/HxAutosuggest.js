@@ -31,7 +31,11 @@ export function open(inputElement, hxAutosuggestDotnetObjectReference) {
 
 	var d = new bootstrap.Dropdown(inputElement);
 	if (d) {
-		d.show();
+		// Bootstrap dropdown registers onClick event handler which toggles the dropdown
+		// For focus-triggered dropdowns we need to delay the show() as the upcomming click event will toggle (= hide) the dropdown
+		window.setTimeout(function (dropdown) {
+			dropdown.show();
+		}, 200, d);
 	}
 }
 
