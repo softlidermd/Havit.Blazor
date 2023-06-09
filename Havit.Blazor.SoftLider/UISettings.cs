@@ -91,5 +91,7 @@ public class UISettings
 		HxListLayout.Defaults.CssClass = "flex-grow-1 d-flex flex-column";
 		HxListLayout.Defaults.CardSettings.CssClass = "flex-grow-1";
 		HxListLayout.Defaults.CardSettings.BodyCssClass = "flex-grow-0";
+
+		HxContextMenu.Defaults.DropdownCssClass = "position-static"; // avoid dropdown clipping inside table-responsive class.
 	}
 }
