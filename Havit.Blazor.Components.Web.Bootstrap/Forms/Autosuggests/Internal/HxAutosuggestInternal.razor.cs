@@ -98,6 +98,11 @@ public partial class HxAutosuggestInternal<TItem, TValue> : IAsyncDisposable
 	[Parameter] public RenderFragment InputGroupEndTemplate { get; set; }
 
 	/// <summary>
+	/// Allow arbitrary values (outside from data provider' list) when <c>TValue</c> is <c>string</c>.
+	/// </summary>
+	[Parameter] public bool AllowArbitraryStringValues { get; set; }
+
+	/// <summary>
 	/// Additional attributes to be splatted onto an underlying HTML element.
 	/// </summary>
 	[Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object> AdditionalAttributes { get; set; }
@@ -401,7 +406,7 @@ public partial class HxAutosuggestInternal<TItem, TValue> : IAsyncDisposable
 			blurInProgress = false;
 			if (userInputModified && !isDropdownOpened)
 			{
-				if (typeof(TValue) == typeof(string))
+				if (typeof(TValue) == typeof(string) && AllowArbitraryStringValues)
 				{
 					// When TValue is string, support arbitrary values.
 					Value = (TValue)(object)userInput;

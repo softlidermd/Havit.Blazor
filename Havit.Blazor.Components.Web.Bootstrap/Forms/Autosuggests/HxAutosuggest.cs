@@ -134,6 +134,11 @@ public class HxAutosuggest<TItem, TValue> : HxInputBase<TValue>, IInputWithSize,
 	/// </summary>
 	[Parameter] public RenderFragment InputGroupEndTemplate { get; set; }
 
+	/// <summary>
+	/// Allow arbitrary values (outside from data provider' list) when <c>TValue</c> is <c>string</c>.
+	/// </summary>
+	[Parameter] public bool AllowArbitraryStringValues { get; set; }
+
 	[Parameter] public EventCallback<TItem> ItemChanged { get; set; }
 
 	private protected override string CoreInputCssClass => "form-control";
@@ -172,6 +177,7 @@ public class HxAutosuggest<TItem, TValue> : HxInputBase<TValue>, IInputWithSize,
 		builder.AddAttribute(1023, nameof(HxAutosuggestInternal<TItem, TValue>.InputGroupStartTemplate), this.InputGroupStartTemplate);
 		builder.AddAttribute(1024, nameof(HxAutosuggestInternal<TItem, TValue>.InputGroupEndText), this.InputGroupEndText);
 		builder.AddAttribute(1025, nameof(HxAutosuggestInternal<TItem, TValue>.InputGroupEndTemplate), this.InputGroupEndTemplate);
+		builder.AddAttribute(1025, nameof(HxAutosuggestInternal<TItem, TValue>.AllowArbitraryStringValues), this.AllowArbitraryStringValues);
 
 		builder.AddMultipleAttributes(2000, this.AdditionalAttributes);
 

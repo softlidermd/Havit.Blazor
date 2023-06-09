@@ -2496,6 +2496,11 @@
             Hides the search icon when used!
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxAutosuggest`2.AllowArbitraryStringValues">
+            <summary>
+            Allow arbitrary values (outside from data provider' list) when <c>TValue</c> is <c>string</c>.
+            </summary>
+        </member>
         <member name="M:Havit.Blazor.Components.Web.Bootstrap.HxAutosuggest`2.BuildRenderInput(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)">
             <inheritdoc cref="M:Microsoft.AspNetCore.Components.ComponentBase.BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)" />
         </member>
@@ -2603,6 +2608,11 @@
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.Internal.HxAutosuggestInternal`2.InputGroupEndTemplate">
             <summary>
             Input-group at the end of the input.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.Internal.HxAutosuggestInternal`2.AllowArbitraryStringValues">
+            <summary>
+            Allow arbitrary values (outside from data provider' list) when <c>TValue</c> is <c>string</c>.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.Internal.HxAutosuggestInternal`2.AdditionalAttributes">
