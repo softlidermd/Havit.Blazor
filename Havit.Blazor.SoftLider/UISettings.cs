@@ -86,7 +86,7 @@ public class UISettings
 
 		HxInputBase.Defaults.ValidationMessageMode = ValidationMessageMode.Regular;
 
-		HxFormValue.Defaults.ValueCssClass = "grayed";
+		HxFormValue.Defaults.ValueCssClass = "bg-body-tertiary";
 
 		HxListLayout.Defaults.CssClass = "flex-grow-1 d-flex flex-column";
 		HxListLayout.Defaults.CardSettings.CssClass = "flex-grow-1";
