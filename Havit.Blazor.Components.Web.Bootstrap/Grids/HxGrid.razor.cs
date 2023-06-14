@@ -56,7 +56,6 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	/// </summary>
 	[Parameter, EditorRequired] public RenderFragment Columns { get; set; }
 
-	/// <summary>
 	[Parameter] public bool? RenderLoadingData { get; set; }
 
 	protected bool RenderLoadingDataEffective => this.RenderLoadingData ?? this.GetSettings()?.RenderLoadingData ?? GetDefaults().RenderLoadingData ?? throw new InvalidOperationException(nameof(RenderLoadingData) + " default for " + nameof(HxGrid) + " has to be set.");
@@ -65,6 +64,7 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 
 	protected bool RenderHeaderEffective => this.RenderHeader ?? this.GetSettings()?.RenderHeader ?? GetDefaults().RenderHeader ?? throw new InvalidOperationException(nameof(RenderHeader) + " default for " + nameof(HxGrid) + " has to be set.");
 
+	/// <summary>
 	/// Template to render when "first" data are loading.
 	/// This template is not used when loading data for sorting or paging operations.
 	/// </summary>

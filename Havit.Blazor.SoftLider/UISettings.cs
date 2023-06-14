@@ -1,4 +1,5 @@
-﻿using Havit.Blazor.Components.Web;
+﻿using System.Drawing;
+using Havit.Blazor.Components.Web;
 using Havit.Blazor.Components.Web.Bootstrap;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -47,7 +48,7 @@ public class UISettings
 	public static ButtonSettings RefreshButtonSettings { get; } = new()
 	{
 		TextCssClass = "d-none d-sm-inline",
-		Color = ThemeColor.Light,
+		CssClass = "bg-body-secondary",
 		Icon = BootstrapIcon.ArrowClockwise
 	};
 
@@ -75,8 +76,8 @@ public class UISettings
 		HxModal.Defaults.Centered = true;
 
 		HxPlaceholderContainer.Defaults.CssClass = "text-start";
-		HxPlaceholder.Defaults.Color = ThemeColor.Light;
-		HxPlaceholder.Defaults.CssClass = "rounded";
+		HxPlaceholder.Defaults.Color = ThemeColor.None;
+		HxPlaceholder.Defaults.CssClass = "bg-body-secondary rounded";
 
 		HxGrid.Defaults.Responsive = true;
 		HxGrid.Defaults.ContentNavigationMode = GridContentNavigationMode.InfiniteScroll;
@@ -91,6 +92,8 @@ public class UISettings
 		HxListLayout.Defaults.CssClass = "flex-grow-1 d-flex flex-column";
 		HxListLayout.Defaults.CardSettings.CssClass = "flex-grow-1";
 		HxListLayout.Defaults.CardSettings.BodyCssClass = "flex-grow-0";
+		HxListLayout.Defaults.FilterOpenButtonSettings.Color = ThemeColor.None;
+		HxListLayout.Defaults.FilterOpenButtonSettings.CssClass = "bg-body-secondary";
 
 		HxContextMenu.Defaults.DropdownCssClass = "position-static"; // avoid dropdown clipping inside table-responsive class.
 	}
