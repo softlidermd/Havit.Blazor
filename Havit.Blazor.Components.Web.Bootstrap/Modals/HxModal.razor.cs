@@ -184,11 +184,6 @@ public partial class HxModal : IAsyncDisposable
 	[Parameter] public EventCallback<ModalHidingEventArgs> OnHiding { get; set; }
 
 	/// <summary>
-	/// Triggers the <see cref="OnHiding"/> event. Allows interception of the event in derived components.
-	/// </summary>
-	protected virtual Task InvokeOnHidingAsync(ModalHidingEventArgs args) => OnHiding.InvokeAsync(args);
-
-	/// <summary>
 	/// This event is fired when the modal has finished being hidden from the user (will wait for CSS transitions to complete).<br/>
 	/// This can be caused by <see cref="HideAsync"/>, close-button, <kbd>Esc</kbd> key or other interaction.
 	/// </summary>
@@ -259,7 +254,7 @@ public partial class HxModal : IAsyncDisposable
 	public async Task<bool> HandleModalHide()
 	{
 		var eventArgs = new ModalHidingEventArgs();
-		await InvokeOnHidingAsync(eventArgs);
+		await OnHiding.InvokeAsync(eventArgs);
 		return eventArgs.Cancel;
 	}
 
