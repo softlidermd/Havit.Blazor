@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using Havit.Blazor.Components.Web;
+﻿using Havit.Blazor.Components.Web;
 using Havit.Blazor.Components.Web.Bootstrap;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,8 +8,10 @@ public class UISettings
 {
 	public static IServiceCollection Initialize(IServiceCollection services)
 	{
+		var isBlazorServer = services.Any(x => (x.ImplementationType?.Name ?? "") == "RemoteJSRuntime");
+
 		services.AddHxServices();
-		services.AddHxMessenger(forceAsSingleton: true);
+		services.AddHxMessenger(forceAsSingleton: !isBlazorServer);
 		services.AddHxMessageBoxHost();
 		SetDefaults();
 		return services;
