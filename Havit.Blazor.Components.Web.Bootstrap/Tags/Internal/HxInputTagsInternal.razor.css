@@ -52,7 +52,7 @@ input:focus {
 }
 
 .hx-input-tags-control-disabled:not(.hx-input-tags-naked) {
-	background-color: var(--bs-form-control-disabled-bg);
+	background-color: var(--bs-secondary-bg);
 }
 
 .hx-tag-add-button-text {
@@ -61,4 +61,9 @@ input:focus {
 
 ::deep .hx-input-tags-dropdown-item-focused {
 	background-color: var(--hx-input-tags-dropdown-item-highlighted-background-color);
+}
+
+::deep .hx-tag-add-button-disabled {
+	opacity: var(--hx-input-tags-add-button-disabled-opacity);
+	cursor: default;
 }
