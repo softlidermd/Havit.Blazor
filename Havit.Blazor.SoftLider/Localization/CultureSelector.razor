@@ -1,0 +1,47 @@
+﻿
+<label class="form-label">@Localization.Language</label>
+<div class="d-flex align-items-center">
+    @*<HxIcon Icon="BootstrapIcon.Translate" CssClass="me-2" />*@
+    <HxSelect TItem="CultureItem"
+              TValue="string"
+              Data="cultures"
+              TextSelector="p => p.Name"
+              ValueSelector="p => p.Culture"
+              Nullable="false"
+              CssClass="flex-grow-1"
+              @bind-Value:get="Culture"
+              @bind-Value:set="CultureChanged">
+    </HxSelect>
+</div>
+
+@code {
+    [Inject, AllowNull] public NavigationManager Navigation { get; set; }
+
+    [Inject, AllowNull] public ILocalizationHelper LocalizationHelper { get; set; }
+
+    private CultureItem[] cultures = new CultureItem[]
+    {
+        new("Română", "ro"),
+        new("Русский", "ru")
+    };
+
+    private string Culture => CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+    private async Task CultureChanged(string newValue)
+    {
+        if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName != newValue)
+            await LocalizationHelper.ChangeCultureAsync(newValue);
+    }
+
+    struct CultureItem
+    {
+        public string Name { get; set; }
+        public string Culture { get; set; }
+
+        public CultureItem(string name, string culture)
+        {
+            Name = name;
+            Culture = culture;
+        }
+    }
+}
