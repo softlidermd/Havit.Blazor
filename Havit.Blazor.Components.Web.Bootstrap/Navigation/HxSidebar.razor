@@ -9,8 +9,7 @@
                 <CascadingValue Value="@this">
                     @HeaderTemplate
                 </CascadingValue>
-                <HxButton CssClass="@CssClassHelper.Combine("hx-sidebar-navbar-toggler ms-auto position-relative", GetResponsiveCssClass("d-??-none"))"
-                    CssClass="@CssClassHelper.Combine("hx-sidebar-navbar-toggler position-relative", GetResponsiveCssClass("d-??-none"))"
+                <HxButton CssClass="@CssClassHelper.Combine("hx-sidebar-navbar-toggler position-relative", GetResponsiveCssClass("d-??-none"))"
                           data-bs-toggle="collapse"
                           data-bs-target="@($"#{NavContentElementId}")"
                           aria-controls="@NavContentElementId"
