@@ -1,7 +1,12 @@
-﻿
-<label class="form-label">@Localization.Language</label>
+﻿@if (ShowLabel)
+{
+    <label class="form-label">@Localization.Language</label>
+}
 <div class="d-flex align-items-center">
-    @*<HxIcon Icon="BootstrapIcon.Translate" CssClass="me-2" />*@
+    @if (ShowIcon)
+    {
+        <HxIcon Icon="BootstrapIcon.Translate" CssClass="me-2" />
+    }
     <HxSelect TItem="CultureItem"
               TValue="string"
               Data="cultures"
@@ -15,8 +20,14 @@
 </div>
 
 @code {
-    [Inject, AllowNull] public NavigationManager Navigation { get; set; }
 
+    [Parameter]
+    public bool ShowLabel { get; set; }
+
+    [Parameter]
+    public bool ShowIcon { get; set; }
+
+    [Inject, AllowNull] public NavigationManager Navigation { get; set; }
     [Inject, AllowNull] public ILocalizationHelper LocalizationHelper { get; set; }
 
     private CultureItem[] cultures = new CultureItem[]
