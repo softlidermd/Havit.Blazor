@@ -18,25 +18,26 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\SoftLider.NET\SoftLider.Common\SoftLider.Common.csproj" />
 		<ProjectReference Include="..\Havit.Blazor.Components.Web.Bootstrap\Havit.Blazor.Components.Web.Bootstrap.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="Resources\Localization.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>Localization.resx</DependentUpon>
-		</Compile>
+	  <Compile Update="Resources\Localization.Designer.cs">
+	    <DependentUpon>Localization.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Update="Resources\Localization.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>Localization.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Resources\Localization.ro.resx">
-		  <Generator>ResXFileCodeGenerator</Generator>
-		</EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Localization.resx">
+	    <LastGenOutput>Localization.Designer.cs</LastGenOutput>
+	    <Generator>ResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Localization.ro.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 </Project>
