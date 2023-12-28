@@ -19,6 +19,11 @@ public partial class HxSidebarItem : IAsyncDisposable
 	[Parameter] public IconBase Icon { get; set; }
 
 	/// <summary>
+	/// Text content of tooltip displayed while hovering item of collapsed Sidebar.
+	/// </summary>
+	[Parameter] public string TooltipText { get; set; }
+
+	/// <summary>
 	/// Item navigation target.
 	/// </summary>
 	[Parameter] public string Href { get; set; }
@@ -35,6 +40,12 @@ public partial class HxSidebarItem : IAsyncDisposable
 	/// NOTE: The expansion is only applied on initial load, the sidebar does not track the URL changes (this may change in the future).
 	/// </summary>
 	[Parameter] public bool ExpandOnMatch { get; set; } = true;
+
+	/// <summary>
+	/// Set to <c>false</c> if you don't want to highlight the item if one of the children items is active (URL matches).<br/>
+	/// Default is <c>true</c>.
+	/// </summary>
+	[Parameter] public bool HighlightOnActiveChild { get; set; } = true;
 
 	/// <summary>
 	/// Allows you to disable the item with <c>false</c>.

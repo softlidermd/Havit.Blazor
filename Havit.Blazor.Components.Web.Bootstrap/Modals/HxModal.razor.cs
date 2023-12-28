@@ -388,6 +388,10 @@ public partial class HxModal : IAsyncDisposable
 				{
 					// NOOP
 				}
+				catch (TaskCanceledException)
+				{
+					// NOOP
+				}
 			}
 
 			try
@@ -395,6 +399,10 @@ public partial class HxModal : IAsyncDisposable
 				await jsModule.DisposeAsync();
 			}
 			catch (JSDisconnectedException)
+			{
+				// NOOP
+			}
+			catch (TaskCanceledException)
 			{
 				// NOOP
 			}

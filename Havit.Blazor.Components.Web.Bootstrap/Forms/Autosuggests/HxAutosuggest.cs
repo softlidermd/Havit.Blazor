@@ -180,7 +180,10 @@ public class HxAutosuggest<TItem, TValue> : HxInputBase<TValue>, IInputWithSize,
 		builder.AddAttribute(1023, nameof(HxAutosuggestInternal<TItem, TValue>.InputGroupStartTemplate), this.InputGroupStartTemplate);
 		builder.AddAttribute(1024, nameof(HxAutosuggestInternal<TItem, TValue>.InputGroupEndText), this.InputGroupEndText);
 		builder.AddAttribute(1025, nameof(HxAutosuggestInternal<TItem, TValue>.InputGroupEndTemplate), this.InputGroupEndTemplate);
-		builder.AddAttribute(1025, nameof(HxAutosuggestInternal<TItem, TValue>.AllowArbitraryStringValues), this.AllowArbitraryStringValues);
+#if NET8_0_OR_GREATER
+		builder.AddAttribute(1026, nameof(HxAutosuggestInternal<TItem, TValue>.NameAttributeValue), NameAttributeValue);
+#endif
+		builder.AddAttribute(1125, nameof(HxAutosuggestInternal<TItem, TValue>.AllowArbitraryStringValues), this.AllowArbitrary
 
 		builder.AddMultipleAttributes(2000, this.AdditionalAttributes);
 

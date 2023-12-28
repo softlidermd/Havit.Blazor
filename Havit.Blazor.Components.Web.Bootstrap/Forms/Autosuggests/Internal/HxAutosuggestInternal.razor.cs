@@ -97,6 +97,8 @@ public partial class HxAutosuggestInternal<TItem, TValue> : IAsyncDisposable
 	/// </summary>
 	[Parameter] public RenderFragment InputGroupEndTemplate { get; set; }
 
+	[Parameter] public string NameAttributeValue { get; set; }
+
 	/// <summary>
 	/// Allow arbitrary values (outside from data provider' list) when <c>TValue</c> is <c>string</c>.
 	/// </summary>
@@ -503,6 +505,10 @@ public partial class HxAutosuggestInternal<TItem, TValue> : IAsyncDisposable
 				await jsModule.DisposeAsync();
 			}
 			catch (JSDisconnectedException)
+			{
+				// NOOP
+			}
+			catch (TaskCanceledException)
 			{
 				// NOOP
 			}
