@@ -24,6 +24,7 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageReleaseNotes>https://github.com/havit/Havit.Blazor/releases</PackageReleaseNotes>
 		<PackageTags>blazor bootstrap components webassembly wasm bootstrap5</PackageTags>
+		<RepositoryUrl>https://github.com/softlidermd/Havit.Blazor</RepositoryUrl>
 	</PropertyGroup>
 	
 	<ItemGroup>

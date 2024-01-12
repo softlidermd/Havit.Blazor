@@ -13,6 +13,7 @@
 		<!-- aligned NuGet PackageVersion for package-bundles -->
 		<ComponentsPackagesVersion>4.4.1</ComponentsPackagesVersion>
 		<GrpcPackagesVersion>1.5.0</GrpcPackagesVersion>
+		<SoftLiderPackageVersion>1.0.4</SoftLiderPackageVersion>
 	</PropertyGroup>
 
 	<Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../')))"/>

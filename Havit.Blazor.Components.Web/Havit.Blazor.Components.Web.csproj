@@ -21,6 +21,7 @@
 		<Description>HAVIT Blazor Library - Free UI components and supportive classes</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://havit.blazor.eu</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/softlidermd/Havit.Blazor</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
