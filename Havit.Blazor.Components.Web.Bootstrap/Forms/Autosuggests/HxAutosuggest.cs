@@ -183,7 +183,7 @@ public class HxAutosuggest<TItem, TValue> : HxInputBase<TValue>, IInputWithSize,
 #if NET8_0_OR_GREATER
 		builder.AddAttribute(1026, nameof(HxAutosuggestInternal<TItem, TValue>.NameAttributeValue), NameAttributeValue);
 #endif
-		builder.AddAttribute(1125, nameof(HxAutosuggestInternal<TItem, TValue>.AllowArbitraryStringValues), this.AllowArbitrary
+		builder.AddAttribute(1125, nameof(HxAutosuggestInternal<TItem, TValue>.AllowArbitraryStringValues), this.AllowArbitraryStringValues);
 
 		builder.AddMultipleAttributes(2000, this.AdditionalAttributes);
 
