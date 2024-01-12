@@ -6,7 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<NeutralLanguage>ru</NeutralLanguage>
 		<PackageId>Havit.Blazor.SoftLider</PackageId>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<Authors>Vitalie Ceban</Authors>
 		<Description>Havit.Blazor.SoftLider</Description>
 		<RepositoryUrl>https://github.com/softlidermd/Havit.Blazor</RepositoryUrl>
@@ -20,6 +20,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0" Condition="'$(TargetFramework)' == 'net8.0'" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.14" Condition="'$(TargetFramework)' == 'net7.0'" />
 		<PackageReference Include="SoftLider.Common" Version="1.0.0" />
+		<PackageReference Include="Havit.Core" Version="2.0.28" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -27,30 +28,30 @@
 			<PrivateAssets>all</PrivateAssets>
 		</ProjectReference>
 		<ProjectReference Include="..\Havit.Blazor.Components.Web.Bootstrap\Havit.Blazor.Components.Web.Bootstrap.csproj">
-		  <PrivateAssets>all</PrivateAssets>
+			<PrivateAssets>all</PrivateAssets>
 		</ProjectReference>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Resources\Localization.Designer.cs">
-	    <DependentUpon>Localization.resx</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
+		<Compile Update="Resources\Localization.Designer.cs">
+			<DependentUpon>Localization.resx</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Resources\Localization.resx">
-	    <LastGenOutput>Localization.Designer.cs</LastGenOutput>
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Localization.ro.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
+		<EmbeddedResource Update="Resources\Localization.resx">
+			<LastGenOutput>Localization.Designer.cs</LastGenOutput>
+			<Generator>ResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\Localization.ro.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 	</ItemGroup>
 
 	<!-- Include referenced projects in nupkg. https://stackoverflow.com/a/59893520  -->
-	
+
 	<PropertyGroup>
 		<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
 	</PropertyGroup>
