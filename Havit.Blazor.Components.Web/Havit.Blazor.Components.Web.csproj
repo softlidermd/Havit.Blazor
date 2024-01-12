@@ -16,12 +16,13 @@
 	<!-- NuGet -->
 	<Import Project="../NuGet.targets" />
 	<PropertyGroup>
-		<!-- ComponentsPackagesVersion - variable from Directory.Build.props -->
-		<PackageVersion>$(ComponentsPackagesVersion)</PackageVersion>
+		<!-- ComponentsPackagesCustomVersion - variable from Directory.Build.props -->
+		<PackageVersion>$(ComponentsPackagesCustomVersion)</PackageVersion>
 		<Description>HAVIT Blazor Library - Free UI components and supportive classes</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://havit.blazor.eu</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/softlidermd/Havit.Blazor</RepositoryUrl>
+		<PackageId>Havit.Blazor.Components.Web.SoftLider</PackageId>
 	</PropertyGroup>
 
 	<ItemGroup>

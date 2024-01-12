@@ -19,7 +19,7 @@ public static class JSRuntimeExtensions
 	{
 		versionIdentifierHavitBlazorWeb ??= GetAssemblyVersionIdentifierForUri(typeof(HxDynamicElement).Assembly);
 
-		var path = "./_content/Havit.Blazor.Components.Web/" + moduleNameWithoutExtension + ".js?v=" + versionIdentifierHavitBlazorWeb;
+		var path = "./_content/Havit.Blazor.Components.Web.SoftLider/" + moduleNameWithoutExtension + ".js?v=" + versionIdentifierHavitBlazorWeb;
 		return jsRuntime.InvokeAsync<IJSObjectReference>("import", path);
 	}
 	private static string versionIdentifierHavitBlazorWeb;

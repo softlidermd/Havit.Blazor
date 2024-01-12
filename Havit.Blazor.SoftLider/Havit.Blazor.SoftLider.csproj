@@ -10,10 +10,10 @@
 
 	<!-- NuGet -->
 	<PropertyGroup>
-		<!-- SoftLiderPackageVersion - variable from Directory.Build.props -->
-		<GeneratePackageOnBuild>GeneratePackageOnBuild&gt;true</GeneratePackageOnBuild>
+		<!-- ComponentsPackagesCustomVersion - variable from Directory.Build.props -->
+		<PackageVersion>$(ComponentsPackagesCustomVersion)</PackageVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>Vitalie Ceban, Soft Lider SRL</Authors>
-		<PackageVersion>$(SoftLiderPackageVersion)</PackageVersion>
 		<Description>HAVIT Blazor Soft Lider</Description>
 		<RepositoryUrl>https://github.com/softlidermd/Havit.Blazor</RepositoryUrl>
 	</PropertyGroup>
