@@ -44,6 +44,12 @@
     white-space: nowrap; /* prevent columns stretching vertically*/
 }
 
+.table-layout-auto {
+	/* используется для сброса table-layout-fixed, который установлен по умолчанию */
+	table-layout: auto;
+	white-space: inherit;
+}
+
 .table-min-960px {
     min-width: 960px;
 }
@@ -157,4 +163,8 @@ th, td {
 
 .sl-table-static {
     position: static !important;
+}
+
+.sl-white-space-pre-line {
+	white-space: pre-line;
 }
