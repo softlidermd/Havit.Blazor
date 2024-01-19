@@ -305,6 +305,7 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	private CancellationTokenSource paginationRefreshDataCancellationTokenSource;
 	private List<GridInternalStateSortingItem<TItem>> currentSorting = null;
 	private bool postponeCurrentSortingDeserialization = false;
+	private List<TItem> allDataItemsForMultiselection;
 
 	private bool firstRenderCompleted = false;
 	private GridUserState previousUserState;
@@ -332,7 +333,7 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 
 		Contract.Requires<InvalidOperationException>(DataProvider != null, $"Property {nameof(DataProvider)} on {GetType()} must have a value.");
 		Contract.Requires<InvalidOperationException>(CurrentUserState != null, $"Property {nameof(CurrentUserState)} on {GetType()} must have a value.");
-		Contract.Requires<InvalidOperationException>(!MultiSelectionEnabled || (ContentNavigationModeEffective != GridContentNavigationMode.InfiniteScroll), $"Cannot use multi selection with infinite scroll on {GetType()}.");
+		//Contract.Requires<InvalidOperationException>(!MultiSelectionEnabled || (ContentNavigationModeEffective != GridContentNavigationMode.InfiniteScroll), $"Cannot use multi selection with infinite scroll on {GetType()}.");
 
 		if (previousUserState != CurrentUserState)
 		{
@@ -810,7 +811,7 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	private async Task HandleMultiSelectUnselectDataItemClicked(TItem selectedDataItem)
 	{
 		Contract.Requires(MultiSelectionEnabled);
-		Contract.Requires((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore));
+		//Contract.Requires((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore));
 
 		var selectedDataItems = SelectedDataItems?.ToHashSet() ?? new HashSet<TItem>();
 		if (selectedDataItems.Remove(selectedDataItem))
@@ -822,22 +823,26 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	private async Task HandleMultiSelectSelectAllClicked()
 	{
 		Contract.Requires(MultiSelectionEnabled, nameof(MultiSelectionEnabled));
-		Contract.Requires((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore));
+		//Contract.Requires((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore));
 
-		if (paginationDataItemsToRender is null)
+		GridDataProviderRequest<TItem> gridDataProviderRequest = new GridDataProviderRequest<TItem>
 		{
-			await SetSelectedDataItemsWithEventCallback(new HashSet<TItem>());
-		}
-		else
-		{
-			await SetSelectedDataItemsWithEventCallback(new HashSet<TItem>(paginationDataItemsToRender));
-		}
+			StartIndex = 0,
+			Count = 1000000,
+			Sorting = GridInternalStateSortingItemHelper.ToSortingItems(currentSorting),
+			CancellationToken = CancellationToken.None
+		};
+
+		GridDataProviderResult<TItem> gridDataProviderResponse = await InvokeDataProviderInternal(gridDataProviderRequest);
+		allDataItemsForMultiselection = gridDataProviderResponse.Data.ToList();
+
+		await SetSelectedDataItemsWithEventCallback(new HashSet<TItem>(allDataItemsForMultiselection));
 	}
 
 	private async Task HandleMultiSelectSelectNoneClicked()
 	{
 		Contract.Requires(MultiSelectionEnabled);
-		Contract.Requires((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore));
+		//Contract.Requires((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore));
 
 		await SetSelectedDataItemsWithEventCallback(new HashSet<TItem>());
 	}
