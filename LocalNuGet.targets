@@ -1,0 +1,14 @@
+<Project>
+	<Target Name="CopyNuGetPackage" AfterTargets="Pack" Condition="'$(Configuration)' == 'Release'">
+		<PropertyGroup>
+			<!-- Get the output path of the NuGet package -->
+			<NuGetPackagePath>$(OutputPath)\$(PackageId).$(PackageVersion).nupkg</NuGetPackagePath>
+
+			<!-- Get the destination folder from the environment variable -->
+			<DestinationFolder>$(LocalNuGetFeedPath)</DestinationFolder>
+		</PropertyGroup>
+
+		<!-- Copy the NuGet package to the destination folder -->
+		<Copy SourceFiles="$(NuGetPackagePath)" DestinationFolder="$(DestinationFolder)" />
+	</Target>
+</Project>

@@ -9,6 +9,7 @@
 	</PropertyGroup>
 
 	<!-- NuGet -->
+	<Import Project="../LocalNuGet.targets" />
 	<PropertyGroup>
 		<!-- ComponentsPackagesCustomVersion - variable from Directory.Build.props -->
 		<PackageVersion>$(ComponentsPackagesCustomVersion)</PackageVersion>

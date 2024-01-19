@@ -15,6 +15,7 @@
 
 	<!-- NuGet -->
 	<Import Project="../NuGet.targets" />
+	<Import Project="../LocalNuGet.targets" />
 	<PropertyGroup>
 		<!-- ComponentsPackagesCustomVersion - variable from Directory.Build.props -->
 		<PackageVersion>$(ComponentsPackagesCustomVersion)</PackageVersion>
