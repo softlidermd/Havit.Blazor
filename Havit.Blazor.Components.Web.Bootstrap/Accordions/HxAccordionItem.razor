@@ -1,25 +1,28 @@
 ﻿@namespace Havit.Blazor.Components.Web.Bootstrap
 <div class="@CssClassHelper.Combine("hx-accordion-item accordion-item", this.CssClass)">
     <h2 class="@CssClassHelper.Combine("accordion-header", this.HeaderCssClass)" id="header-@idEffective">
-        <button type="button"
-                class="@CssClassHelper.Combine("accordion-button", lastKnownStateIsExpanded ? null : "collapsed")"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapse-@idEffective"
-                aria-expanded="@lastKnownStateIsExpanded"
-                aria-controls="collapse-@idEffective">
-            @HeaderTemplate
-        </button>
+            <button type="button"
+                class="@CssClassHelper.Combine("accordion-button", lastKnownStateIsExpanded ? null : "collapsed", BodyTemplate == null ? "hx-accordeon-button-hidden" : null)"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapse-@idEffective"
+                    aria-expanded="@lastKnownStateIsExpanded"
+                    aria-controls="collapse-@idEffective">
+                @HeaderTemplate
+            </button>
     </h2>
-    <HxCollapse @ref="collapseComponent"
-                Id="@("collapse-" + idEffective)"
-                Parent="@(!ParentAccordion.StayOpen ? $"#{ParentAccordion.Id}" : null)"
-                CssClass="accordion-collapse"
-                InitiallyExpanded="IsSetToBeExpanded()"
-                OnShown="HandleCollapseShown"
-                OnHidden="HandleCollapseHidden"
-                aria-labelledby="@("header-" + idEffective)">
-        <div class="@CssClassHelper.Combine("accordion-body", this.BodyCssClass)">
-            @BodyTemplate
-        </div>
-    </HxCollapse>
+    @if (BodyTemplate != null)
+    {
+        <HxCollapse @ref="collapseComponent"
+                    Id="@("collapse-" + idEffective)"
+                    Parent="@(!ParentAccordion.StayOpen ? $"#{ParentAccordion.Id}" : null)"
+                    CssClass="accordion-collapse"
+                    InitiallyExpanded="IsSetToBeExpanded()"
+                    OnShown="HandleCollapseShown"
+                    OnHidden="HandleCollapseHidden"
+                    aria-labelledby="@("header-" + idEffective)">
+            <div class="@CssClassHelper.Combine("accordion-body", this.BodyCssClass)">
+                @BodyTemplate
+            </div>
+        </HxCollapse>
+    }
 </div>
