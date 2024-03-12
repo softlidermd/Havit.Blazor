@@ -191,7 +191,11 @@ public partial class HxAutosuggestInternal<TItem, TValue> : IAsyncDisposable
 
 	private async Task HandleInputInput(string newUserInput)
 	{
-		Contract.Requires<InvalidOperationException>(EnabledEffective, $"The {GetType().Name} component is in a disabled state.");
+		//Contract.Requires<InvalidOperationException>(EnabledEffective, $"The {GetType().Name} component is in a disabled state.");
+		if (!EnabledEffective)
+		{
+			return; // Exception is sometimes thrown in normal operation mode, when running on Blazor Server.
+		}
 
 		// user changes an input
 		userInput = newUserInput;

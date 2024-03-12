@@ -476,6 +476,7 @@ public abstract class HxInputBase<TValue> : InputBase<TValue>, ICascadeEnabledCo
 	/// </summary>
 	protected void ThrowIfNotEnabled()
 	{
-		Contract.Requires<InvalidOperationException>(EnabledEffective, $"The {GetType().Name} component is in a disabled state.");
+		//Contract.Requires<InvalidOperationException>(EnabledEffective, $"The {GetType().Name} component is in a disabled state.");
+		// Exception is sometimes thrown in normal operation mode, when running on Blazor Server.
 	}
 }

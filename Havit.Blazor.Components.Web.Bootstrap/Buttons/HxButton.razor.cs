@@ -286,7 +286,11 @@ public partial class HxButton : ComponentBase, ICascadeEnabledComponent
 
 	private async Task HandleClick(MouseEventArgs mouseEventArgs)
 	{
-		Contract.Requires<InvalidOperationException>(!DisabledEffective, $"The {GetType().Name} component is in a disabled state.");
+		//Contract.Requires<InvalidOperationException>(!DisabledEffective, $"The {GetType().Name} component is in a disabled state.");
+		if (DisabledEffective)
+		{
+			return; // Exception is sometimes thrown in normal operation mode, when running on Blazor Server.
+		}
 
 		if (!clickInProgress || !SingleClickProtection)
 		{
