@@ -20,7 +20,7 @@ public class HxMultiSelectGridColumnInternal<TItem> : HxGridColumnBase<TItem>
 	{
 		return new GridCellTemplate
 		{
-			CssClass = "text-center",
+			CssClass = "hx-multi-select-column-th text-center",
 			Template = (RenderTreeBuilder builder) =>
 			{
 				builder.OpenElement(100, "input");

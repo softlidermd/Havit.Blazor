@@ -151,9 +151,9 @@ th, td {
         --bs-alert-padding-y: 0.5rem;
     }
 
-    .accordion {
-        --bs-accordion-btn-padding-y: 0.5rem;
-    }
+	.accordion {
+		--bs-accordion-btn-padding-y: 0.75rem;
+	}
 }
 
 .flex-force-break {
@@ -167,4 +167,8 @@ th, td {
 
 .sl-white-space-pre-line {
 	white-space: pre-line;
+}
+
+.fw-500 {
+	font-weight: 500;
 }
