@@ -42,6 +42,12 @@ public partial class HxSidebarItem : IAsyncDisposable
 	[Parameter] public bool ExpandOnMatch { get; set; } = true;
 
 	/// <summary>
+	/// Set to <c>true</c> if you want item to be exanded initially.<br/>
+	/// Default is <c>false</c>.
+	/// </summary>
+	[Parameter] public bool ExpandedInitially { get; set; } = false;
+
+	/// <summary>
 	/// Set to <c>false</c> if you don't want to highlight the item if one of the children items is active (URL matches).<br/>
 	/// Default is <c>true</c>.
 	/// </summary>
@@ -103,7 +109,7 @@ public partial class HxSidebarItem : IAsyncDisposable
 		isMatch = ShouldMatch(NavigationManager.Uri);
 	}
 
-	protected bool ShouldBeExpanded => ExpandOnMatch && !ParentSidebar.Collapsed && this.childItems.Any(i => i.isMatch && i.ExpandOnMatch);
+	protected bool ShouldBeExpanded => ExpandedInitially || (ExpandOnMatch && !ParentSidebar.Collapsed && this.childItems.Any(i => i.isMatch && i.ExpandOnMatch));
 	protected bool HasExpandableContent => (this.ChildContent is not null);
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
