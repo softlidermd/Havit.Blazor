@@ -6,14 +6,14 @@ namespace Havit.Blazor.SoftLider;
 
 public class UISettings
 {
-	public static IServiceCollection Initialize(IServiceCollection services)
+	public static IServiceCollection Initialize(IServiceCollection services, UIOptions? options = null)
 	{
 		var isBlazorServer = services.Any(x => (x.ImplementationType?.Name ?? "") == "RemoteJSRuntime");
 
 		services.AddHxServices();
 		services.AddHxMessenger(forceAsSingleton: !isBlazorServer);
 		services.AddHxMessageBoxHost();
-		SetDefaults();
+		SetDefaults(options);
 		return services;
 	}
 
@@ -53,25 +53,28 @@ public class UISettings
 		Icon = BootstrapIcon.ArrowClockwise
 	};
 
-	private static void SetDefaults()
+	private static void SetDefaults(UIOptions? options = null)
 	{
+		var buttonSize = options?.ButtonSize ?? ButtonSize.Small;
+		var inputSize = options?.InputSize ?? InputSize.Small;
+
 		HxAutosuggest.Defaults.MinimumLength = 1;
 		HxSearchBox.Defaults.MinimumLength = 1;
 
-		HxButton.Defaults.Size = ButtonSize.Small;
+		HxButton.Defaults.Size = buttonSize;
 		HxButton.Defaults.Spinner = false;
 
-		HxInputText.Defaults.InputSize = InputSize.Small;
-		HxInputNumber.Defaults.InputSize = InputSize.Small;
-		HxInputDate.Defaults.InputSize = InputSize.Small;
-		HxInputDateRange.Defaults.InputSize = InputSize.Small;
-		HxInputFile.Defaults.InputSize = InputSize.Small;
-		HxSelect.Defaults.InputSize = InputSize.Small;
-		HxMultiSelect.Defaults.InputSize = InputSize.Small;
-		HxInputTags.Defaults.InputSize = InputSize.Small;
-		HxSearchBox.Defaults.InputSize = InputSize.Small;
-		HxFormValue.Defaults.InputSize = InputSize.Small;
-		HxAutosuggest.Defaults.InputSize = InputSize.Small;
+		HxInputText.Defaults.InputSize = inputSize;
+		HxInputNumber.Defaults.InputSize = inputSize;
+		HxInputDate.Defaults.InputSize = inputSize;
+		HxInputDateRange.Defaults.InputSize = inputSize;
+		HxInputFile.Defaults.InputSize = inputSize;
+		HxSelect.Defaults.InputSize = inputSize;
+		HxMultiSelect.Defaults.InputSize = inputSize;
+		HxInputTags.Defaults.InputSize = inputSize;
+		HxSearchBox.Defaults.InputSize = inputSize;
+		HxFormValue.Defaults.InputSize = inputSize;
+		HxAutosuggest.Defaults.InputSize = inputSize;
 
 		HxModal.Defaults.HeaderCssClass = "gap-2";
 		HxModal.Defaults.Centered = true;
@@ -97,5 +100,11 @@ public class UISettings
 		HxListLayout.Defaults.FilterOpenButtonSettings.CssClass = "bg-body-secondary";
 
 		HxContextMenu.Defaults.DropdownCssClass = "position-static"; // avoid dropdown clipping inside table-responsive class.
+	}
+
+	public class UIOptions
+	{
+		public InputSize? InputSize { get; set; }
+		public ButtonSize? ButtonSize { get; set; }
 	}
 }
