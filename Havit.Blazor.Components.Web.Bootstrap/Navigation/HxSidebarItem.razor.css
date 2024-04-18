@@ -16,8 +16,11 @@
 	flex-direction: row;
 	align-items: center;
 	align-self: stretch;
-	gap: .75rem;
 }
+
+	::deep .hx-sidebar-item-navlink-content > *:not(:last-child) {
+		margin-right: .75rem !important;
+	}
 
 ::deep .hx-sidebar-subitems.collapse .nav-link,
 ::deep .hx-sidebar-subitems.collapsing .nav-link {
