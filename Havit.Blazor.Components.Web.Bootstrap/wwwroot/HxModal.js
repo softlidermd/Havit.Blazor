@@ -9,9 +9,18 @@
 	element.addEventListener('hidden.bs.modal', handleModalHidden);
 	element.addEventListener('shown.bs.modal', handleModalShown);
 
+	var modalCount = document.querySelectorAll('.modal').length; // already includes current modal
+
 	var modal = new bootstrap.Modal(element, {
 		keyboard: closeOnEscape
 	});
+
+	if (modalCount > 1) {
+		var modalNumber = Math.min(modalCount, 5);
+		modal._element.classList.add(`hx-modal-${modalNumber}`);
+		modal._backdrop._config.className = `modal-backdrop hx-modal-backdrop-${modalNumber}`;
+	}
+
 	if (modal) {
 		modal.show();
 	}

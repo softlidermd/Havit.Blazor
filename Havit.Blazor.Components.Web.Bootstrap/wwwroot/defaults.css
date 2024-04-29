@@ -208,13 +208,36 @@ form > .hx-button {
 	width: 36px;
 }
 
-.hx-messagebox-modal {
-	z-index: 1500;
+.hx-modal-2 {
+	--bs-modal-zindex: 1065;
 }
 
-.modal-backdrop ~ .modal-backdrop {
-	/* second modal-backdrop, used for message boxes */
-	--bs-backdrop-zindex: 1499;
+.hx-modal-backdrop-2 {
+	--bs-backdrop-zindex: 1060;
+}
+
+.hx-modal-3 {
+	--bs-modal-zindex: 1075;
+}
+
+.hx-modal-backdrop-3 {
+	--bs-backdrop-zindex: 1070;
+}
+
+.hx-modal-4 {
+	--bs-modal-zindex: 1085;
+}
+
+.hx-modal-backdrop-4 {
+	--bs-backdrop-zindex: 1080;
+}
+
+.hx-modal-5 {
+	--bs-modal-zindex: 1095;
+}
+
+.hx-modal-backdrop-5 {
+	--bs-backdrop-zindex: 1090;
 }
 
 .hx-accordeon-button-hidden::after {
