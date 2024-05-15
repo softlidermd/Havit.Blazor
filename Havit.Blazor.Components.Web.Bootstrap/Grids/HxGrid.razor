@@ -2,7 +2,7 @@
 @using Havit.Blazor.Components.Web.Bootstrap.Internal
 @typeparam TItem
 
-<CascadingValue Value="@columnsListRegistration" Name="@ColumnsRegistrationCascadingValueName" IsFixed="true">
+<CascadingValue Value="@_columnsListRegistration" Name="@ColumnsRegistrationCascadingValueName" IsFixed="true">
 	@* To get the components to the collections, we have to let them render with this component. Still we don't want them to render any output. *@
 	@if (MultiSelectionEnabled)
 	{
@@ -22,13 +22,13 @@
 @{
 	List<IHxGridColumn<TItem>> columnsToRender = GetColumnsToRender();
 	
-	bool shouldRenderLoadingData = RenderLoadingDataEffective && totalCount == null;
+	bool shouldRenderLoadingData = RenderLoadingDataEffective && _totalCount == null;
 	bool shouldRenderLoadingDataWithLoadingTemplate = shouldRenderLoadingData && (LoadingDataTemplate != null);
-	bool shouldRenderLoadingDataWithPlaceholders = shouldRenderLoadingData && !shouldRenderLoadingDataWithLoadingTemplate && (PlaceholdersRowCountEffective > 0);
+	bool shouldRenderLoadingDataWithPlaceholders = shouldRenderLoadingData && (LoadingDataTemplate is null) && (PlaceholdersRowCountEffective > 0);
 
-	bool shouldRenderEmptyData = totalCount == 0 && EmptyDataTemplate != null;
+	bool shouldRenderEmptyData = _totalCount == 0 && EmptyDataTemplate != null;
 	bool shouldRenderData;
-	bool shouldRenderFooter = (totalCount > 0) || ((totalCount == 0) && this.ShowFooterWhenEmptyDataEffective);
+	bool shouldRenderFooter = (_totalCount > 0) || ((_totalCount == 0) && ShowFooterWhenEmptyDataEffective);
 	var rowHeightValue = ItemRowHeightEffective;
 	string rowHeight = rowHeightValue.ToString() + "px";
 
@@ -37,7 +37,7 @@
 		case GridContentNavigationMode.Pagination:
 		case GridContentNavigationMode.LoadMore:
 		case GridContentNavigationMode.PaginationAndLoadMore:
-			shouldRenderData = (totalCount > 0);
+			shouldRenderData = (_totalCount > 0);
 			break;
 
 		case GridContentNavigationMode.InfiniteScroll:
@@ -47,18 +47,23 @@
 		default: throw new InvalidOperationException(ContentNavigationModeEffective.ToString());
 	}
 
-	if ((paginationDataItemsToRender?.Count == 0) && (CurrentUserState.PageIndex > 0))
+	if ((_paginationDataItemsToRender?.Count == 0) && (CurrentUserState.PageIndex > 0))
 	{
-		paginationDecreasePageIndexAfterRender = true;
+		_paginationDecreasePageIndexAfterRender = true;
 	}
 }
 
 @if (columnsToRender.Any() && (shouldRenderLoadingData || shouldRenderEmptyData || shouldRenderData))
 {
-	<HxProgressIndicator InProgress="@(InProgress ?? (dataProviderInProgress /* indicates data loading */ && !shouldRenderLoadingDataWithPlaceholders /* but not when placeholders are used - in such case we are indicating data loading using the placeholders */))">
+	bool progressIndicatorInProgress =
+						(InProgress ?? _dataProviderInProgress)
+						&& (ContentNavigationModeEffective != GridContentNavigationMode.InfiniteScroll)
+						&& !shouldRenderLoadingDataWithPlaceholders;
 
-		<div class="@CssClassHelper.Combine(ResponsiveEffective ? "table-responsive" : null, TableContainerCssClassEffective)">
-			<table class="@GetTableElementCssClass(totalCount > 0)">
+	<HxProgressIndicator InProgress="progressIndicatorInProgress">
+
+		<div class="@CssClassHelper.Combine("hx-grid-container",ResponsiveEffective ? "table-responsive" : null, TableContainerCssClassEffective)">
+			<table class="@GetTableElementCssClass(_totalCount > 0)">
 				@if (RenderHeaderEffective)
 				{
 					<thead>
@@ -70,25 +75,26 @@
 							@foreach (IHxGridColumn<TItem> column in columnsToRender)
 							{
 								var columnSorting = column.GetSorting();
-								bool isCurrentSorting = currentSorting?.FirstOrDefault()?.Column == column;
+							bool isCurrentSorting = _currentSorting?.FirstOrDefault()?.Column == column;
 								var headerCellTemplate = column.GetHeaderCellTemplate(gridHeaderCellContext);
-								bool isSortingActive = (totalCount > 0) && columnSorting.Any();
+							bool isSortingActive = (_totalCount > 0) && columnSorting.Any();
 
-							<th @key="@column" role="@(isSortingActive ? "button" : null)"
+							<th @key="@column"
+								role="@(isSortingActive ? "button" : null)"
 									class="@CssClassHelper.Combine(headerCellTemplate.CssClass, isSortingActive ? (isCurrentSorting ? "hx-grid-sorted" : "hx-grid-sortable") : null)"
-							@onclick="@(isSortingActive ? async () => await HandleSortingClick(column) : null)"
-							@onclick:stopPropagation="isSortingActive">
+								@onclick="@(isSortingActive ? async () => await HandleSortingClick(column) : null)"
+								@onclick:stopPropagation="isSortingActive">
 									<div class="hx-grid-header-cell-container">
 										<div class="hx-grid-header-cell-template">@headerCellTemplate.Template</div>
 										@if (isSortingActive)
 										{
-											if (GetSortIconDisplayDirection(isCurrentSorting, currentSorting, columnSorting) == Collections.SortDirection.Ascending)
+										if (GetSortIconDisplayDirection(isCurrentSorting, _currentSorting, columnSorting) == Collections.SortDirection.Ascending)
 											{
-												<HxIcon CssClass="hx-grid-sort-icon" Icon="@this.SortAscendingIconEffective" />
+											<HxIcon CssClass="hx-grid-sort-icon" Icon="@SortAscendingIconEffective" />
 											}
 											else
 											{
-												<HxIcon CssClass="hx-grid-sort-icon" Icon="@this.SortDescendingIconEffective" />
+											<HxIcon CssClass="hx-grid-sort-icon" Icon="@SortDescendingIconEffective" />
 											}
 										}
 									</div>
@@ -107,7 +113,7 @@
 							{
 							<tr @key="@(ItemKeySelector(item))"
 								role="button"
-								height="@((this.ContentNavigationModeEffective == GridContentNavigationMode.InfiniteScroll) ? rowHeight : null)"
+								height="@((ContentNavigationModeEffective == GridContentNavigationMode.InfiniteScroll) ? rowHeight : null)"
 								class="@CssClassHelper.Combine(
 															ItemRowCssClassEffective,
 															ItemRowCssClassSelector?.Invoke(item),
@@ -132,7 +138,7 @@
 							{
 								// !SelectionEnabled && !MultiSelectionEnabled - no table-active, no event handlers
 							<tr @key="@(ItemKeySelector(item))"
-								height="@((this.ContentNavigationModeEffective == GridContentNavigationMode.InfiniteScroll) ? rowHeight : null)"
+								height="@((ContentNavigationModeEffective == GridContentNavigationMode.InfiniteScroll) ? rowHeight : null)"
 								class="@CssClassHelper.Combine(ItemRowCssClassEffective, ItemRowCssClassSelector?.Invoke(item))"
 								@onclick:stopPropagation>
 
@@ -150,7 +156,7 @@
 
 						@if (ContentNavigationModeEffective == GridContentNavigationMode.InfiniteScroll)
 						{
-							<Microsoft.AspNetCore.Components.Web.Virtualization.Virtualize TItem="TItem" @ref="infiniteScrollVirtualizeComponent" ItemsProvider="VirtualizeItemsProvider" ItemSize="@ItemRowHeightEffective" OverscanCount="@OverscanCountEffective">
+							<Microsoft.AspNetCore.Components.Web.Virtualization.Virtualize TItem="TItem" @ref="_infiniteScrollVirtualizeComponent" ItemsProvider="VirtualizeItemsProvider" ItemSize="@ItemRowHeightEffective" OverscanCount="@OverscanCountEffective" SpacerElement="tr">
 								<ItemContent>
 									@rowTemplate(@context)
 								</ItemContent>
@@ -170,7 +176,7 @@
 
 						@if ((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore))
 						{
-							foreach (TItem item in paginationDataItemsToRender)
+							foreach (TItem item in _paginationDataItemsToRender)
 							{
 								@rowTemplate(item)
 							}
@@ -253,12 +259,23 @@
 			</table>
 		</div>
 
-		@if (((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore)) && (PageSizeEffective > 0) && (totalCount != null))
+		@if (((ContentNavigationModeEffective == GridContentNavigationMode.Pagination) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore)) && (PageSizeEffective > 0) && (_totalCount != null))
 		{
-			int totalPages = (totalCount.Value + PageSizeEffective - 1) / PageSizeEffective;
-			if (totalPages > 1)
+			int totalPages = (_totalCount.Value + PageSizeEffective - 1) / PageSizeEffective;
+			int currentPageIndex = CurrentUserState.PageIndex + ((CurrentUserState.LoadMoreAdditionalItemsCount + PageSizeEffective - 1) / PageSizeEffective);
+			if (PaginationTemplate != null)
 			{
-				int currentPageIndex = CurrentUserState.PageIndex + ((CurrentUserState.LoadMoreAdditionalItemsCount + PageSizeEffective - 1) / PageSizeEffective);
+				var paginationContext = new GridPaginationTemplateContext(HandlePagerCurrentPageIndexChanged)
+						{
+							CurrentUserState = CurrentUserState with { },
+							PageSize = PageSizeEffective,
+							TotalCount = _totalCount.Value,
+							PagerSettings = PagerSettingsEffective,
+						};
+				@PaginationTemplate(paginationContext)
+			}
+			else if (totalPages > 1) // if there is only one page, we do not need to render the pager (default behavior, the PaginationTemplate can override this behavior)
+			{
 				<HxPager TotalPages="@totalPages"
 						 CurrentPageIndex="@currentPageIndex"
 						 CurrentPageIndexChanged="@HandlePagerCurrentPageIndexChanged"
@@ -266,9 +283,9 @@
 			}
 		}
 
-		@if (((ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore)) && (PageSizeEffective > 0) && (totalCount != null))
+		@if (((ContentNavigationModeEffective == GridContentNavigationMode.LoadMore) || (ContentNavigationModeEffective == GridContentNavigationMode.PaginationAndLoadMore)) && (PageSizeEffective > 0) && (_totalCount != null))
 		{
-			if ((((CurrentUserState.PageIndex + 1) * PageSizeEffective) + CurrentUserState.LoadMoreAdditionalItemsCount) < totalCount.Value)
+			if ((((CurrentUserState.PageIndex + 1) * PageSizeEffective) + CurrentUserState.LoadMoreAdditionalItemsCount) < _totalCount.Value)
 			{
 				<div class="hx-grid-load-more-container d-flex justify-content-center">
 					@if (LoadMoreTemplate != null)
@@ -280,8 +297,8 @@
 					}
 					else
 					{
-						string buttonText = this.LoadMoreButtonText ?? HxGridLocalizer["LoadMoreData"];
-						<HxButton Text="@buttonText" Settings="this.LoadMoreButtonSettingsEffective" OnClick="HandleLoadMoreClick" />
+						string buttonText = LoadMoreButtonText ?? HxGridLocalizer["LoadMoreData"];
+						<HxButton Text="@buttonText" Settings="LoadMoreButtonSettingsEffective" OnClick="HandleLoadMoreClick" />
 					}
 				</div>
 			}

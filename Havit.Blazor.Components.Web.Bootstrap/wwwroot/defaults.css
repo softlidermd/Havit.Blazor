@@ -33,6 +33,7 @@
 	--hx-sidebar-parent-item-active-background-opacity:				0;
 	--hx-sidebar-parent-item-active-background-color:				unset;
 	--hx-sidebar-parent-item-active-font-weight: 					600;
+	--hx-sidebar-parent-item-active-icon-color: 					var(--hx-sidebar-item-hover-icon-color);
 	--hx-sidebar-subitem-font-size: 								.875rem;
 	--hx-sidebar-subitem-padding: 									.5rem;
 	--hx-sidebar-subitem-margin: 									0 0 .25rem 2rem;
@@ -66,14 +67,15 @@
 	--hx-form-spacing: 1rem;
 
 	/* HxChipList */
-	--hx-chip-list-chip-margin:							0.75rem 0.25rem .375rem 0;
-	--hx-chip-list-chip-remove-btn-margin: 				0 0 0 .25rem;
-	--hx-chip-list-chip-remove-btn-opacity: 				.75;
-	--hx-chip-list-chip-reset-btn-padding: 				.35em .65em;
-	--hx-chip-list-chip-label-font-weight: 				400;
-	--hx-chip-list-chip-label-margin: 					.25rem;
-	--hx-chip-list-chip-label-opacity: 					.75;
-    --hx-chip-list-gap:									.25rem;
+	--hx-chip-list-chip-margin:										0.75rem 0.25rem .375rem 0;
+	--hx-chip-list-chip-remove-btn-margin: 							0 0 0 .25rem;
+	--hx-chip-list-chip-remove-btn-opacity: 							.75;
+	--hx-chip-list-chip-reset-btn-padding: 							.35em .65em;
+	--hx-chip-list-chip-label-font-weight: 							400;
+	--hx-chip-list-chip-label-margin: 								.25rem;
+	--hx-chip-list-chip-label-opacity: 								.75;
+    --hx-chip-list-gap:												.25rem;
+
 	/* HxContextMenu */
 	--hx-context-menu-button-color: 								unset;
 	--hx-context-menu-button-border: 								unset;

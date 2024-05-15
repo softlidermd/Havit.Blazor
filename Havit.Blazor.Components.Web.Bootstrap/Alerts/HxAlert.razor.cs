@@ -14,7 +14,7 @@ public partial class HxAlert
 	[Parameter, EditorRequired] public ThemeColor Color { get; set; }
 
 	/// <summary>
-	/// Shows the Close button and allows dismissing of the alert.
+	/// Shows the Close button and allows dismissing the alert.
 	/// </summary>
 	[Parameter] public bool Dismissible { get; set; }
 
@@ -22,6 +22,11 @@ public partial class HxAlert
 	/// Any additional CSS class to apply.
 	/// </summary>
 	[Parameter] public string CssClass { get; set; }
+
+	/// <summary>
+	/// Additional attributes to be splatted onto an underlying HTML element.
+	/// </summary>
+	[Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object> AdditionalAttributes { get; set; }
 
 	protected override void OnParametersSet()
 	{
@@ -32,11 +37,11 @@ public partial class HxAlert
 
 	public string GetColorCss()
 	{
-		return this.Color switch
+		return Color switch
 		{
 			ThemeColor.None => null,
 			ThemeColor.Link => throw new NotSupportedException($"{nameof(ThemeColor)}.{nameof(ThemeColor.Link)} cannot be used as {nameof(HxAlert)} color."),
-			_ => "alert-" + this.Color.ToString("f").ToLower()
+			_ => "alert-" + Color.ToString("f").ToLower()
 		};
 	}
 

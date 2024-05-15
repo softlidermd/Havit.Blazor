@@ -1,18 +1,18 @@
 ﻿@namespace Havit.Blazor.Components.Web.Bootstrap
 
-@if (opened)
+@if (_opened)
 {
-	<div @ref="modalElement"
+	<div @ref="_modalElement"
 		id="@id"
-		 class="@CssClassHelper.Combine("hx-modal modal", this.AnimatedEffective ? "fade" : null, this.CssClassEffective)"
+		 class="@CssClassHelper.Combine("hx-modal modal", AnimatedEffective ? "fade" : null, CssClassEffective)"
 		 tabindex="-1"
 		 data-bs-backdrop="@GetBackdropSetupValue(BackdropEffective)">
 
-		<div class="@CssClassHelper.Combine("modal-dialog", GetDialogSizeCssClass(), GetDialogFullscreenCssClass(), GetDialogScrollableCssClass(), GetDialogCenteredCssClass(), this.DialogCssClassEffective)">
-			<div class="@CssClassHelper.Combine("modal-content", this.ContentCssClassEffective)">
+		<div class="@CssClassHelper.Combine("modal-dialog", GetDialogSizeCssClass(), GetDialogFullscreenCssClass(), GetDialogScrollableCssClass(), GetDialogCenteredCssClass(), DialogCssClassEffective)">
+			<div class="@CssClassHelper.Combine("modal-content", ContentCssClassEffective)">
 				@if (!ControlsAtBottom && (!String.IsNullOrEmpty(Title) || ShowCloseButtonEffective || CommandsTemplate != null) || (HeaderTemplate != null))
 				{
-					<div class="@CssClassHelper.Combine("modal-header", this.HeaderCssClassEffective)">
+					<div class="@CssClassHelper.Combine("modal-header", HeaderCssClassEffective)">
 						@if (!String.IsNullOrEmpty(Title) && !ControlsAtBottom)
 						{
 							<h5 class="modal-title">@Title</h5>
@@ -40,13 +40,13 @@
 				}
 				@if (BodyTemplate != null)
 				{
-					<div class="@CssClassHelper.Combine("modal-body", this.BodyCssClassEffective)">
+					<div class="@CssClassHelper.Combine("modal-body", BodyCssClassEffective)">
 						@BodyTemplate
 					</div>
 				}
 				@if (ControlsAtBottom && (!String.IsNullOrEmpty(Title) || ShowCloseButtonEffective || CommandsTemplate != null) || (FooterTemplate != null))
 				{
-					<div class="@CssClassHelper.Combine("modal-footer", this.FooterCssClassEffective)">
+					<div class="@CssClassHelper.Combine("modal-footer", FooterCssClassEffective)">
 						@if (!String.IsNullOrEmpty(Title) && ControlsAtBottom)
 						{
 							<h5 class="modal-title">@Title</h5>

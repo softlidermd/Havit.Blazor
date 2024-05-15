@@ -4,28 +4,23 @@ namespace Havit.Blazor.Components.Web.Bootstrap;
 
 /// <summary>
 /// <see href="https://getbootstrap.com/docs/5.3/components/toasts/">Bootstrap Toast</see> component. Not intended to be used in user code, use <see cref="HxMessenger"/>.
-/// After first render component never updates.<br />
+/// After the first render, the component never updates.<br />
 /// Full documentation and demos: <see href="https://havit.blazor.eu/components/HxToast">https://havit.blazor.eu/components/HxToast</see>
 /// </summary>
 public partial class HxToast : ComponentBase, IAsyncDisposable
 {
 	/// <summary>
-	/// JS Runtime.
-	/// </summary>
-	[Inject] protected IJSRuntime JSRuntime { get; set; }
-
-	/// <summary>
-	/// Color-scheme.
+	/// Color scheme.
 	/// </summary>
 	[Parameter] public ThemeColor? Color { get; set; }
 
 	/// <summary>
-	/// Delay in milliseconds to automatically hide toast.
+	/// Delay in milliseconds to automatically hide the toast.
 	/// </summary>
 	[Parameter] public int? AutohideDelay { get; set; }
 
 	/// <summary>
-	/// Css class to render with toast.
+	/// CSS class to render with the toast.
 	/// </summary>
 	[Parameter] public string CssClass { get; set; }
 
@@ -55,12 +50,12 @@ public partial class HxToast : ComponentBase, IAsyncDisposable
 	[Parameter] public RenderFragment ContentTemplate { get; set; }
 
 	/// <summary>
-	/// Indicates whether to show close button.
+	/// Indicates whether to show the close button.
 	/// </summary>
 	[Parameter] public bool ShowCloseButton { get; set; } = true;
 
 	/// <summary>
-	/// Fires when toast is hidden (button or autohide).
+	/// Fires when the toast is hidden (button or autohide).
 	/// </summary>
 	[Parameter] public EventCallback OnToastHidden { get; set; }
 	/// <summary>
@@ -68,14 +63,16 @@ public partial class HxToast : ComponentBase, IAsyncDisposable
 	/// </summary>
 	protected virtual Task InvokeOnToastHiddenAsync() => OnToastHidden.InvokeAsync();
 
-	private ElementReference toastElement;
-	private DotNetObjectReference<HxToast> dotnetObjectReference;
-	private IJSObjectReference jsModule;
-	private bool disposed;
+	[Inject] protected IJSRuntime JSRuntime { get; set; }
+
+	private ElementReference _toastElement;
+	private DotNetObjectReference<HxToast> _dotnetObjectReference;
+	private IJSObjectReference _jsModule;
+	private bool _disposed;
 
 	public HxToast()
 	{
-		dotnetObjectReference = DotNetObjectReference.Create(this);
+		_dotnetObjectReference = DotNetObjectReference.Create(this);
 	}
 
 	/// <inheritdoc />
@@ -102,7 +99,7 @@ public partial class HxToast : ComponentBase, IAsyncDisposable
 		{
 			builder.AddAttribute(111, "data-bs-autohide", "false");
 		}
-		builder.AddElementReferenceCapture(120, referenceCapture => toastElement = referenceCapture);
+		builder.AddElementReferenceCapture(120, referenceCapture => _toastElement = referenceCapture);
 
 		if (renderHeader)
 		{
@@ -184,7 +181,7 @@ public partial class HxToast : ComponentBase, IAsyncDisposable
 
 	private bool HasContrastColor()
 	{
-		return this.Color switch
+		return Color switch
 		{
 			null => false,
 			ThemeColor.Primary => true,
@@ -195,7 +192,7 @@ public partial class HxToast : ComponentBase, IAsyncDisposable
 			ThemeColor.Info => false,
 			ThemeColor.Light => false,
 			ThemeColor.Dark => true,
-			_ => throw new InvalidOperationException($"Unknown {nameof(Color)}: {this.Color}")
+			_ => throw new InvalidOperationException($"Unknown {nameof(Color)}: {Color}")
 		};
 	}
 
@@ -206,12 +203,12 @@ public partial class HxToast : ComponentBase, IAsyncDisposable
 
 		if (firstRender)
 		{
-			jsModule ??= await JSRuntime.ImportHavitBlazorBootstrapModuleAsync(nameof(HxToast));
-			if (disposed)
+			_jsModule ??= await JSRuntime.ImportHavitBlazorBootstrapModuleAsync(nameof(HxToast));
+			if (_disposed)
 			{
 				return;
 			}
-			await jsModule.InvokeVoidAsync("show", toastElement, dotnetObjectReference);
+			await _jsModule.InvokeVoidAsync("show", _toastElement, _dotnetObjectReference);
 		}
 	}
 
@@ -241,14 +238,14 @@ public partial class HxToast : ComponentBase, IAsyncDisposable
 
 	protected virtual async ValueTask DisposeAsyncCore()
 	{
-		disposed = true;
+		_disposed = true;
 
-		if (jsModule != null)
+		if (_jsModule != null)
 		{
 			try
 			{
-				await jsModule.InvokeVoidAsync("dispose", toastElement);
-				await jsModule.DisposeAsync();
+				await _jsModule.InvokeVoidAsync("dispose", _toastElement);
+				await _jsModule.DisposeAsync();
 			}
 			catch (JSDisconnectedException)
 			{
@@ -260,6 +257,6 @@ public partial class HxToast : ComponentBase, IAsyncDisposable
 			}
 		}
 
-		dotnetObjectReference.Dispose();
+		_dotnetObjectReference.Dispose();
 	}
 }

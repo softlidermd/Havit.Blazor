@@ -26,7 +26,7 @@ public partial class HxTabPanel : ComponentBase, IAsyncDisposable
 	[Parameter] public TabPanelVariant Variant { get; set; } = TabPanelVariant.Standard;
 
 	/// <summary>
-	/// Determines whether the content all tabs is always rendered or only if the tab is active.<br />
+	/// Determines whether the content of all tabs is always rendered or only if the tab is active.<br />
 	/// Default is <see cref="TabPanelRenderMode.AllTabs"/>.
 	/// </summary>
 	[Parameter] public TabPanelRenderMode RenderMode { get; set; } = TabPanelRenderMode.AllTabs;
@@ -43,7 +43,7 @@ public partial class HxTabPanel : ComponentBase, IAsyncDisposable
 	[Parameter] public string ActiveTabId { get; set; }
 
 	/// <summary>
-	/// Raised when ID of the active tab changes.
+	/// Raised when the ID of the active tab changes.
 	/// </summary>
 	[Parameter] public EventCallback<string> ActiveTabIdChanged { get; set; }
 	/// <summary>
@@ -52,7 +52,8 @@ public partial class HxTabPanel : ComponentBase, IAsyncDisposable
 	protected virtual Task InvokeActiveTabIdChangedAsync(string newActiveTabId) => ActiveTabIdChanged.InvokeAsync(newActiveTabId);
 
 	/// <summary>
-	/// ID of the tab which should be active at the very beginning.
+	/// ID of the tab which should be active at the very beginning.<br />
+	/// We are considering deprecating this parameter. Please use <see cref="ActiveTabId"/> instead (<c>@bind-ActiveTabId</c>).
 	/// </summary>
 	[Parameter] public string InitialActiveTabId { get; set; }
 
@@ -66,23 +67,21 @@ public partial class HxTabPanel : ComponentBase, IAsyncDisposable
 	/// </summary>
 	[Parameter] public string CssClass { get; set; }
 
-	private HxTab previousActiveTab;
-	private List<HxTab> tabsList;
-	private CollectionRegistration<HxTab> tabsListRegistration;
-	private bool isDisposed = false;
+	private HxTab _previousActiveTab;
+	private List<HxTab> _tabsList;
+	private CollectionRegistration<HxTab> _tabsListRegistration;
+	private bool _isDisposed = false;
 
 	public HxTabPanel()
 	{
-		tabsList = new List<HxTab>();
-		tabsListRegistration = new CollectionRegistration<HxTab>(tabsList,
-			async () => await InvokeAsync(this.StateHasChanged),
-			() => isDisposed);
+		_tabsList = new List<HxTab>();
+		_tabsListRegistration = new CollectionRegistration<HxTab>(_tabsList,
+			async () => await InvokeAsync(StateHasChanged),
+			() => _isDisposed);
 	}
 
 	protected override async Task OnInitializedAsync()
 	{
-		await base.OnInitializedAsync();
-
 		if (!String.IsNullOrWhiteSpace(InitialActiveTabId))
 		{
 			await SetActiveTabIdAsync(InitialActiveTabId);
@@ -91,13 +90,12 @@ public partial class HxTabPanel : ComponentBase, IAsyncDisposable
 
 	protected override async Task OnParametersSetAsync()
 	{
-		await base.OnParametersSetAsync();
 		await NotifyActivationAndDeactivationAsync();
 	}
 
 	internal async Task SetActiveTabIdAsync(string newId)
 	{
-		if (this.ActiveTabId != newId)
+		if (ActiveTabId != newId)
 		{
 			ActiveTabId = newId;
 			await InvokeActiveTabIdChangedAsync(newId);
@@ -107,15 +105,15 @@ public partial class HxTabPanel : ComponentBase, IAsyncDisposable
 
 	private async Task NotifyActivationAndDeactivationAsync()
 	{
-		HxTab activeTab = tabsList.FirstOrDefault(tab => IsActive(tab));
-		if (activeTab == previousActiveTab)
+		HxTab activeTab = _tabsList.FirstOrDefault(tab => IsActive(tab));
+		if (activeTab == _previousActiveTab)
 		{
 			return;
 		}
 
-		if (previousActiveTab != null)
+		if (_previousActiveTab != null)
 		{
-			await previousActiveTab.NotifyDeactivatedAsync();
+			await _previousActiveTab.NotifyDeactivatedAsync();
 		}
 
 		if (activeTab != null)
@@ -123,7 +121,7 @@ public partial class HxTabPanel : ComponentBase, IAsyncDisposable
 			await activeTab.NotifyActivatedAsync();
 		}
 
-		previousActiveTab = activeTab;
+		_previousActiveTab = activeTab;
 	}
 
 	/// <inheritdoc />
@@ -133,20 +131,21 @@ public partial class HxTabPanel : ComponentBase, IAsyncDisposable
 
 		if (firstRender)
 		{
-			// when no tab is active after initial render, activate the first visible & enabled tab
-			if (!tabsList.Any(tab => IsActive(tab)) && (tabsList.Count > 0))
+			// when no tab is active after the initial render, activate the first visible & enabled tab
+			if (String.IsNullOrWhiteSpace(ActiveTabId))
 			{
-				HxTab tabToActivate = tabsList.FirstOrDefault(tab => CascadeEnabledComponent.EnabledEffective(tab) && tab.Visible);
+				var tabToActivate = GetDefaultActiveTab();
 				if (tabToActivate != null)
 				{
 					await SetActiveTabIdAsync(tabToActivate.Id);
+					StateHasChanged();
 				}
 			}
 		}
 	}
 
 	/// <summary>
-	/// Handle click on tab title to activate tab.
+	/// Handle click on the tab title to activate the tab.
 	/// </summary>
 	protected async Task HandleTabClick(HxTab tab)
 	{
@@ -155,7 +154,19 @@ public partial class HxTabPanel : ComponentBase, IAsyncDisposable
 
 	private bool IsActive(HxTab tab)
 	{
+		if (String.IsNullOrWhiteSpace(ActiveTabId))
+		{
+			// no active tab set, activate the first visible & enabled tab
+			return tab.Id == GetDefaultActiveTab()?.Id;
+		}
 		return ActiveTabId == tab.Id;
+	}
+
+	private HxTab GetDefaultActiveTab()
+	{
+		return _tabsList
+					.OrderBy(tab => tab.Order)
+					.FirstOrDefault(t => t.Visible && (((ICascadeEnabledComponent)t).Enabled ?? true));
 	}
 
 	protected string GetNavCssClassInCardMode()
@@ -188,12 +199,12 @@ public partial class HxTabPanel : ComponentBase, IAsyncDisposable
 
 	protected virtual async ValueTask DisposeAsyncCore()
 	{
-		if (!isDisposed && (previousActiveTab != null))
+		if (!_isDisposed && (_previousActiveTab != null))
 		{
-			await previousActiveTab.NotifyDeactivatedAsync();
-			previousActiveTab = null;
+			await _previousActiveTab.NotifyDeactivatedAsync();
+			_previousActiveTab = null;
 		}
 
-		isDisposed = true;
+		_isDisposed = true;
 	}
 }

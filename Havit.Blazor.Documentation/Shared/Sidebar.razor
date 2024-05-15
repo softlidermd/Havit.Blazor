@@ -12,7 +12,7 @@
         <Search />
 
 		<HxSidebarItem Text="Getting started" Href="/" Match="NavLinkMatch.All" Icon="BootstrapIcon.House" TooltipText="Getting started" />
-		<HxSidebarItem Text="Migration to v4 🔥" Href="/migrating" Match="NavLinkMatch.All" Icon="BootstrapIcon.ArrowUpCircle" TooltipText="Migration to v4 🔥" />
+		<HxSidebarItem Text="Migration to v4" Href="/migrating" Match="NavLinkMatch.All" Icon="BootstrapIcon.ArrowUpCircle" TooltipText="Migration to v4 🔥" />
 
         <HxSidebarItem Text="Forms" Icon="BootstrapIcon.InputCursorText">
             <HxSidebarItem Href="/components/Inputs" Text="Inputs" />
@@ -105,9 +105,15 @@
             <HxSidebarItem Href="@($"/components/{nameof(HxToast)}")" Text="@nameof(HxToast)" />
         </HxSidebarItem>
 
-        <HxSidebarItem Text="Special" Icon="BootstrapIcon.Stars">
+		<HxSidebarItem Text="Smart (AI) 🔥" Icon="BootstrapIcon.Stars">
+			<HxSidebarItem Href="@($"/components/{nameof(HxSmartPasteButton)}")" Text="@nameof(HxSmartPasteButton)" />
+			<HxSidebarItem Href="@($"/components/{nameof(HxSmartTextArea)}")" Text="@nameof(HxSmartTextArea)" />
+			<HxSidebarItem Href="@($"/components/{nameof(HxSmartComboBox)}")" Text="@nameof(HxSmartComboBox)" />
+		</HxSidebarItem>
+
+        <HxSidebarItem Text="Special" Icon="BootstrapIcon.BagHeart">
             <HxSidebarItem Href="@($"/components/{nameof(HxDynamicElement)}")" Text="@nameof(HxDynamicElement)" />
-            <HxSidebarItem Href="@($"/components/{nameof(Havit.Blazor.GoogleTagManager.HxGoogleTagManager)}")" Text="@nameof(Havit.Blazor.GoogleTagManager.HxGoogleTagManager)" />
+            <HxSidebarItem Href="@($"/components/{nameof(GoogleTagManager.HxGoogleTagManager)}")" Text="@nameof(GoogleTagManager.HxGoogleTagManager)" />
         </HxSidebarItem>
 
         <HxSidebarItem Text="Concepts" Icon="BootstrapIcon.Lightbulb">
@@ -148,7 +154,7 @@
             <HxSidebarItem Href="@($"/components/{nameof(HxFilterForm<object>)}")" Text="@(nameof(HxFilterForm<object>))" />
             <HxSidebarItem Href="@($"/components/{nameof(HxFormState)}")" Text="@nameof(HxFormState)" />
             <HxSidebarItem Href="@($"/components/{nameof(HxFormValue)}")" Text="@(nameof(HxFormValue))" />
-            <HxSidebarItem Href="@($"/components/{nameof(Havit.Blazor.GoogleTagManager.HxGoogleTagManager)}")" Text="@nameof(Havit.Blazor.GoogleTagManager.HxGoogleTagManager)" />
+            <HxSidebarItem Href="@($"/components/{nameof(GoogleTagManager.HxGoogleTagManager)}")" Text="@nameof(GoogleTagManager.HxGoogleTagManager)" />
             <HxSidebarItem Href="@($"/components/{nameof(HxGrid<object>)}")" Text="@nameof(HxGrid<object>)" />
             <HxSidebarItem Href="@($"/components/{nameof(HxIcon)}")" Text="@nameof(HxIcon)" />
             <HxSidebarItem Href="@($"/components/{nameof(HxInputDate)}")" Text="@nameof(HxInputDate)" />
@@ -170,7 +176,6 @@
             <HxSidebarItem Href="@($"/components/{nameof(HxNav)}")" Text="@nameof(HxNav)" />
             <HxSidebarItem Href="@($"/components/{nameof(HxNavbar)}")" Text="@nameof(HxNavbar)" />
             <HxSidebarItem Href="@($"/components/{nameof(HxNavLink)}#{nameof(HxNavLink)}")" Text="@nameof(HxNavLink)" />
-            <HxSidebarItem Href="@($"/components/{nameof(HxNamedViewList<object>)}")" Text="@(nameof(HxNamedViewList<object>))" />
             <HxSidebarItem Href="@($"/components/{nameof(HxOffcanvas)}")" Text="@nameof(HxOffcanvas)" />
             <HxSidebarItem Href="@($"/components/{nameof(HxPager)}")" Text="@(nameof(HxPager))" />
             <HxSidebarItem Href="@($"/components/{nameof(HxPlaceholder)}")" Text="@nameof(HxPlaceholder)" />
@@ -195,17 +200,17 @@
         </HxSidebarItem>
     </ItemsTemplate>
     <FooterTemplate>
-        <HxSelect Label="Theme" TItem="Theme" CssClass="w-100 me-2" TValue="Theme" Data="themes" @bind-Value="selectedTheme" TextSelector="t => t.Name" Nullable="true" NullText="Havit.Blazor" />
+        <HxSelect Label="Theme" TItem="Theme" CssClass="w-100 me-2" TValue="Theme" Data="_themes" @bind-Value="_selectedTheme" TextSelector="t => t.Name" Nullable="true" NullText="Havit.Blazor" />
     </FooterTemplate>
 </HxSidebar>
 
 <HeadContent>
-    @if (selectedTheme?.Name == "Bootstrap 5")
+    @if (_selectedTheme?.Name == "Bootstrap 5")
     {
 		@((MarkupString)HxSetup.RenderBootstrapCssReference(BootstrapFlavor.PlainBootstrap))
     }
-    else if (selectedTheme is not null) // null = HAVIT Bootstrap build (default)
+    else if (_selectedTheme is not null) // null = HAVIT Bootstrap build (default)
     {
-        <link href="@selectedTheme.CssCdn" rel="stylesheet" />
+        <link href="@_selectedTheme.CssCdn" rel="stylesheet" />
     }
 </HeadContent>
