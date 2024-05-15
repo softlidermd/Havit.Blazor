@@ -172,3 +172,7 @@ th, td {
 .fw-500 {
 	font-weight: 500;
 }
+
+.hx-multi-select-column-th {
+	width: 2.5rem;
+}
