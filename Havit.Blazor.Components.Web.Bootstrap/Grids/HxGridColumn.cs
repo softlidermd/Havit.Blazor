@@ -163,6 +163,7 @@ public class HxGridColumn<TItem> : HxGridColumnBase<TItem>
 			builder.OpenElement(200, "div");
 			builder.AddAttribute(201, "class", CssClassHelper.Combine("placeholder", "col-" + DefaultPlaceholderColumns[context.Index % DefaultPlaceholderColumns.Length], ThemeColorExtensions.ToBackgroundColorCss(HxPlaceholder.Defaults.Color ?? ThemeColor.None)));
 			builder.CloseElement();
+			builder.CloseElement();
 		};
 	}
 	public static string[] DefaultPlaceholderColumns { get; } = new[] { "6", "9", "4", "10", "5", "2", "7" };
