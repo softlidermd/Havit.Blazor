@@ -6,7 +6,7 @@
 	@* To get the components to the collections, we have to let them render with this component. Still we don't want them to render any output. *@
 	@if (MultiSelectionEnabled)
 	{
-        bool allDataItemsSelected = (allDataItemsForMultiselection != null) && (SelectedDataItems != null) && (SelectedDataItems.Count > 0) && (allDataItemsForMultiselection.Count == SelectedDataItems.Count);
+        bool allDataItemsSelected = (_allDataItemsForMultiselection != null) && (SelectedDataItems != null) && (SelectedDataItems.Count > 0) && (_allDataItemsForMultiselection.Count == SelectedDataItems.Count);
 		<HxMultiSelectGridColumnInternal TItem="TItem"
 										 AllDataItemsSelected="@allDataItemsSelected"
 										 SelectedDataItems="@SelectedDataItems"
@@ -21,12 +21,12 @@
 
 @{
 	List<IHxGridColumn<TItem>> columnsToRender = GetColumnsToRender();
-	
-	bool shouldRenderLoadingData = RenderLoadingDataEffective && _totalCount == null;
+
+    bool shouldRenderLoadingData = (RenderLoadingDataEffective && _totalCount == null);
 	bool shouldRenderLoadingDataWithLoadingTemplate = shouldRenderLoadingData && (LoadingDataTemplate != null);
 	bool shouldRenderLoadingDataWithPlaceholders = shouldRenderLoadingData && (LoadingDataTemplate is null) && (PlaceholdersRowCountEffective > 0);
 
-	bool shouldRenderEmptyData = _totalCount == 0 && EmptyDataTemplate != null;
+    bool shouldRenderEmptyData = (_totalCount == 0 && EmptyDataTemplate != null);
 	bool shouldRenderData;
 	bool shouldRenderFooter = (_totalCount > 0) || ((_totalCount == 0) && ShowFooterWhenEmptyDataEffective);
 	var rowHeightValue = ItemRowHeightEffective;
@@ -64,45 +64,45 @@
 
 		<div class="@CssClassHelper.Combine("hx-grid-container",ResponsiveEffective ? "table-responsive" : null, TableContainerCssClassEffective)">
 			<table class="@GetTableElementCssClass(_totalCount > 0)">
-				@if (RenderHeaderEffective)
-				{
-					<thead>
-						<tr class="@HeaderRowCssClassEffective">
-							@{
-								GridHeaderCellContext gridHeaderCellContext = CreateGridHeaderCellContext();
-							}
+                @if (RenderHeaderEffective)
+                {
+				<thead>
+					<tr class="@HeaderRowCssClassEffective">
+						@{
+							GridHeaderCellContext gridHeaderCellContext = CreateGridHeaderCellContext();
+						}
 
-							@foreach (IHxGridColumn<TItem> column in columnsToRender)
-							{
-								var columnSorting = column.GetSorting();
+						@foreach (IHxGridColumn<TItem> column in columnsToRender)
+						{
+							var columnSorting = column.GetSorting();
 							bool isCurrentSorting = _currentSorting?.FirstOrDefault()?.Column == column;
-								var headerCellTemplate = column.GetHeaderCellTemplate(gridHeaderCellContext);
+							var headerCellTemplate = column.GetHeaderCellTemplate(gridHeaderCellContext);
 							bool isSortingActive = (_totalCount > 0) && columnSorting.Any();
 
 							<th @key="@column"
 								role="@(isSortingActive ? "button" : null)"
-									class="@CssClassHelper.Combine(headerCellTemplate.CssClass, isSortingActive ? (isCurrentSorting ? "hx-grid-sorted" : "hx-grid-sortable") : null)"
+								class="@CssClassHelper.Combine(headerCellTemplate.CssClass, isSortingActive ? (isCurrentSorting ? "hx-grid-sorted" : "hx-grid-sortable") : null)"
 								@onclick="@(isSortingActive ? async () => await HandleSortingClick(column) : null)"
 								@onclick:stopPropagation="isSortingActive">
-									<div class="hx-grid-header-cell-container">
-										<div class="hx-grid-header-cell-template">@headerCellTemplate.Template</div>
-										@if (isSortingActive)
-										{
+								<div class="hx-grid-header-cell-container">
+									<div class="hx-grid-header-cell-template">@headerCellTemplate.Template</div>
+									@if (isSortingActive)
+									{
 										if (GetSortIconDisplayDirection(isCurrentSorting, _currentSorting, columnSorting) == Collections.SortDirection.Ascending)
-											{
+										{
 											<HxIcon CssClass="hx-grid-sort-icon" Icon="@SortAscendingIconEffective" />
-											}
-											else
-											{
-											<HxIcon CssClass="hx-grid-sort-icon" Icon="@SortDescendingIconEffective" />
-											}
 										}
-									</div>
-								</th>
-							}
-						</tr>
+										else
+										{
+											<HxIcon CssClass="hx-grid-sort-icon" Icon="@SortDescendingIconEffective" />
+										}
+									}
+								</div>
+							</th>
+						}
+					</tr>
 				</thead>
-				}
+                }
 				<tbody>
 					@if (shouldRenderData)
 					{
@@ -119,16 +119,16 @@
 															ItemRowCssClassSelector?.Invoke(item),
 															((SelectionEnabled && (item != null) && item.Equals(SelectedDataItem)) ? "table-active" : null))"
 								@onclick="async () => await HandleSelectOrMultiSelectDataItemClick(item)"
-									@onclick:stopPropagation
-									@ondblclick="async () => await InvokeRowDoubleClickedAsync(item)"
-									@ondblclick:stopPropagation>
+								@onclick:stopPropagation
+                                @ondblclick="async () => await InvokeRowDoubleClickedAsync(item)"
+                                @ondblclick:stopPropagation>
 
 									@foreach (IHxGridColumn<TItem> column in columnsToRender)
 									{
-										var dataLabel = (column is HxGridColumn<TItem> gridColumn) ? gridColumn.HeaderText : string.Empty;
+                                        var dataLabel = (column is HxGridColumn<TItem> gridColumn) ? gridColumn.HeaderText : string.Empty;
 										// same as below in the else section
 										GridCellTemplate cellTemplate = column.GetItemCellTemplate(item);
-										<td @key="@column" data-label="@dataLabel" class="@cellTemplate.CssClass">
+                                    <td @key="@column" data-label="@dataLabel" class="@cellTemplate.CssClass">
 											@cellTemplate.Template
 									</td>
 									}
@@ -287,7 +287,7 @@
 		{
 			if ((((CurrentUserState.PageIndex + 1) * PageSizeEffective) + CurrentUserState.LoadMoreAdditionalItemsCount) < _totalCount.Value)
 			{
-				<div class="hx-grid-load-more-container d-flex justify-content-center">
+                <div class="hx-grid-load-more-container d-flex justify-content-center">
 					@if (LoadMoreTemplate != null)
 					{
 						var loadMoreContext = GridLoadMoreTemplateContext.CreateFor(this);

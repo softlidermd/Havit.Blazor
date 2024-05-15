@@ -272,6 +272,11 @@
             CSS class to be rendered with the button icon.
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.ButtonSettings.TextCssClass">
+            <summary>
+            CSS class to be rendered with the button's text.
+            </summary>
+        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.ButtonSettings.Icon">
             <summary>
             Icon to be rendered with the button.
@@ -290,6 +295,13 @@
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.ButtonSettings.Outline">
             <summary>
             <see href="https://getbootstrap.com/docs/5.3/components/buttons/#outline-buttons">Bootstrap outline button style</see>.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.ButtonSettings.Spinner">
+            <summary>
+            Set state of the embedded <see cref="T:Havit.Blazor.Components.Web.Bootstrap.HxSpinner"/>.
+            Leave <c>null</c> if you want automated spinner when any of the <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.OnClick"/> handlers is running.
+            You can set an explicit <c>false</c> constant to disable (override) the spinner automation.
             </summary>
         </member>
         <member name="T:Havit.Blazor.Components.Web.Bootstrap.ButtonSize">
@@ -383,6 +395,11 @@
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.IconCssClass">
             <summary>
             CSS class to be rendered with the button icon.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.TextCssClass">
+            <summary>
+            Custom CSS class to render with the button's text <c>&lt;span /&gt;</c>.<br />
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxButton.Enabled">
@@ -2619,6 +2636,11 @@
             Hides the search icon when used!
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxAutosuggest`2.AllowArbitraryStringValues">
+            <summary>
+            Allow arbitrary values (outside from data provider' list) when <c>TValue</c> is <c>string</c>.
+            </summary>
+        </member>
         <member name="M:Havit.Blazor.Components.Web.Bootstrap.HxAutosuggest`2.BuildRenderInput(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)">
             <inheritdoc cref="M:Microsoft.AspNetCore.Components.ComponentBase.BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)" />
         </member>
@@ -2726,6 +2748,11 @@
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.Internal.HxAutosuggestInternal`2.InputGroupEndTemplate">
             <summary>
             Input-group at the end of the input.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.Internal.HxAutosuggestInternal`2.AllowArbitraryStringValues">
+            <summary>
+            Allow arbitrary values (outside from data provider' list) when <c>TValue</c> is <c>string</c>.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.Internal.HxAutosuggestInternal`2.AdditionalAttributes">
@@ -3345,9 +3372,14 @@
             Settings for the <see cref="T:Havit.Blazor.Components.Web.Bootstrap.HxFormValue"/> and derived components.
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.FormValueSettings.ValueCssClass">
+            <summary>
+            Custom CSS class to render with the value.
+            </summary>
+        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.FormValueSettings.InputSize">
             <summary>
-            Input size. The default is <see cref="F:Havit.Blazor.Components.Web.Bootstrap.InputSize.Regular"/>.
+            Input size. Default is <see cref="F:Havit.Blazor.Components.Web.Bootstrap.InputSize.Regular"/>.
             </summary>
         </member>
         <member name="T:Havit.Blazor.Components.Web.Bootstrap.HxCheckbox">
@@ -6069,9 +6101,14 @@
             </summary>
             <exception cref="T:System.ArgumentException">Value is <c>Int32.MinValue</c> or <c>Int32.MaxValue</c>.</exception>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxContextMenuGridColumn`1.HeaderCssClass">
+            <summary>
+            Header cell css class.
+            </summary>
+        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxContextMenuGridColumn`1.ItemCssClass">
             <summary>
-            Returns the item CSS class (not dependent on data).
+            Returns item css class (not dependent on data).
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxContextMenuGridColumn`1.ItemCssClassSelector">
@@ -6209,6 +6246,16 @@
         <member name="M:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.InvokeSelectedDataItemsChangedAsync(System.Collections.Generic.HashSet{`0})">
             <summary>
             Triggers the <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.SelectedDataItemsChanged"/> event. This method can be overridden in derived components to implement custom logic before or after the event is triggered.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.RowDoubleClicked">
+            <summary>
+            Event fires when row received double-click.
+            </summary>		
+        </member>
+        <member name="M:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.InvokeRowDoubleClickedAsync(`0)">
+            <summary>
+            Triggers the <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.RowDoubleClicked"/> event. Allows interception of the event in derived components.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxGrid`1.ContentNavigationMode">
@@ -7077,6 +7124,16 @@
             Additional CSS classes for the wrapping <c>div</c>.
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxListLayout`1.HeaderCssClass">
+            <summary>
+            Additional CSS classes for the header <c>div</c>.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxListLayout`1.ControlsAtBottom">
+            <summary>
+            Render controls (header, commands, filters, etc) at the bottom, instead of top.
+            </summary>
+        </member>
         <member name="T:Havit.Blazor.Components.Web.Bootstrap.ILayoutColumnComponent">
             <summary>
             Interface for column-sized components (e.g. <see cref="T:Havit.Blazor.Components.Web.Bootstrap.HxPlaceholder"/>).
@@ -7131,6 +7188,11 @@
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.ListLayoutSettings.CssClass">
             <summary>
             Additional CSS classes for the wrapping <c>div</c>.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.ListLayoutSettings.HeaderCssClass">
+            <summary>
+            Additional CSS classes for the header <c>div</c>.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.ListLayoutSettings.CardSettings">
@@ -7560,6 +7622,12 @@
             Header template.
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxModal.CommandsTemplate">
+            <summary>
+            Commands template.
+            If <see cref="P:Havit.Blazor.Components.Web.Bootstrap.HxModal.ControlsAtBottom"/> is true, the template is rendered in the footer, otherwise in the header.
+            </summary>
+        </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxModal.BodyTemplate">
             <summary>
             Body template.
@@ -7671,6 +7739,11 @@
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxModal.OnShown">
             <summary>
             Fired when a modal element becomes visible to the user, after CSS transitions complete.
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxModal.ControlsAtBottom">
+            <summary>
+            Render controls (title, commands, close button) at the bottom, instead of top.
             </summary>
         </member>
         <member name="M:Havit.Blazor.Components.Web.Bootstrap.HxModal.InvokeOnShownAsync">
@@ -8294,6 +8367,11 @@
             The default is <see cref="F:Havit.Blazor.Components.Web.Bootstrap.SidebarResponsiveBreakpoint.Medium"/>.
             </summary>
         </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxSidebar.ShowNotificationsDot">
+            <summary>
+            Displays notifications dot.
+            </summary>
+        </member>
         <member name="F:Havit.Blazor.Components.Web.Bootstrap.HxSidebar._navId">
             <summary>
             The ID of the immediate parent of the contained <see cref="T:Havit.Blazor.Components.Web.Bootstrap.HxSidebarItem"/> components.
@@ -8397,6 +8475,12 @@
             Set to <c>false</c> if you don't want to expand the sidebar if URL matches.<br/>
             Default is <c>true</c>.
             NOTE: The expansion is only applied on initial load, the sidebar does not track the URL changes (this may change in the future).
+            </summary>
+        </member>
+        <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxSidebarItem.ExpandedInitially">
+            <summary>
+            Set to <c>true</c> if you want item to be exanded initially.<br/>
+            Default is <c>false</c>.
             </summary>
         </member>
         <member name="P:Havit.Blazor.Components.Web.Bootstrap.HxSidebarItem.HighlightOnActiveChild">

@@ -57,11 +57,9 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	[Parameter, EditorRequired] public RenderFragment Columns { get; set; }
 
 	[Parameter] public bool? RenderLoadingData { get; set; }
-
 	protected bool RenderLoadingDataEffective => this.RenderLoadingData ?? this.GetSettings()?.RenderLoadingData ?? GetDefaults().RenderLoadingData ?? throw new InvalidOperationException(nameof(RenderLoadingData) + " default for " + nameof(HxGrid) + " has to be set.");
 
 	[Parameter] public bool? RenderHeader { get; set; }
-
 	protected bool RenderHeaderEffective => this.RenderHeader ?? this.GetSettings()?.RenderHeader ?? GetDefaults().RenderHeader ?? throw new InvalidOperationException(nameof(RenderHeader) + " default for " + nameof(HxGrid) + " has to be set.");
 
 	/// <summary>
@@ -117,12 +115,14 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	/// Event fires when row received double-click.
 	/// </summary>		
 	[Parameter] public EventCallback<TItem> RowDoubleClicked { get; set; }
+
 	/// <summary>
 	/// Triggers the <see cref="RowDoubleClicked"/> event. Allows interception of the event in derived components.
 	/// </summary>
 	protected virtual Task InvokeRowDoubleClickedAsync(TItem dataItem) => RowDoubleClicked.InvokeAsync(dataItem);
 
 	/// <summary>
+	/// The strategy for how data items are displayed and loaded into the grid. Supported modes include pagination, load more, and infinite scroll.
 	/// </summary>
 	[Parameter] public GridContentNavigationMode? ContentNavigationMode { get; set; }
 	protected GridContentNavigationMode ContentNavigationModeEffective => ContentNavigationMode ?? GetSettings()?.ContentNavigationMode ?? GetDefaults().ContentNavigationMode ?? throw new InvalidOperationException(nameof(ContentNavigationMode) + " default for " + nameof(HxGrid) + " has to be set.");
@@ -186,7 +186,7 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	/// Custom CSS class for the main <c>table</c> element of the grid. This class allows for styling and customization of the grid's appearance.
 	/// </summary>
 	[Parameter] public string TableCssClass { get; set; }
-	protected string TableCssClassEffective => TableCssClass ?? GetSettings()?.TableCssClass ?? GetDefaults().TableCssClass;
+	protected string TableCssClassEffective => CssClassHelper.Combine(TableCssClass, GetSettings()?.TableCssClass, GetDefaults().TableCssClass);
 
 	/// <summary>
 	/// Custom CSS class for the header <c>tr</c> element in the grid. Enables specific styling for the header row separate from the rest of the grid.
@@ -301,7 +301,7 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 	private CancellationTokenSource _paginationRefreshDataCancellationTokenSource;
 	private List<GridInternalStateSortingItem<TItem>> _currentSorting = null;
 	private bool _postponeCurrentSortingDeserialization = false;
-	private List<TItem> allDataItemsForMultiselection;
+	private List<TItem> _allDataItemsForMultiselection;
 
 	private bool _firstRenderCompleted = false;
 	private GridUserState _previousUserState;
@@ -835,9 +835,8 @@ public partial class HxGrid<TItem> : ComponentBase, IDisposable
 		};
 
 		GridDataProviderResult<TItem> gridDataProviderResponse = await InvokeDataProviderInternal(gridDataProviderRequest);
-		allDataItemsForMultiselection = gridDataProviderResponse.Data.ToList();
-
-		await SetSelectedDataItemsWithEventCallback(new HashSet<TItem>(allDataItemsForMultiselection));
+		_allDataItemsForMultiselection = gridDataProviderResponse.Data.ToList();
+		await SetSelectedDataItemsWithEventCallback(new HashSet<TItem>(_allDataItemsForMultiselection));
 	}
 
 	private async Task HandleMultiSelectSelectNoneClicked()
