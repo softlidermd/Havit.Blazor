@@ -12,6 +12,7 @@
               Data="cultures"
               TextSelector="p => p.Name"
               ValueSelector="p => p.Culture"
+              AutoSort="false"
               Nullable="false"
               CssClass="flex-grow-1"
               @bind-Value:get="Culture"
@@ -27,16 +28,27 @@
     [Parameter]
     public bool ShowIcon { get; set; }
 
+    [Parameter]
+    public IEnumerable<CultureItem>? AvailableCultures { get; set; }
+
     [Inject, AllowNull] public NavigationManager Navigation { get; set; }
     [Inject, AllowNull] public ILocalizationHelper LocalizationHelper { get; set; }
 
-    private CultureItem[] cultures = new CultureItem[]
-    {
-        new("Română", "ro"),
-        new("Русский", "ru")
-    };
+    private CultureItem[] cultures = default!;
 
     private string Culture => CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        cultures = AvailableCultures?.ToArray()
+            ?? new CultureItem[]
+            {
+                new("Română", "ro"),
+                new("Русский", "ru")
+            };
+    }
 
     private async Task CultureChanged(string newValue)
     {
@@ -44,7 +56,7 @@
             await LocalizationHelper.ChangeCultureAsync(newValue);
     }
 
-    struct CultureItem
+    public struct CultureItem
     {
         public string Name { get; set; }
         public string Culture { get; set; }
