@@ -245,3 +245,7 @@ form > .hx-button {
 .hx-accordeon-button-hidden::after {
 	visibility: hidden;
 }
+
+.hx-toast-max-width {
+	max-width: calc(var(--bs-toast-max-width) - 40px);
+}

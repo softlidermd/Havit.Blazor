@@ -145,7 +145,7 @@ public partial class HxToast : ComponentBase, IAsyncDisposable
 				builder.AddAttribute(301, "class", "d-flex");
 			}
 			builder.OpenElement(302, "div");
-			builder.AddAttribute(303, "class", "toast-body");
+			builder.AddAttribute(303, "class", "toast-body hx-toast-max-width");
 			builder.AddContent(304, ContentText);
 			builder.AddContent(305, ContentTemplate);
 			builder.CloseElement(); // toast-body
