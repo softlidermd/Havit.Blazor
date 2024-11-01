@@ -176,7 +176,21 @@ public partial class HxAutosuggestInternal<TItem, TValue> : IAsyncDisposable
 		{
 			_userInput = TextSelectorEffective(default);
 		}
-		_userInputModified = false;
+		if (typeof(TValue) == typeof(string) && AllowArbitraryStringValues)
+		{
+			// I've encountered a bug on touchscreen devices, which is also present in desktop's Chrome device mode (Ctrl+Shift+M).
+			// When I input some text, then click on a element which have a click handler, the _userInput is not stored in Value,
+			// because OnParametersSetAsync get's fired too early, so _userInputModified is set to false before the Value is set from _userInput in OnAfterRenderAsync.
+			// That's because on mobile devices, client-side Blazor framework fires onclick event way earlier (before OnAfterRenderAsync fires) that on desktop devices.
+			// So I found a dirty workaround to overcome this bug.
+
+			if (_userInput == (string)(object)Value)
+				_userInputModified = false;
+		}
+		else
+		{
+			_userInputModified = false;
+		}
 		_lastKnownValue = Value;
 
 		if (string.IsNullOrWhiteSpace(InputId))
