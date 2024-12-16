@@ -226,6 +226,8 @@ public partial class HxModal : IAsyncDisposable
 	private bool _disposed;
 	private string id = "hx" + Guid.NewGuid().ToString("N");
 
+	public string ElementId => id;
+
 	public HxModal()
 	{
 		_dotnetObjectReference = DotNetObjectReference.Create(this);
