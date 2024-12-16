@@ -8,10 +8,8 @@ public class UISettings
 {
 	public static IServiceCollection Initialize(IServiceCollection services, UIOptions? options = null)
 	{
-		var isBlazorServer = services.Any(x => (x.ImplementationType?.Name ?? "") == "RemoteJSRuntime");
-
 		services.AddHxServices();
-		services.AddHxMessenger(forceAsSingleton: !isBlazorServer);
+		services.AddHxMessenger(forceAsSingleton: !(options?.HxMessengerAsScopedService ?? false));
 		services.AddHxMessageBoxHost();
 		SetDefaults(options);
 		return services;
@@ -106,5 +104,6 @@ public class UISettings
 	{
 		public InputSize? InputSize { get; set; }
 		public ButtonSize? ButtonSize { get; set; }
+		public bool HxMessengerAsScopedService{ get; set; }
 	}
 }
