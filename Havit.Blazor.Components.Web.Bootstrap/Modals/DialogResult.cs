@@ -36,10 +36,10 @@ public sealed class DialogResult<TValue>
 	/// <summary>
 	/// Returns a new instance for a cancelled dialog.
 	/// </summary>
-	internal static DialogResult<TValue> CreateCancelled() => new DialogResult<TValue>(false);
+	public static DialogResult<TValue> CreateCancelled() => new DialogResult<TValue>(false);
 
 	/// <summary>
 	/// Returns a new instance for a successful dialog.
 	/// </summary>
-	internal static DialogResult<TValue> CreateSuccessful(TValue value) => new DialogResult<TValue>(true, value);
+	public static DialogResult<TValue> CreateSuccessful(TValue value) => new DialogResult<TValue>(true, value);
 }
