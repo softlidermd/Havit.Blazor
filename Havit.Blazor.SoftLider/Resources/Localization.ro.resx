@@ -112,10 +112,22 @@
   <data name="PreviousMonth" xml:space="preserve">
     <value>Luna precedentă</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>Limba</value>
+  </data>
+  <data name="Last7Days" xml:space="preserve">
+    <value>Ultimele 7 zile</value>
+  </data>
+  <data name="PreviousWeek" xml:space="preserve">
+    <value>Săptămâna precedentă</value>
+  </data>
   <data name="PreviousYear" xml:space="preserve">
     <value>Anul precedent</value>
   </data>
-  <data name="Language" xml:space="preserve">
-    <value>Limba</value>
+  <data name="ThisWeek" xml:space="preserve">
+    <value>Săptămâna  curentă</value>
+  </data>
+  <data name="Previous7Days" xml:space="preserve">
+    <value>7 zile precedente</value>
   </data>
 </root>

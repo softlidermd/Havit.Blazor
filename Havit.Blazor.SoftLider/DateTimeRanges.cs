@@ -11,6 +11,26 @@ public static class DateTimeRanges
 		{
 			new InputDateRangePredefinedRangesItem()
 			{
+				Label = Resources.Localization.ThisWeek,
+				DateRange = new() { StartDate = DateTime.Today.StartOfWeek(), EndDate = DateTime.Today.EndOfWeek() }
+			},
+			new InputDateRangePredefinedRangesItem()
+			{
+				Label = Resources.Localization.PreviousWeek,
+				DateRange = new() { StartDate = DateTime.Today.StartOfWeek().AddDays(-7), EndDate = DateTime.Today.StartOfWeek().AddTicks(-1) }
+			},
+			new InputDateRangePredefinedRangesItem()
+			{
+				Label = Resources.Localization.Last7Days,
+				DateRange = new() { StartDate = DateTime.Today.AddDays(-7), EndDate = DateTime.Today.EndOfDay() }
+			},
+			new InputDateRangePredefinedRangesItem()
+			{
+				Label = Resources.Localization.Previous7Days,
+				DateRange = new() { StartDate = DateTime.Today.AddDays(-14), EndDate = DateTime.Today.AddDays(-7).AddTicks(-1) }
+			},
+			new InputDateRangePredefinedRangesItem()
+			{
 				Label = Resources.Localization.ThisMonth,
 				DateRange = new() { StartDate = DateTime.Today.StartOfMonth(), EndDate = DateTime.Today.EndOfMonth() }
 			},

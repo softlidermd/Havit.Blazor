@@ -35,7 +35,7 @@
     <PackageVersion Include="SmartComponents.Inference.OpenAI" Version="0.1.0-preview10148" />
     <PackageVersion Include="SmartComponents.LocalEmbeddings" Version="0.1.0-preview10148" />
     <PackageVersion Include="System.Text.Json" Version="8.0.3" />
-	<PackageVersion Include="SoftLider.Common" Version="1.0.0" />
+	<PackageVersion Include="SoftLider.Common" Version="1.0.35" />
   </ItemGroup>
   <ItemGroup>
     <!-- https://github.com/microsoft/MSBuildSdks/tree/main/src/CopyOnWrite -->
