@@ -1,0 +1,51 @@
+<HxFormValue Label="@Localization.ElementsSize" Value="@CurrentFontSize.ToString()" CssClass="mb-2">
+    <InputGroupEndTemplate>
+        <HxButton Icon="BootstrapIcon.Plus"
+                  Color="ThemeColor.Secondary"
+                  Outline="true"
+                  OnClick="IncreaseFontSizeAsync" />
+        <HxButton Icon="BootstrapIcon.Dash"
+                  Color="ThemeColor.Secondary"
+                  Outline="true"
+                  OnClick="DecreaseFontSizeAsync" />
+    </InputGroupEndTemplate>
+</HxFormValue>
+
+@code {
+    [Parameter] public int DefaultSize { get; set; } = 16;
+
+    [Inject, AllowNull] private IJSRuntime JSRuntime { get; set; }
+    [Inject, AllowNull] private IPersistentStorage PersistentStorage { get; set; }
+
+    private int CurrentFontSize { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        CurrentFontSize = await PersistentStorage.GetItemAsync<int?>("fontSize") ?? DefaultSize;
+        await ApplyFontSizeAsync(save: false);
+    }
+
+    private async Task IncreaseFontSizeAsync()
+    {
+        CurrentFontSize++;
+        await ApplyFontSizeAsync(save: true);
+    }
+
+    private async Task DecreaseFontSizeAsync()
+    {
+        if (CurrentFontSize > 6)
+            CurrentFontSize--;
+        await ApplyFontSizeAsync(save: true);
+    }
+
+    private async Task ApplyFontSizeAsync(bool save)
+    {
+        await JSRuntime.InvokeVoidAsync("eval", $"document.getElementsByTagName('html')[0].style.fontSize = '{CurrentFontSize}px';");
+        await InvokeAsync(StateHasChanged);
+
+        if (save)
+        {
+            await PersistentStorage.SetItemAsync("fontSize", CurrentFontSize);
+        }
+    }
+}

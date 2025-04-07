@@ -22,14 +22,14 @@ namespace Havit.Blazor.SoftLider.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Localization {
+    internal class Localization___Copy {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Localization() {
+        internal Localization___Copy() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Havit.Blazor.SoftLider.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Havit.Blazor.SoftLider.Resources.Localization", typeof(Localization).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Havit.Blazor.SoftLider.Resources.Localization - Copy", typeof(Localization___Copy).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace Havit.Blazor.SoftLider.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Elements size.
+        ///   Looks up a localized string similar to Размер элементов.
         /// </summary>
         internal static string ElementsSize {
             get {
@@ -70,7 +70,7 @@ namespace Havit.Blazor.SoftLider.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Language.
+        ///   Looks up a localized string similar to Язык.
         /// </summary>
         internal static string Language {
             get {
@@ -79,7 +79,7 @@ namespace Havit.Blazor.SoftLider.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last 30 days.
+        ///   Looks up a localized string similar to Последние 30 дней.
         /// </summary>
         internal static string Last30Days {
             get {
@@ -88,7 +88,7 @@ namespace Havit.Blazor.SoftLider.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last 365 days.
+        ///   Looks up a localized string similar to Последние 365 дней.
         /// </summary>
         internal static string Last365Days {
             get {
@@ -97,7 +97,7 @@ namespace Havit.Blazor.SoftLider.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last 7 days.
+        ///   Looks up a localized string similar to Последние 7 дней.
         /// </summary>
         internal static string Last7Days {
             get {
@@ -106,7 +106,7 @@ namespace Havit.Blazor.SoftLider.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Previous 7 days.
+        ///   Looks up a localized string similar to Предыдущие 7 дней.
         /// </summary>
         internal static string Previous7Days {
             get {
@@ -115,7 +115,7 @@ namespace Havit.Blazor.SoftLider.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Previous month.
+        ///   Looks up a localized string similar to Предыдущий месяц.
         /// </summary>
         internal static string PreviousMonth {
             get {
@@ -124,7 +124,7 @@ namespace Havit.Blazor.SoftLider.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Previous week.
+        ///   Looks up a localized string similar to Предыдущая неделя.
         /// </summary>
         internal static string PreviousWeek {
             get {
@@ -133,7 +133,7 @@ namespace Havit.Blazor.SoftLider.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Previous year.
+        ///   Looks up a localized string similar to Предыдущий год.
         /// </summary>
         internal static string PreviousYear {
             get {
@@ -142,7 +142,7 @@ namespace Havit.Blazor.SoftLider.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This month.
+        ///   Looks up a localized string similar to Этот месяц.
         /// </summary>
         internal static string ThisMonth {
             get {
@@ -151,7 +151,7 @@ namespace Havit.Blazor.SoftLider.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This week.
+        ///   Looks up a localized string similar to Эта неделя.
         /// </summary>
         internal static string ThisWeek {
             get {
@@ -160,7 +160,7 @@ namespace Havit.Blazor.SoftLider.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This year.
+        ///   Looks up a localized string similar to Этот год.
         /// </summary>
         internal static string ThisYear {
             get {

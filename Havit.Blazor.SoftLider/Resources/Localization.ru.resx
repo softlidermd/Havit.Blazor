@@ -118,39 +118,39 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ThisMonth" xml:space="preserve">
-    <value>This month</value>
+    <value>Этот месяц</value>
   </data>
   <data name="ThisYear" xml:space="preserve">
-    <value>This year</value>
+    <value>Этот год</value>
   </data>
   <data name="Last30Days" xml:space="preserve">
-    <value>Last 30 days</value>
+    <value>Последние 30 дней</value>
   </data>
   <data name="Last365Days" xml:space="preserve">
-    <value>Last 365 days</value>
+    <value>Последние 365 дней</value>
   </data>
   <data name="PreviousMonth" xml:space="preserve">
-    <value>Previous month</value>
+    <value>Предыдущий месяц</value>
   </data>
   <data name="PreviousYear" xml:space="preserve">
-    <value>Previous year</value>
+    <value>Предыдущий год</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Language</value>
+    <value>Язык</value>
   </data>
   <data name="ThisWeek" xml:space="preserve">
-    <value>This week</value>
+    <value>Эта неделя</value>
   </data>
   <data name="PreviousWeek" xml:space="preserve">
-    <value>Previous week</value>
+    <value>Предыдущая неделя</value>
   </data>
   <data name="Last7Days" xml:space="preserve">
-    <value>Last 7 days</value>
+    <value>Последние 7 дней</value>
   </data>
   <data name="Previous7Days" xml:space="preserve">
-    <value>Previous 7 days</value>
+    <value>Предыдущие 7 дней</value>
   </data>
   <data name="ElementsSize" xml:space="preserve">
-    <value>Elements size</value>
+    <value>Размер элементов</value>
   </data>
 </root>

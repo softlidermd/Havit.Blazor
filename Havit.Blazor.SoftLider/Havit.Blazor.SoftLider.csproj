@@ -4,7 +4,7 @@
 		<TargetFrameworks>net8.0;net7.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<NeutralLanguage>ru</NeutralLanguage>
+		<NeutralLanguage>ro</NeutralLanguage>
 
 	</PropertyGroup>
 
@@ -34,6 +34,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Resources\Localization.ru.Designer.cs">
+		  <DependentUpon>Localization.ru.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Resources\Localization.Designer.cs">
 			<DependentUpon>Localization.resx</DependentUpon>
 			<DesignTime>True</DesignTime>
@@ -42,6 +47,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Update="Resources\Localization.ru.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>Localization.ru.Designer.cs</LastGenOutput>
+		  <Generator>ResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Resources\Localization.resx">
 			<LastGenOutput>Localization.Designer.cs</LastGenOutput>
 			<Generator>ResXFileCodeGenerator</Generator>

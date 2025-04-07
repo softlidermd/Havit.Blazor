@@ -130,4 +130,7 @@
   <data name="Previous7Days" xml:space="preserve">
     <value>7 zile precedente</value>
   </data>
+  <data name="ElementsSize" xml:space="preserve">
+    <value>Mărimea elementelor</value>
+  </data>
 </root>
