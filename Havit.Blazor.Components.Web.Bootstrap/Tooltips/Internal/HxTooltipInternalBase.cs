@@ -329,6 +329,10 @@ public abstract class HxTooltipInternalBase : ComponentBase, IAsyncDisposable
 				{
 					await _jsModule.InvokeVoidAsync("dispose", _spanElement);
 				}
+				catch (JSException)
+				{
+					// NOOP
+				}
 				catch (JSDisconnectedException)
 				{
 					// NOOP

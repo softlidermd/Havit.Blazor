@@ -252,6 +252,11 @@ public partial class HxCollapse : IAsyncDisposable
 				await _jsModule.InvokeVoidAsync("dispose", _collapseHtmlElement);
 				await _jsModule.DisposeAsync();
 			}
+			catch (JSException)
+			{
+				// Encountered Microsoft.JSInterop.JSException: 'JS object instance with ID 2 does not exist (has it been disposed?).'
+				// NOOP
+			}
 			catch (JSDisconnectedException)
 			{
 				// NOOP
