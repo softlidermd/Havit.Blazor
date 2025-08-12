@@ -2,7 +2,7 @@
 
 namespace Havit.Blazor.Documentation.Shared;
 
-public partial class Sidebar
+public partial class Sidebar : ComponentBase
 {
 	private static readonly HttpClient s_client = new HttpClient();
 
@@ -25,6 +25,11 @@ public partial class Sidebar
 		}
 
 		_themes = _themes.Prepend(new() { Name = "Bootstrap 5", CssCdn = "FULL_LINK_HARDCODED_IN_RAZOR" }).ToList();
+	}
+
+	protected override Task OnAfterRenderAsync(bool firstRender)
+	{
+		return base.OnAfterRenderAsync(firstRender);
 	}
 }
 

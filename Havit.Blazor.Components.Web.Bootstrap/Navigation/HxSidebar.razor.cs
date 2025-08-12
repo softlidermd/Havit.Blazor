@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using System.Diagnostics;
+using System.Reflection;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
+using Microsoft.JSInterop;
 
 namespace Havit.Blazor.Components.Web.Bootstrap;
 
@@ -6,7 +10,7 @@ namespace Havit.Blazor.Components.Web.Bootstrap;
 /// Sidebar component - responsive navigation sidebar.<br />
 /// Full documentation and demos: <see href="https://havit.blazor.eu/components/HxSidebar">https://havit.blazor.eu/components/HxSidebar</see>
 /// </summary>
-public partial class HxSidebar : ComponentBase
+public partial class HxSidebar : ComponentBase, IAsyncDisposable
 {
 	/// <summary>
 	/// Sidebar header.
@@ -79,6 +83,8 @@ public partial class HxSidebar : ComponentBase
 
 	[Inject] protected IStringLocalizer<HxSpinner> Localizer { get; set; }
 
+	[Inject] protected IJSRuntime JSRuntime { get; set; }
+
 	/// <summary>
 	/// Displays notifications dot.
 	/// </summary>
@@ -93,10 +99,71 @@ public partial class HxSidebar : ComponentBase
 
 	protected string GetCollapsedCssClass() => Collapsed ? "collapsed" : null;
 
+	private IJSObjectReference _jsModule;
+	private bool _disposed = false;
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+	}
+	protected override void OnAfterRender(bool firstRender)
+	{
+		base.OnAfterRender(firstRender);
+	}
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			_jsModule ??= await JSRuntime.ImportHavitBlazorBootstrapModuleAsync(nameof(HxSidebar));
+			if (_disposed)
+			{
+				return;
+			}
+			await _jsModule.InvokeVoidAsync("initializeSwipeDetection");
+		}
+	}
+
+	public async ValueTask DisposeAsync()
+	{
+		// Unregister swipe detection
+		await DisposeAsyncCore();
+	}
+
+	protected virtual async ValueTask DisposeAsyncCore()
+	{
+		_disposed = true;
+
+		if (_jsModule is not null)
+		{
+			try
+			{
+				await _jsModule.InvokeVoidAsync("unregisterSwipeDetection");
+				await _jsModule.DisposeAsync();
+			}
+			catch (JSDisconnectedException)
+			{
+				// NOOP
+			}
+			catch (TaskCanceledException)
+			{
+				// NOOP
+			}
+		}
+	}
+
 	private async Task HandleCollapseToggleClick()
 	{
 		Collapsed = !Collapsed;
 		await InvokeCollapsedChangedAsync(Collapsed);
+	}
+
+	private async Task HandleOverlayClick()
+	{
+		try
+		{
+			await JSRuntime.InvokeVoidAsync("eval", $"bootstrap.Collapse.getInstance(document.getElementById('{NavContentElementId}')).hide()");
+		}
+		catch (Exception) { }
 	}
 
 	protected string GetResponsiveCssClass(string cssClassPattern)
