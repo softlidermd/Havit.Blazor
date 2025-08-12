@@ -220,3 +220,7 @@ th, td {
 .w-45 {
 	width: 45%;
 }
+
+.min-h-0 {
+	min-height: 0 !important;
+}

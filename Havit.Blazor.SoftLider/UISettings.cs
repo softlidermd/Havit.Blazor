@@ -91,8 +91,8 @@ public class UISettings
 
 		HxFormValue.Defaults.ValueCssClass = "bg-body-tertiary";
 
-		HxListLayout.Defaults.CssClass = "flex-grow-1 d-flex flex-column";
-		HxListLayout.Defaults.CardSettings.CssClass = "flex-grow-1";
+		HxListLayout.Defaults.CssClass = "flex-grow-1 d-flex flex-column min-h-0";
+		HxListLayout.Defaults.CardSettings.CssClass = "flex-grow-1 min-h-0";
 		HxListLayout.Defaults.CardSettings.BodyCssClass = "flex-grow-0";
 		HxListLayout.Defaults.FilterOpenButtonSettings.Color = ThemeColor.None;
 		HxListLayout.Defaults.FilterOpenButtonSettings.CssClass = "bg-body-secondary";
