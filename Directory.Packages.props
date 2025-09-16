@@ -20,10 +20,12 @@
     <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.4" />
     <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.4" />
     <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.4" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Localization" Version="8.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Localization.Abstractions" Version="8.0.4" />
     <PackageVersion Include="Microsoft.Bcl.TimeProvider" Version="8.0.1" Condition="'$(TargetFramework)' != 'net8.0'" />
+    <PackageVersion Include="Microsoft.Maui.Core" Version="8.0.3" />
+    <PackageVersion Include="Microsoft.NET.Sdk.Razor" Version="3.1.32" />
     <PackageVersion Include="Moq" Version="4.20.70" />
     <PackageVersion Include="MSTest" Version="3.3.1" />
     <PackageVersion Include="protobuf-net" Version="3.2.30" />
@@ -35,7 +37,10 @@
     <PackageVersion Include="SmartComponents.Inference.OpenAI" Version="0.1.0-preview10148" />
     <PackageVersion Include="SmartComponents.LocalEmbeddings" Version="0.1.0-preview10148" />
     <PackageVersion Include="System.Text.Json" Version="8.0.3" />
-	<PackageVersion Include="SoftLider.Common" Version="1.0.39" />
+    <PackageVersion Include="SoftLider.Common" Version="1.0.39" />
+    <PackageVersion Include="Microsoft.Maui.Controls" Version="8.0.100" Condition="'$(TargetFramework)' == 'net8.0-android'" />
+	<PackageVersion Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.100" Condition="'$(TargetFramework)' == 'net8.0-android'" />
+	<PackageVersion Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.100" Condition="'$(TargetFramework)' == 'net8.0-android'" />
   </ItemGroup>
   <ItemGroup>
     <!-- https://github.com/microsoft/MSBuildSdks/tree/main/src/CopyOnWrite -->

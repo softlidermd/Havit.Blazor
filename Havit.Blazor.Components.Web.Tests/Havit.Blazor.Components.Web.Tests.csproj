@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0;net7.0;net6.0</TargetFrameworks>
+		<TargetFrameworks>net8.0;</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<IsPackable>false</IsPackable>
 		<EnableMSTestRunner>true</EnableMSTestRunner>
@@ -16,6 +16,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Havit.Blazor.Components.Web\Havit.Blazor.Components.Web.csproj" />
+		<ProjectReference Include="..\Havit.Blazor.SoftLider\Havit.Blazor.SoftLider.csproj" />
 	</ItemGroup>
 
 </Project>

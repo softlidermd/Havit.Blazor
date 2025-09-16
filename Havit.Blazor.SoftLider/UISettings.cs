@@ -11,7 +11,6 @@ public class UISettings
 		services.AddHxServices();
 		services.AddHxMessenger(forceAsSingleton: !(options?.HxMessengerAsScopedService ?? false));
 		services.AddHxMessageBoxHost();
-		services.AddSingleton<ModalManager>();
 		SetDefaults(options);
 		return services;
 	}
