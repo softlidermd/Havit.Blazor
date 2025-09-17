@@ -1,4 +1,6 @@
-﻿using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.JSInterop;
 
 namespace Havit.Blazor.SoftLider.Maui
 {
@@ -81,6 +83,8 @@ namespace Havit.Blazor.SoftLider.Maui
 		private readonly object _gate = new();
 		private readonly Stack<string> _stack = new();
 		private IJSRuntime? _js;
+		private NavigationManager? _navigationManager;
+		private IDisposable? _locationChangingHandler;
 
 		public bool HasOpenModal
 		{
@@ -93,12 +97,29 @@ namespace Havit.Blazor.SoftLider.Maui
 			}
 		}
 
-		public async Task InitAsync(IJSRuntime js)
+		public async Task InitAsync(IJSRuntime js, NavigationManager navigationManager = null)
 		{
+			if ((OperatingSystem.IsBrowser() || OperatingSystem.IsWindows()) && navigationManager != null)
+			{
+				_navigationManager = navigationManager;
+				_locationChangingHandler = _navigationManager.RegisterLocationChangingHandler(OnLocationChanging);
+			}
+
 			_js = js;
 			_ref = DotNetObjectReference.Create<ModalManager>(this);
 			await _js.InvokeVoidAsync("eval", jsCode);
 			await _js.InvokeVoidAsync("modalInterop.init", _ref);
+		}
+
+		private ValueTask OnLocationChanging(LocationChangingContext context)
+		{
+			if (this.HasOpenModal)
+			{
+				context.PreventNavigation();
+				this.CloseTop();
+			}
+
+			return ValueTask.CompletedTask;
 		}
 
 		[JSInvokable]
@@ -186,6 +207,7 @@ namespace Havit.Blazor.SoftLider.Maui
 		public void Dispose()
 		{
 			_ = _js?.InvokeVoidAsync("modalInterop.dispose");
+			_locationChangingHandler?.Dispose();
 			_ref?.Dispose();
 		}
 
@@ -196,6 +218,7 @@ namespace Havit.Blazor.SoftLider.Maui
 				await _js.InvokeVoidAsync("modalInterop.dispose");
 			}
 
+			_locationChangingHandler?.Dispose();
 			_ref?.Dispose();
 		}
 	}
