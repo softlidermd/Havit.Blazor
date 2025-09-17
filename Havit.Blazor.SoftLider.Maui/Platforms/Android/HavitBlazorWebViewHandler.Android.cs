@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components.WebView.Maui;
 
 namespace Havit.Blazor.SoftLider.Maui
 {
-	public partial class HavitBlazorWebViewHandler : BlazorWebViewHandler
+	internal class HavitBlazorWebViewHandler : BlazorWebViewHandler
 	{
 		public HavitBlazorWebViewHandler()
 		{
