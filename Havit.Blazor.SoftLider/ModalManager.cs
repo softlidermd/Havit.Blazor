@@ -41,6 +41,7 @@ namespace Havit.Blazor.SoftLider
 
 			_js = js;
 			_ref = DotNetObjectReference.Create<ModalManager>(this);
+			await _js.InvokeVoidAsync("import", "/_content/Havit.Blazor.SoftLider/modalManager.js");
 			await _js.InvokeVoidAsync("modalInterop.init", _ref);
 		}
 
