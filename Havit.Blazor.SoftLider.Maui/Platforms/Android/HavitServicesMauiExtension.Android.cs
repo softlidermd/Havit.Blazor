@@ -15,12 +15,14 @@ namespace Havit.Blazor.SoftLider.Maui
 				services.AddSingleton<ModalManager>();
 			}
 
-#if ANDROID
-			services.ConfigureMauiHandlers(h =>
+			if (OperatingSystem.IsAndroid())
 			{
-				h.AddHandler<BlazorWebView, HavitBlazorWebViewHandler>();
-			});
-#endif
+				services.ConfigureMauiHandlers(h =>
+				{
+					h.AddHandler<BlazorWebView, HavitBlazorWebViewHandler>();
+				});
+			}
+
 			return services;
 		}
 	}

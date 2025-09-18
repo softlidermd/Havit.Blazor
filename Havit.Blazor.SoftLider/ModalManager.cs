@@ -28,18 +28,20 @@ namespace Havit.Blazor.SoftLider
 
 		public async Task InitAsync(IJSRuntime js, NavigationManager navigationManager = null)
 		{
+			if (_js != null)
+			{
+				return;
+			}
+
 			if ((OperatingSystem.IsBrowser() || OperatingSystem.IsWindows()) && navigationManager != null)
 			{
 				_navigationManager = navigationManager;
 				_locationChangingHandler = _navigationManager.RegisterLocationChangingHandler(OnLocationChangingAsync);
 			}
 
-			if (_js == null)
-			{
-				_js = js;
-				_ref = DotNetObjectReference.Create<ModalManager>(this);
-				await _js.InvokeVoidAsync("modalInterop.init", _ref);
-			}
+			_js = js;
+			_ref = DotNetObjectReference.Create<ModalManager>(this);
+			await _js.InvokeVoidAsync("modalInterop.init", _ref);
 		}
 
 		private async ValueTask OnLocationChangingAsync(LocationChangingContext context)
@@ -111,7 +113,7 @@ namespace Havit.Blazor.SoftLider
 					}
 				}
 
-				if (id is null || _js is null)
+				if (string.IsNullOrEmpty(id) || _js is null)
 				{
 					return;
 				}
@@ -126,13 +128,18 @@ namespace Havit.Blazor.SoftLider
 
 		public async ValueTask DisposeAsync()
 		{
-			if (_js != null)
+			try
 			{
-				await _js.InvokeVoidAsync("modalInterop.dispose");
+				if (_js != null)
+				{
+					await _js.InvokeVoidAsync("modalInterop.dispose");
+				}
 			}
-
-			_locationChangingHandler?.Dispose();
-			_ref?.Dispose();
+			finally
+			{
+				_locationChangingHandler?.Dispose();
+				_ref?.Dispose();
+			}
 		}
 	}
 }

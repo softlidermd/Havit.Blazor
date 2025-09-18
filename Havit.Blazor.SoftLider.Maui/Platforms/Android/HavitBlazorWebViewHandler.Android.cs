@@ -15,7 +15,12 @@ namespace Havit.Blazor.SoftLider.Maui
 		protected override void ConnectHandler(Android.Webkit.WebView platformView)
 		{
 			base.ConnectHandler(platformView);
-			platformView.SetOnKeyListener(new BlockBackKeyListener(MauiContext.Services.GetService<ModalManager>()));
+
+			var manager = MauiContext?.Services.GetService<ModalManager>();
+			if (manager != null)
+			{
+				platformView.SetOnKeyListener(new BlockBackKeyListener(manager));
+			}
 		}
 		private class BlockBackKeyListener : Java.Lang.Object, Android.Views.View.IOnKeyListener
 		{
