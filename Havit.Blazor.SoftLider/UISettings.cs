@@ -12,6 +12,16 @@ public class UISettings
 		services.AddHxServices();
 		services.AddHxMessenger(forceAsSingleton: !(options?.HxMessengerAsScopedService ?? false));
 		services.AddHxMessageBoxHost();
+
+		if ((OperatingSystem.IsBrowser() || OperatingSystem.IsWindows()))
+		{
+			services.AddScoped<ModalManager>();
+		}
+		else
+		{
+			services.AddSingleton<ModalManager>();
+		}
+
 		SetDefaults(options);
 		return services;
 	}
