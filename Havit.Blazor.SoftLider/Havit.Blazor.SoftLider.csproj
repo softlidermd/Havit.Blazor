@@ -32,7 +32,6 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Havit.Blazor.Components.Web.Bootstrap\Havit.Blazor.Components.Web.Bootstrap.csproj" />
 	  <ProjectReference Include="..\Havit.Blazor.Components.Web\Havit.Blazor.Components.Web.csproj" />
-	  <ProjectReference Include="..\Havit.Blazor.SoftLider.Maui\Havit.Blazor.SoftLider.Maui.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,4 +1,6 @@
-﻿using Android.Runtime;
+﻿using System.Threading.Tasks;
+using Android.OS;
+using Android.Runtime;
 using Android.Views;
 using Microsoft.AspNetCore.Components.WebView.Maui;
 
@@ -13,15 +15,15 @@ namespace Havit.Blazor.SoftLider.Maui
 		protected override void ConnectHandler(Android.Webkit.WebView platformView)
 		{
 			base.ConnectHandler(platformView);
-			platformView.SetOnKeyListener(new BlockBackKeyListener());
+			platformView.SetOnKeyListener(new BlockBackKeyListener(MauiContext.Services.GetService<ModalManager>()));
 		}
 		private class BlockBackKeyListener : Java.Lang.Object, Android.Views.View.IOnKeyListener
 		{
 			private readonly ModalManager _modalManager;
 
-			public BlockBackKeyListener()
+			public BlockBackKeyListener(ModalManager modalManager)
 			{
-				_modalManager = ModalManager.GetInstance();
+				_modalManager = modalManager;
 			}
 
 			public bool OnKey(Android.Views.View? v, [GeneratedEnum] Keycode keyCode, KeyEvent? e)
@@ -30,7 +32,7 @@ namespace Havit.Blazor.SoftLider.Maui
 				{
 					if (_modalManager?.HasOpenModal == true)
 					{
-						_modalManager.CloseTop();
+						_ = _modalManager.CloseTopAsync();
 						return true;
 					}
 				}

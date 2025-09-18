@@ -1,0 +1,13 @@
+@inject ModalManager ModalManager
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await ModalManager.InitAsync(JSRuntime, NavigationManager);
+        }
+    }
+}

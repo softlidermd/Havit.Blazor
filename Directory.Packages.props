@@ -24,8 +24,6 @@
     <PackageVersion Include="Microsoft.Extensions.Localization" Version="8.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Localization.Abstractions" Version="8.0.4" />
     <PackageVersion Include="Microsoft.Bcl.TimeProvider" Version="8.0.1" Condition="'$(TargetFramework)' != 'net8.0'" />
-    <PackageVersion Include="Microsoft.Maui.Core" Version="8.0.3" />
-    <PackageVersion Include="Microsoft.NET.Sdk.Razor" Version="3.1.32" />
     <PackageVersion Include="Moq" Version="4.20.70" />
     <PackageVersion Include="MSTest" Version="3.3.1" />
     <PackageVersion Include="protobuf-net" Version="3.2.30" />
