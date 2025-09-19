@@ -33,13 +33,14 @@ namespace Havit.Blazor.SoftLider.Maui
 
 			public bool OnKey(Android.Views.View? v, [GeneratedEnum] Keycode keyCode, KeyEvent? e)
 			{
-				if (keyCode == Android.Views.Keycode.Back)
+				if (keyCode == Keycode.Back && _modalManager.HasOpenModal)
 				{
-					if (_modalManager?.HasOpenModal == true)
+					if (e != null && e.Action == KeyEventActions.Up)
 					{
 						_ = _modalManager.CloseTopAsync();
-						return true;
 					}
+
+					return true;
 				}
 
 				return false;

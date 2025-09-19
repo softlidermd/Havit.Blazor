@@ -1,7 +1,6 @@
 @inject ModalManager ModalManager
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
-@implements IAsyncDisposable
 
 @code {
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -10,10 +9,5 @@
         {
             await ModalManager.InitAsync(JSRuntime, NavigationManager);
         }
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        await ModalManager.DisposeAsync();
     }
 }

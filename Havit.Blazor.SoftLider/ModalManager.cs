@@ -28,19 +28,21 @@ namespace Havit.Blazor.SoftLider
 
 		public async Task InitAsync(IJSRuntime js, NavigationManager navigationManager = null)
 		{
-			if (_js != null)
+			lock (_gate)
 			{
-				return;
+				if (_js != null || js == null)
+					return;
+
+				if ((OperatingSystem.IsBrowser() || OperatingSystem.IsWindows()) && navigationManager != null)
+				{
+					_navigationManager = navigationManager;
+					_locationChangingHandler = _navigationManager.RegisterLocationChangingHandler(OnLocationChangingAsync);
+				}
+
+				_js = js;
+				_ref = DotNetObjectReference.Create<ModalManager>(this);
 			}
 
-			if ((OperatingSystem.IsBrowser() || OperatingSystem.IsWindows()) && navigationManager != null)
-			{
-				_navigationManager = navigationManager;
-				_locationChangingHandler = _navigationManager.RegisterLocationChangingHandler(OnLocationChangingAsync);
-			}
-
-			_js = js;
-			_ref = DotNetObjectReference.Create<ModalManager>(this);
 			await _js.InvokeVoidAsync("import", "/_content/Havit.Blazor.SoftLider/modalManager.js");
 			await _js.InvokeVoidAsync("modalInterop.init", _ref);
 		}
@@ -52,8 +54,6 @@ namespace Havit.Blazor.SoftLider
 				context.PreventNavigation();
 				await this.CloseTopAsync();
 			}
-
-			await ValueTask.CompletedTask;
 		}
 
 		[JSInvokable]
@@ -138,6 +138,7 @@ namespace Havit.Blazor.SoftLider
 			}
 			finally
 			{
+				_js = null;
 				_locationChangingHandler?.Dispose();
 				_ref?.Dispose();
 			}
