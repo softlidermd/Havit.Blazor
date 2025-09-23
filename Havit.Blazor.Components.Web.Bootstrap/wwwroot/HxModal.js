@@ -23,11 +23,11 @@ function ensureId(el) {
 
 // Keep Blazor NavigationManager's state shape consistent
 function getCurrentIndex(state) {
-	const s = state ?? history.state;
+	const s = state != null ? state : history.state;
 	return s && typeof s._index === 'number' ? s._index : 0;
 }
 function cloneUserState(state) {
-	const s = state ?? history.state;
+	const s = state != null ? state : history.state;
 	return s && Object.prototype.hasOwnProperty.call(s, 'userState') ? s.userState : undefined;
 }
 function pushModalState(id, baseState) {
