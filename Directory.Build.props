@@ -13,7 +13,7 @@
 		
 		<!-- aligned NuGet PackageVersion for package-bundles -->
 		<ComponentsPackagesVersion>4.6.7</ComponentsPackagesVersion>
-		<ComponentsPackagesCustomVersion>1.0.63</ComponentsPackagesCustomVersion>
+		<ComponentsPackagesCustomVersion>1.0.66</ComponentsPackagesCustomVersion>
 		<GrpcPackagesVersion>1.5.5</GrpcPackagesVersion>
 	</PropertyGroup>
 
