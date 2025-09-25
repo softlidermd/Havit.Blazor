@@ -1,0 +1,65 @@
+@namespace Havit.Blazor.Components.Web.Bootstrap
+
+<HxModal @ref="_modal"
+         Title="@_title"
+         Size="@_size"
+         OnClosed="HandleModalClosed"
+         Settings="_modalSettings">
+    <BodyTemplate>
+        @if (_componentType != null)
+        {
+            <CascadingValue Value="this" IsFixed="true">
+                <DynamicComponent Type="_componentType" Parameters="_parameters" />
+            </CascadingValue>
+        }
+    </BodyTemplate>
+</HxModal>
+
+@code {
+    private HxModal _modal = default!;
+    private Type _componentType;
+    private Dictionary<string, object> _parameters = [];
+    private TaskCompletionSource<object> _taskCompletionSource;
+    private string _title = string.Empty;
+    private ModalSize _size = ModalSize.Large;
+
+    private ModalSettings _modalSettings = new()
+    {
+        Backdrop = ModalBackdrop.Static,
+        Scrollable = true,
+        ContentCssClass = "vh-100",
+        BodyCssClass = "d-flex flex-column pt-0",
+    };
+
+    public async Task<T> ShowAsync<T>(Type componentType, string title, Dictionary<string, object> parameters = null, ModalSize size = ModalSize.Large)
+    {
+        _componentType = componentType;
+        _title = title;
+        _size = size;
+        _parameters = parameters ?? new Dictionary<string, object>();
+
+        _taskCompletionSource = new();
+        await InvokeAsync(StateHasChanged); // Render the component
+        await _modal.ShowAsync();
+        var result = await _taskCompletionSource.Task;
+
+        if (result is T typedResult)
+        {
+            return typedResult;
+        }
+        return default;
+    }
+
+    public void Close(object result)
+    {
+        _taskCompletionSource?.TrySetResult(result);
+        _ = _modal.HideAsync();
+    }
+
+    private void HandleModalClosed()
+    {
+        _taskCompletionSource?.TrySetResult(null);
+        _componentType = null;
+        InvokeAsync(StateHasChanged);
+    }
+}

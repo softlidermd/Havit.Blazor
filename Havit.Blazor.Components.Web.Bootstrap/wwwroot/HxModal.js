@@ -249,27 +249,3 @@ export function dispose(element) {
 		modal.dispose();
 	}
 }
-
-// Tiny globals for MAUI native Back (file:// or any host)
-if (!window.hxModalApi) {
-	window.hxModalApi = {
-		// returns true if any .modal.show exists
-		isAnyOpen: function () {
-			return !!document.querySelector('.modal.show');
-		},
-		// closes the topmost open modal; returns true if a close was requested
-		closeTop: function () {
-			const modals = document.querySelectorAll('.modal.show');
-			if (!modals.length) return false;
-			const el = modals[modals.length - 1];
-			try {
-				const inst = (window.bootstrap && (bootstrap.Modal.getInstance(el) || new bootstrap.Modal(el)));
-				if (inst) {
-					inst.hide();
-					return true;
-				}
-			} catch { }
-			return false;
-		}
-	};
-}

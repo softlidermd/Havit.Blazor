@@ -1,0 +1,24 @@
+@namespace Havit.Blazor.Components.Web.Bootstrap
+
+<CascadingValue Value="this" IsFixed="true">
+    @ChildContent
+</CascadingValue>
+
+<HxDynamicModal @ref="_dynamicModal" />
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    private HxDynamicModal _dynamicModal = default!;
+
+    public Task<T> ShowAsync<T>(Type componentType, string title, Dictionary<string, object> parameters = null, ModalSize size = ModalSize.Large)
+    {
+        return _dynamicModal.ShowAsync<T>(componentType, title, parameters, size);
+    }
+
+    public void Close(object result)
+    {
+        _dynamicModal.Close(result);
+    }
+}
