@@ -11,6 +11,8 @@ public class UISettings
 		services.AddHxServices();
 		services.AddHxMessenger(forceAsSingleton: !(options?.HxMessengerAsScopedService ?? false));
 		services.AddHxMessageBoxHost();
+		services.AddScoped<HxDynamicModalService>();
+		services.AddScoped<IHxDynamicModalService>(sp => sp.GetRequiredService<HxDynamicModalService>()); // Interface and implementation should resolve to the same instance
 		SetDefaults(options);
 		return services;
 	}
@@ -104,6 +106,6 @@ public class UISettings
 	{
 		public InputSize? InputSize { get; set; }
 		public ButtonSize? ButtonSize { get; set; }
-		public bool HxMessengerAsScopedService{ get; set; }
+		public bool HxMessengerAsScopedService { get; set; }
 	}
 }

@@ -16,6 +16,9 @@
 </HxModal>
 
 @code {
+    [Inject]
+    private HxDynamicModalService DynamicModalService { get; set; } = default!;
+
     private HxModal _modal = default!;
     private Type _componentType;
     private Dictionary<string, object> _parameters = [];
@@ -30,6 +33,11 @@
         ContentCssClass = "vh-100",
         BodyCssClass = "d-flex flex-column pt-0",
     };
+
+    protected override void OnInitialized()
+    {
+        DynamicModalService.RegisterDynamicModal(this);
+    }
 
     public async Task<T> ShowAsync<T>(Type componentType, string title, Dictionary<string, object> parameters = null, ModalSize size = ModalSize.Large)
     {
