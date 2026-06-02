@@ -530,10 +530,19 @@ public partial class HxSearchBox<TItem> : IAsyncDisposable
 	private async void HandleTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
 	{
 		// when a time interval reached, update suggestions
-		await InvokeAsync(async () =>
+		try
 		{
-			await UpdateSuggestionsAsync();
-		});
+			await InvokeAsync(async () =>
+			{
+				await UpdateSuggestionsAsync();
+			});
+		}
+		// The timer can elapse after the Blazor Server circuit is gone (tab closed, network lost, JSInterop timeout).
+		// Because this is async void, an unhandled exception escapes to AppDomain.UnhandledException and kills the
+		// whole server process for every user. Swallow the expected disconnect/cancellation/disposal exceptions.
+		catch (JSDisconnectedException) { /* circuit disconnected */ }
+		catch (TaskCanceledException) { /* JSInterop timeout / cancellation */ }
+		catch (ObjectDisposedException) { /* component/renderer already disposed */ }
 	}
 
 	private async Task HandleInputFocus()
