@@ -184,7 +184,7 @@
 
 	/* HxToastContainer */
 	--hx-toast-container-margin: 									.5rem;
-	--hx-toast-body-max-height: 									50vh;
+	--hx-toast-body-max-height: 									50dvh;
 
 	/* HxSearchBox */
 	--hx-search-box-item-icon-margin: 								0 .5rem 0 0;
