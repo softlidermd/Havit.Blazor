@@ -1,4 +1,13 @@
 ﻿.hx-toast-container {
 	z-index: 1580;
 	margin: var(--hx-toast-container-margin);
+	max-height: calc(100vh - 2 * var(--hx-toast-container-margin));
+	max-height: calc(100dvh - 2 * var(--hx-toast-container-margin));
+	overflow-y: auto;
+}
+
+/* long messages scroll inside the toast so the close button stays on screen */
+.hx-toast-container ::deep .toast-body {
+	max-height: var(--hx-toast-body-max-height);
+	overflow-y: auto;
 }
